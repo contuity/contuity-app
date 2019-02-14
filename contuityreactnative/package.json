@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "react": "16.6.3",
-    "react-native": "0.58.4"
+    "react-native": "0.58.4",
+    "realm": "^2.23.0"
   },
   "devDependencies": {
     "@nuscout/eslint-config": "^0.2.1",
