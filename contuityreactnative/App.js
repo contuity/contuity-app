@@ -7,6 +7,8 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
+const Realm = require('realm');
+
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 
@@ -18,17 +20,53 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { realm: null };
+  }
+
+  componentWillMount() {
+    Realm.open({
+      schema: [{name: 'Dog', properties: {name: 'string'}}]
+    }).then(realm => {
+      realm.write(() => {
+        realm.create('Dog', {name: 'Rex'});
+      });
+      this.setState({ realm });
+    });
+  }
+
   render() {
+    const info = this.state.realm
+      ? 'Number of dogs in this Realm: ' + this.state.realm.objects('Dog').length
+      : 'Loading...';
+
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Text style={styles.welcome}>
+          {info}
+        </Text>
       </View>
     );
   }
 }
+
+export default App;
+
+
+// export default class App extends Component<Props> {
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <Text style={styles.welcome}>Welcome to React Native!</Text>
+//         <Text style={styles.instructions}>To get started, edit App.js</Text>
+//         <Text style={styles.instructions}>{instructions}</Text>
+//       </View>
+//     );
+//   }
+// }
 
 const styles = StyleSheet.create({
   container: {
