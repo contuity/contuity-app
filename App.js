@@ -6,11 +6,13 @@
  * @flow
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
+import realm from './src/database/realm';
 
 const Realm = require('realm');
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import Jot from './src/database/models/Jot';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -28,45 +30,32 @@ class App extends Component {
   }
 
   componentWillMount() {
-    Realm.open({
-      schema: [{name: 'Dog', properties: {name: 'string'}}]
-    }).then(realm => {
-      realm.write(() => {
-        realm.create('Dog', {name: 'Rex'});
+    realm.write(() => {
+      realm.create('Jot', {
+        id: 4,
+        content: 'This is my fourth jot',
+        dateCreated: new Date(),
+        dateModified: new Date(),
       });
-      this.setState({ realm });
     });
+    this.setState({ realm });
   }
 
   render() {
     const info = this.state.realm
-      ? 'Number of dogs in this Realm: ' + this.state.realm.objects('Dog').length
+      ? 'Number of jots in this Realm: ' +
+      this.state.realm.objects('Jot').length
       : 'Loading...';
 
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          {info}
-        </Text>
+        <Text style={styles.welcome}>{info}</Text>
       </View>
     );
   }
 }
 
 export default App;
-
-
-// export default class App extends Component<Props> {
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         <Text style={styles.welcome}>Welcome to React Native!</Text>
-//         <Text style={styles.instructions}>To get started, edit App.js</Text>
-//         <Text style={styles.instructions}>{instructions}</Text>
-//       </View>
-//     );
-//   }
-// }
 
 const styles = StyleSheet.create({
   container: {
@@ -84,5 +73,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
-  },
+  }
 });
