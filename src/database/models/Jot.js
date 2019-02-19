@@ -1,18 +1,24 @@
 import Realm from 'realm';
 
-export default class Jot extends Realm.Object {}
+export default class Jot {
+  static schema = {
+    name: 'Jot',
+    primaryKey: 'id',
+    properties: {
+      id: 'int',
+      title: 'string?',
+      content: 'string',
+      dateCreated: 'date',
+      dateModified: 'date',
+      reminder: 'date?',
+      // space
+      // person
+    },
+  };
 
-Jot.schema = {
-  name: 'Jot',
-  primaryKey: 'id', // auto-incremented
-  properties: {
-    id: 'int',
-    title: 'string?',
-    content: 'string',
-    dateCreated: 'date',
-    dateModified: 'date',
-    reminder: 'date?',
-    // space
-    // person
-  },
-};
+  constructor(id, title, content) {
+    this.id = id;
+    this.title = title;
+    this.content = content;
+  }
+}
