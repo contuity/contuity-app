@@ -11,8 +11,6 @@ let JotService = {
     if (realm.objects('Jot').filtered('id = ' + jot.id).length) return;
 
     realm.write(() => {
-      jot.dateCreated = new Date();
-      jot.dateModified = new Date();
       realm.create('Jot', jot);
     });
   },

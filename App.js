@@ -34,9 +34,4 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     borderWidth: 1,
   },
-
-  flatList: {
-    flex: 1,
-    textAlign: 'center',
-  },
 });

@@ -20,5 +20,7 @@ export default class Jot {
     this.id = id;
     this.title = title;
     this.content = content;
+    this.dateCreated = new Date();
+    this.dateModified = new Date();
   }
 }
