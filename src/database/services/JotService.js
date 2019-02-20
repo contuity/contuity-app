@@ -3,12 +3,18 @@ import Jot from '../models/Jot.js';
 
 let JotService = {
   findAll: function(sortBy) {
-    if (!sortBy) sortBy = ['dateCreated', false];
+    if (!sortBy) {
+      sortBy = ['dateCreated', false];
+    }
     return realm.objects('Jot');
   },
 
   save: function(jot) {
-    if (realm.objects('Jot').filtered('id = ' + jot.id).length) return;
+    let existingJot = realm.objects('Jot').filtered('id = ' + jot.id);
+
+    if (existingJot.length) {
+      return;
+    }
 
     realm.write(() => {
       realm.create('Jot', jot);
