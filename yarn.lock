@@ -4862,6 +4862,13 @@ react-native-elements@^1.0.0:
     react-native-ratings "^6.3.0"
     react-native-status-bar-height "^2.2.0"
 
+react-native-navbar@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-navbar/-/react-native-navbar-2.1.0.tgz#4f21e947501ce5cf4563a29914cb3192db35a647"
+  integrity sha512-hvETP5lgBbokmTHNMuHdlG6LRqDyXGJb8eiTuxmZ0RSHTsDbGBkxrSBdS9PIA+dizej8Ql9tBQFf6e0QDNG/WA==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-ratings@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-6.3.0.tgz#becda9379616776a81d9d90bfc95ea40b76286fb"
