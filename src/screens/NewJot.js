@@ -12,17 +12,28 @@ class NewJob extends Component {
   constructor(props) {
     super(props);
     this.onChangeText = this.onChangeText.bind(this);
-    this.state = {
-      latestJots: [],
-    };
-  }
+    this.onCancelHit = this.onCancelHit.bind(this);
+    this.onCreateJobHit = this.onCreateJobHit.bind(this);
 
-  componentWillMount() {
-    // this.setState({ latestJots: JotService.findAll() });
+    this.state = {
+      text: ''
+    };
   }
 
   onChangeText() {
     this.setState({text:text})
+  }
+
+  onCreateJobHit() {
+
+    console.log("Jot created with ", this.text);
+
+    // this.props.onJotsubmit(this.state.text)
+
+  }
+
+  onCancelHit() {
+
   }
 
   render() {
@@ -30,8 +41,13 @@ class NewJob extends Component {
 
 
   const rightButtonConfig = {
-    title: 'Next',
-    handler: () => alert('hello!'),
+    title: 'Create',
+    handler: this.onCreateJobHit,
+  };
+
+  const leftButtonConfig = {
+    title: 'Cancel',
+    handler: this.onCancelHit,
   };
 
   const titleConfig = {
@@ -48,8 +64,6 @@ class NewJob extends Component {
       },
     });
 
-    // return <View style={styles.container}><Text>hiiii</Text></View>;
-
 
     const navbarStyles = {
         container: {
@@ -58,13 +72,17 @@ class NewJob extends Component {
       };
 
 
-// // <Text>hi there</Text>
+          // <Button
+          //   title="Create new Jot"
+          // />
+ 
     return (
       <View style={styles.container}>
         <View style={navbarStyles.container}>
           <NavigationBar
             title={titleConfig}
             rightButton={rightButtonConfig}
+            leftButton={leftButtonConfig}
           />
           
           <TextInput
@@ -75,10 +93,6 @@ class NewJob extends Component {
           />
 
 
-          <Button
-            title="Create new Jot"
-            
-          />
 
 
         </View>
