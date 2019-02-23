@@ -20,8 +20,9 @@ class NewJob extends Component {
     };
   }
 
-  onChangeText() {
-    this.setState({text:text})
+  onChangeText(event) {
+    debugger
+    this.setState({text:event})
   }
 
   onCreateJobHit() {

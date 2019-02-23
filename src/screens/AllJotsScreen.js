@@ -3,6 +3,8 @@ import { Button, ListItem } from 'react-native-elements';
 import { ScrollView, SafeAreaView, SectionList, Text, StyleSheet } from 'react-native';
 import JotService from '../database/services/JotService';
 import NewJot from './NewJot';
+import Jot from '../database/models/Jot.js';
+
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -29,8 +31,14 @@ class AllJotsScreen extends Component {
   onJotFinished(jotInfo) {
     console.log(jotInfo)
 
+    let jot = new Jot(Date.now(), 'Jot 1', jotInfo.text)
+
+    let newJots = this.state.latestJots.slice();
+    newJots.push(jot)
+
 
     this.setState({
+      latestJots: newJots,
       isShowingNewJotPage: false
     })
   }
