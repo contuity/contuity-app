@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { ListItem } from 'react-native-elements';
+import { SafeAreaView, SectionList, Text, StyleSheet } from 'react-native';
 import JotService from '../database/services/JotService';
 
 class AllJotsScreen extends Component {
@@ -14,13 +15,39 @@ class AllJotsScreen extends Component {
     this.setState({ latestJots: JotService.findAll() });
   }
 
-  render() {
-    let textElements = [];
-    for (let item of this.state.latestJots) {
-      textElements.push(<Text>{item.content}</Text>);
-    }
+  renderJotItem(item) {
+    let jot = item.item;
 
-    return <View style={styles.container}>{textElements}</View>;
+    return (
+      <ListItem
+        style={styles.listItem}
+        key={jot.id}
+        title={jot.title}
+        subtitle={jot.content}
+        rightSubtitle={jot.dateCreated.toDateString()}
+        chevron={true}
+      />
+    );
+  }
+
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <SectionList
+          style={styles.sectionList}
+          renderItem={this.renderJotItem}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text style={{ fontWeight: 'bold' }}>{title}</Text>
+          )}
+          sections={[
+            { title: 'Today', data: this.state.latestJots },
+            { title: 'This week', data: this.state.latestJots },
+            { title: 'This month', data: this.state.latestJots },
+          ]}
+          keyExtractor={(item, index) => index}
+        />
+      </SafeAreaView>
+    );
   }
 }
 
@@ -32,5 +59,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  listItem: {
+    width: '100%',
+  },
+  sectionList: {
+    width: '100%',
   },
 });
