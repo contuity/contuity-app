@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListItem } from 'react-native-elements';
+import { Button, ListItem } from 'react-native-elements';
 import { SafeAreaView, SectionList, Text, StyleSheet } from 'react-native';
 import JotService from '../database/services/JotService';
 
@@ -20,7 +20,7 @@ class AllJotsScreen extends Component {
 
     return (
       <ListItem
-        style={styles.listItem}
+        style={styles.jotListItem}
         key={jot.id}
         title={jot.title}
         subtitle={jot.content}
@@ -33,8 +33,11 @@ class AllJotsScreen extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
+        <Button
+          title="Edit"
+        />
         <SectionList
-          style={styles.sectionList}
+          style={styles.allJotsList}
           renderItem={this.renderJotItem}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={{ fontWeight: 'bold' }}>{title}</Text>
@@ -46,6 +49,16 @@ class AllJotsScreen extends Component {
           ]}
           keyExtractor={(item, index) => index}
         />
+        <Button
+          icon={{
+            name: "pencil",
+            type: "material-community",
+            size: 15,
+            color: "black"
+          }}
+          title="Create jot"
+        />
+
       </SafeAreaView>
     );
   }
@@ -60,10 +73,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  listItem: {
+  jotListItem: {
     width: '100%',
   },
-  sectionList: {
+  allJotsList: {
     width: '100%',
   },
 });
