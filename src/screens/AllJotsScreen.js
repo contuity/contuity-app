@@ -2,18 +2,40 @@ import React, { Component } from 'react';
 import { Button, ListItem } from 'react-native-elements';
 import { ScrollView, SafeAreaView, SectionList, Text, StyleSheet } from 'react-native';
 import JotService from '../database/services/JotService';
+import NewJot from './NewJot';
 
 class AllJotsScreen extends Component {
   constructor(props) {
     super(props);
+    this.showNewJotPage = this.showNewJotPage.bind(this);
+    this.onJotFinished = this.onJotFinished.bind(this);
     this.state = {
       latestJots: [],
+      isShowingNewJotPage: false,
     };
   }
 
   componentWillMount() {
     this.setState({ latestJots: JotService.findAll() });
   }
+
+  showNewJotPage() {
+    this.setState({
+      isShowingNewJotPage: true
+    })
+  }
+
+
+  onJotFinished(jotInfo) {
+    console.log(jotInfo)
+
+
+    this.setState({
+      isShowingNewJotPage: false
+    })
+  }
+
+
 
   renderJotItem(item) {
     let jot = item.item;
@@ -31,6 +53,14 @@ class AllJotsScreen extends Component {
   }
 
   render() {
+
+    let newJotPage = null;
+    if (this.state.isShowingNewJotPage) {
+      return <NewJot onJotFinished={this.onJotFinished}/>
+    }
+
+
+
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
@@ -59,10 +89,10 @@ class AllJotsScreen extends Component {
               size: 15,
               color: "black"
             }}
+            onPress={this.showNewJotPage}
             title="Create jot"
           />
         </ScrollView>
-
       </SafeAreaView>
     );
   }

@@ -25,20 +25,16 @@ class NewJob extends Component {
   }
 
   onCreateJobHit() {
-
     console.log("Jot created with ", this.text);
-
-    // this.props.onJotsubmit(this.state.text)
+    this.props.onJotFinished({text:this.state.text})
 
   }
 
   onCancelHit() {
-
+    this.props.onJotFinished(null)
   }
 
   render() {
-
-
 
   const rightButtonConfig = {
     title: 'Create',
