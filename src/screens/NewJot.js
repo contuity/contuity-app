@@ -37,10 +37,22 @@ class NewJob extends Component {
 
   render() {
 
-  const rightButtonConfig = {
+  let rightButtonConfig = {
     title: 'Create',
     handler: this.onCreateJobHit,
   };
+
+  // rightButtonConfig = ( 
+  //   <Button
+  //     buttonStyle={{height:12, paddingTop:10, marginTop:15, marginRight:20, paddingRight:10, height: 15}}
+  //     onPress={this.onCreateJobHit}
+  //     title="Create jot"
+  //   >HII</Button> )
+
+
+  // rightButtonConfig = (
+  //   )
+
 
   const leftButtonConfig = {
     title: 'Cancel',

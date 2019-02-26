@@ -31,6 +31,11 @@ class AllJotsScreen extends Component {
   onJotFinished(jotInfo) {
     console.log(jotInfo)
 
+    // New jot creation was cancelled
+    if (jotInfo == null) {
+      return;
+    }
+
     let jot = new Jot(Date.now(), 'Jot 1', jotInfo.text)
 
     let newJots = this.state.latestJots.slice();
