@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { Button, ListItem } from 'react-native-elements';
-import { ScrollView, SafeAreaView, SectionList, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  ScrollView,
+  SafeAreaView,
+  SectionList,
+  Text,
+  StyleSheet,
+} from 'react-native';
 import JotService from '../database/services/JotService';
 import NewJot from './NewJot';
 import Jot from '../database/models/Jot.js';
-
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -23,30 +29,34 @@ class AllJotsScreen extends Component {
 
   showNewJotPage() {
     this.setState({
-      isShowingNewJotPage: true
-    })
+      isShowingNewJotPage: true,
+    });
   }
 
-
   onJotFinished(jotInfo) {
-    console.log(jotInfo)
+    console.log(jotInfo);
 
-    let jot = new Jot(Date.now(), 'Jot 1', jotInfo.text)
+    let jot = new Jot(Date.now(), 'Jot 1', jotInfo.text);
 
     let newJots = this.state.latestJots.slice();
-    newJots.push(jot)
-
+    newJots.push(jot);
 
     this.setState({
       latestJots: newJots,
-      isShowingNewJotPage: false
-    })
+      isShowingNewJotPage: false,
+    });
   }
-
-
 
   renderJotItem(item) {
     let jot = item.item;
+    let dateCreated = jot.dateCreated;
+    let dateFormat =
+      dateCreated.getMonth() +
+      1 +
+      '/' +
+      dateCreated.getDate() +
+      '/' +
+      dateCreated.getFullYear();
 
     return (
       <ListItem
@@ -54,29 +64,27 @@ class AllJotsScreen extends Component {
         key={jot.id}
         title={jot.title}
         subtitle={jot.content}
-        rightSubtitle={jot.dateCreated.toDateString()}
+        rightSubtitle={dateFormat}
         chevron={true}
       />
     );
   }
 
   render() {
-
     let newJotPage = null;
     if (this.state.isShowingNewJotPage) {
-      return <NewJot onJotFinished={this.onJotFinished}/>
+      return <NewJot onJotFinished={this.onJotFinished} />;
     }
-
-
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
-          <Button
-            buttonStyle={styles.editButton}
-            type="clear"
-            title="Edit"
-          />
+        <ScrollView
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.scrollContent}
+        >
+          <View style={styles.editBtn}>
+            <Button title="Edit" type="clear" />
+          </View>
           <SectionList
             style={styles.allJotsList}
             renderItem={this.renderJotItem}
@@ -90,17 +98,18 @@ class AllJotsScreen extends Component {
             ]}
             keyExtractor={(item, index) => index}
           />
-          <Button
-            icon={{
-              name: "pencil",
-              type: "material-community",
-              size: 15,
-              color: "black"
-            }}
-            onPress={this.showNewJotPage}
-            title="Create jot"
-          />
         </ScrollView>
+        <Button
+          style={styles.createJotBtn}
+          icon={{
+            name: 'pencil',
+            type: 'material-community',
+            size: 36,
+            color: '#2089dc',
+          }}
+          type="clear"
+          onPress={this.showNewJotPage}
+        />
       </SafeAreaView>
     );
   }
@@ -111,30 +120,49 @@ export default AllJotsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF',
   },
   scrollContainer: {
     width: '100%',
     flex: 1,
-    backgroundColor: '#F5FCFF',
   },
   scrollContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   sectionHeader: {
     fontSize: 18,
     backgroundColor: 'white',
     paddingTop: 15,
     paddingBottom: 5,
-    fontWeight: 'bold'
+    paddingLeft: 10,
+    fontWeight: 'bold',
   },
   jotListItem: {
     width: '100%',
-    borderBottomColor: 'grey',
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
     borderBottomWidth: 1,
   },
   allJotsList: {
     width: '100%',
+  },
+  editBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginRight: 20,
+  },
+  createJotBtn: {
+    borderWidth: 1.5,
+    borderColor: '#2089dc',
+    width: 70,
+    height: 70,
+    backgroundColor: '#fff',
+    borderRadius: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    right: 20,
   },
 });
