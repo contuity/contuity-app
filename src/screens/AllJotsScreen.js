@@ -12,6 +12,8 @@ import JotService from '../database/services/JotService';
 import NewJot from './NewJot';
 import Jot from '../database/models/Jot.js';
 
+import JotCard from '../components/JotCard';
+
 class AllJotsScreen extends Component {
   constructor(props) {
     super(props);
@@ -53,29 +55,6 @@ class AllJotsScreen extends Component {
     });
   }
 
-  renderJotItem(item) {
-    let jot = item.item;
-    let dateCreated = jot.dateCreated;
-    let dateFormat =
-      dateCreated.getMonth() +
-      1 +
-      '/' +
-      dateCreated.getDate() +
-      '/' +
-      dateCreated.getFullYear();
-
-    return (
-      <ListItem
-        style={styles.jotListItem}
-        key={jot.id}
-        title={jot.title}
-        subtitle={jot.content}
-        rightSubtitle={dateFormat}
-        chevron={true}
-      />
-    );
-  }
-
   render() {
     let newJotPage = null;
     if (this.state.isShowingNewJotPage) {
@@ -93,7 +72,7 @@ class AllJotsScreen extends Component {
           </View>
           <SectionList
             style={styles.allJotsList}
-            renderItem={this.renderJotItem}
+            renderItem={item => <JotCard jot={item.item} />}
             renderSectionHeader={({ section: { title } }) => (
               <Text style={styles.sectionHeader}>{title}</Text>
             )}
@@ -143,11 +122,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingLeft: 10,
     fontWeight: 'bold',
-  },
-  jotListItem: {
-    width: '100%',
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-    borderBottomWidth: 1,
   },
   allJotsList: {
     width: '100%',
