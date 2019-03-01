@@ -19,12 +19,18 @@ class AllJotsScreen extends Component {
     this.onJotFinished = this.onJotFinished.bind(this);
     this.state = {
       latestJots: [],
+      todaysJots: [],
+      thisWeeksJots: [],
       isShowingNewJotPage: false,
     };
   }
 
   componentWillMount() {
-    this.setState({ latestJots: JotService.findAll() });
+    this.setState({
+      latestJots: JotService.findAll(),
+      todaysJots: JotService.findAllCreatedToday(),
+      thisWeeksJots: JotService.findAllCreatedThisWeek(),
+    });
   }
 
   showNewJotPage() {
@@ -38,11 +44,11 @@ class AllJotsScreen extends Component {
 
     let jot = new Jot(Date.now(), 'Jot 1', jotInfo.text);
 
-    let newJots = this.state.latestJots.slice();
+    let newJots = this.state.todaysJots.slice();
     newJots.push(jot);
 
     this.setState({
-      latestJots: newJots,
+      todaysJots: newJots,
       isShowingNewJotPage: false,
     });
   }
@@ -92,8 +98,8 @@ class AllJotsScreen extends Component {
               <Text style={styles.sectionHeader}>{title}</Text>
             )}
             sections={[
-              { title: 'Today', data: this.state.latestJots },
-              { title: 'This week', data: this.state.latestJots },
+              { title: 'Today', data: this.state.todaysJots },
+              { title: 'This week', data: this.state.thisWeeksJots },
               { title: 'This month', data: this.state.latestJots },
             ]}
             keyExtractor={(item, index) => index}

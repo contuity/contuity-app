@@ -3,8 +3,6 @@ import AllJotsScreen from './src/screens/AllJotsScreen';
 import NewJot from './src/screens/NewJot';
 
 class App extends Component {
-
-
   render() {
     // return <NewJot />;
     return <AllJotsScreen />;
@@ -12,12 +10,3 @@ class App extends Component {
 }
 
 export default App;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#F5FCFF',
-//   },
-// });
