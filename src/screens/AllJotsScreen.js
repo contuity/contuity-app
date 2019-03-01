@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
-import { Button, ListItem } from 'react-native-elements';
-import {
-  View,
-  ScrollView,
-  SafeAreaView,
-  SectionList,
-  Text,
-  StyleSheet,
-} from 'react-native';
-import JotService from '../database/services/JotService';
+import { Button } from 'react-native-elements';
+import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import NewJot from './NewJot';
 import Jot from '../database/models/Jot.js';
-
-import JotCard from '../components/JotCard';
+import JotService from '../database/services/JotService';
+import JotList from '../components/JotList';
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -42,8 +34,6 @@ class AllJotsScreen extends Component {
   }
 
   onJotFinished(jotInfo) {
-    console.log(jotInfo);
-
     let jot = new Jot(Date.now(), 'Jot 1', jotInfo.text);
 
     let newJots = this.state.todaysJots.slice();
@@ -55,6 +45,14 @@ class AllJotsScreen extends Component {
     });
   }
 
+  getSections() {
+    return [
+      { title: 'Today', data: this.state.todaysJots },
+      { title: 'This week', data: this.state.thisWeeksJots },
+      { title: 'This month', data: this.state.latestJots },
+    ];
+  }
+
   render() {
     let newJotPage = null;
     if (this.state.isShowingNewJotPage) {
@@ -63,26 +61,11 @@ class AllJotsScreen extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView
-          style={styles.scrollContainer}
-          contentContainerStyle={styles.scrollContent}
-        >
+        <ScrollView style={styles.scrollContainer}>
           <View style={styles.editBtn}>
             <Button title="Edit" type="clear" />
           </View>
-          <SectionList
-            style={styles.allJotsList}
-            renderItem={item => <JotCard jot={item.item} />}
-            renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles.sectionHeader}>{title}</Text>
-            )}
-            sections={[
-              { title: 'Today', data: this.state.todaysJots },
-              { title: 'This week', data: this.state.thisWeeksJots },
-              { title: 'This month', data: this.state.latestJots },
-            ]}
-            keyExtractor={(item, index) => index}
-          />
+          <JotList sections={this.getSections()} />
         </ScrollView>
         <Button
           style={styles.createJotBtn}
@@ -108,22 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   scrollContainer: {
-    width: '100%',
     flex: 1,
-  },
-  scrollContent: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
-  },
-  sectionHeader: {
-    fontSize: 18,
-    backgroundColor: 'white',
-    paddingTop: 15,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    fontWeight: 'bold',
-  },
-  allJotsList: {
     width: '100%',
   },
   editBtn: {
@@ -133,16 +101,16 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   createJotBtn: {
-    borderWidth: 1.5,
-    borderColor: '#2089dc',
     width: 70,
     height: 70,
-    backgroundColor: '#fff',
-    borderRadius: 70,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
     bottom: 10,
     right: 20,
+    borderWidth: 1.5,
+    borderColor: '#2089dc',
+    borderRadius: 70,
   },
 });
