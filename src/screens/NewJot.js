@@ -8,7 +8,7 @@ import { Button } from 'react-native-elements';
 
 
 
-class NewJob extends Component {
+class NewJot extends Component {
   constructor(props) {
     super(props);
     this.onChangeText = this.onChangeText.bind(this);
@@ -125,7 +125,7 @@ class NewJob extends Component {
   }
 }
 
-export default NewJob;
+export default NewJot;
 
 const styles = StyleSheet.create({
   container: {
