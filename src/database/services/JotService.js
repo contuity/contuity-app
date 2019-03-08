@@ -30,8 +30,8 @@ let JotService = {
 };
 
 // populate Jot table
-JotService.save(new Jot(1, 'Jot 1', 'This is my first jot.'));
-JotService.save(new Jot(2, 'Jot 2', 'This is my second jot.'));
-JotService.save(new Jot(3, 'Jot 3', 'This is my third jot.'));
+JotService.save(new Jot('Jot 1', 'This is my first jot.'));
+JotService.save(new Jot('Jot 2', 'This is my second jot.'));
+JotService.save(new Jot('Jot 3', 'This is my third jot.'));
 
 export default JotService;

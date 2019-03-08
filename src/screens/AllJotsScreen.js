@@ -2,18 +2,25 @@ import React, { Component } from 'react';
 import { Button, ListItem } from 'react-native-elements';
 import { ScrollView, SafeAreaView, SectionList, Text, StyleSheet } from 'react-native';
 import JotService from '../database/services/JotService';
-import NewJot from './NewJot';
+import JotPage from './JotPage';
 import Jot from '../database/models/Jot.js';
 
 
 class AllJotsScreen extends Component {
   constructor(props) {
     super(props);
-    this.showNewJotPage = this.showNewJotPage.bind(this);
+    this.createNewJot = this.createNewJot.bind(this);
     this.onJotFinished = this.onJotFinished.bind(this);
+    this.onJotSelect = this.onJotSelect.bind(this);
+    this.renderJotItem = this.renderJotItem.bind(this);
     this.state = {
       latestJots: [],
+
+      // These variables keep track of how and when to show a Jot detail page. 
       isShowingNewJotPage: false,
+      startWithJot: null,
+      startInEditMode: false
+
     };
   }
 
@@ -21,30 +28,40 @@ class AllJotsScreen extends Component {
     this.setState({ latestJots: JotService.findAll() });
   }
 
-  showNewJotPage() {
+  createNewJot() {
     this.setState({
-      isShowingNewJotPage: true
+      isShowingNewJotPage: true,
+      startWithJot: null,
+      startInEditMode: true
     })
   }
 
 
-  onJotFinished(jotInfo) {
-    console.log(jotInfo)
+  onJotFinished(jot) {
+    console.log(jot)
 
     // New jot creation was cancelled
-    if (jotInfo == null) {
+    if (jot == null) {
       return;
     }
 
-    let jot = new Jot(Date.now(), 'Jot 1', jotInfo.text)
-
     let newJots = this.state.latestJots.slice();
-    newJots.push(jot)
+    newJots.push(jot);
 
 
     this.setState({
       latestJots: newJots,
       isShowingNewJotPage: false
+    })
+  }
+
+  onJotSelect(jot) {
+    console.log(jot)
+
+    this.setState({
+      isShowingNewJotPage: true,
+      startWithJot: jot,
+      startInEditMode: false,
     })
   }
 
@@ -61,6 +78,7 @@ class AllJotsScreen extends Component {
         subtitle={jot.content}
         rightSubtitle={jot.dateCreated.toDateString()}
         chevron={true}
+        onPress={this.onJotSelect.bind(null, jot)}
       />
     );
   }
@@ -69,7 +87,7 @@ class AllJotsScreen extends Component {
 
     let newJotPage = null;
     if (this.state.isShowingNewJotPage) {
-      return <NewJot onJotFinished={this.onJotFinished}/>
+      return <JotPage  onJotFinished={this.onJotFinished} isEditing={this.state.startInEditMode} jot={this.state.startWithJot} />
     }
 
 
@@ -102,7 +120,7 @@ class AllJotsScreen extends Component {
               size: 15,
               color: "black"
             }}
-            onPress={this.showNewJotPage}
+            onPress={this.createNewJot}
             title="Create jot"
           />
         </ScrollView>

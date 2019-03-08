@@ -114,17 +114,6 @@ class Login extends Component {
   }
 
 
-
-  onCreateJobHit() {
-    console.log("Jot created with ", this.text);
-    this.props.onJotFinished({text:this.state.text})
-
-  }
-
-  onCancelHit() {
-    this.props.onJotFinished(null)
-  }
-
   render() {
 
     const navbarStyles = {

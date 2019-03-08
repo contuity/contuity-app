@@ -4,30 +4,38 @@ import JotService from '../database/services/JotService';
 import NavigationBar from 'react-native-navbar';
 import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
+import Jot from '../database/models/Jot'
 
 
-
-
-class NewJot extends Component {
+class JotPage extends Component {
   constructor(props) {
     super(props);
     this.onChangeText = this.onChangeText.bind(this);
     this.onCancelHit = this.onCancelHit.bind(this);
     this.onCreateJobHit = this.onCreateJobHit.bind(this);
 
+    let content = '';
+    if (props.jot) {
+      content = props.jot.content
+    }
+
     this.state = {
-      text: ''
+      content: content,
+      isEditing: props.isEditing,
+
     };
   }
 
   onChangeText(event) {
-    debugger
-    this.setState({text:event})
+    this.setState({content:event})
   }
 
   onCreateJobHit() {
-    console.log("Jot created with ", this.text);
-    this.props.onJotFinished({text:this.state.text})
+    console.log("Jot created with ", this.state.content);
+
+    let jot = new Jot('Jot 1', this.state.content)
+
+    this.props.onJotFinished(jot)
 
   }
 
@@ -37,53 +45,72 @@ class NewJot extends Component {
 
   render() {
 
-  let rightButtonConfig = {
-    title: 'Create',
-    handler: this.onCreateJobHit,
-  };
+    let rightButtonConfig = {
+      title: 'Create',
+      handler: this.onCreateJobHit,
+    };
 
-  // rightButtonConfig = ( 
-  //   <Button
-  //     buttonStyle={{height:12, paddingTop:10, marginTop:15, marginRight:20, paddingRight:10, height: 15}}
-  //     onPress={this.onCreateJobHit}
-  //     title="Create jot"
-  //   >HII</Button> )
-
-
-  // rightButtonConfig = (
-  //   )
+    // rightButtonConfig = ( 
+    //   <Button
+    //     buttonStyle={{height:12, paddingTop:10, marginTop:15, marginRight:20, paddingRight:10, height: 15}}
+    //     onPress={this.onCreateJobHit}
+    //     title="Create jot"
+    //   >HII</Button> )
 
 
-  const leftButtonConfig = {
-    title: 'Cancel',
-    handler: this.onCancelHit,
-  };
+    // rightButtonConfig = (
+    //   )
 
-  const titleConfig = {
-    title: 'New Jot ',
-  };
+
+    const leftButtonConfig = {
+      title: 'Cancel',
+      handler: this.onCancelHit,
+    };
+
+    const titleConfig = {
+      title: 'New Jot ',
+    };
 
 
     const styles = StyleSheet.create({
       container: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
         backgroundColor: '#F5FCFF',
       },
     });
 
 
     const navbarStyles = {
-        container: {
-          flex: 1,
-        },
-      };
+      container: {
+        flex: 1,
+      },
+    };
 
 
           // <Button
           //   title="Create new Jot"
           // />
+
+
+
+    let content;
+    if (this.state.isEditing) {
+      content = (
+        <TextInput
+          style={{height: 600, borderColor: 'gray', borderWidth: 1}}
+          onChangeText={this.onChangeText}
+          value={this.state.content}
+          multiline={true}
+        />
+      )
+    }
+    else {
+      content = (
+        <Text style={{height: 600, borderColor: 'gray', borderWidth: 1}}>
+          {this.state.content}
+        </Text>  
+      )
+    }
  
     return (
       <View style={styles.container}>
@@ -93,17 +120,6 @@ class NewJot extends Component {
             rightButton={rightButtonConfig}
             leftButton={leftButtonConfig}
           />
-          
-          <TextInput
-            style={{height: 600, borderColor: 'gray', borderWidth: 1}}
-            onChangeText={this.onChangeText}
-            value={this.state.text}
-            multiline={true}
-          />
-
-
-
-
         </View>
       </View>
     )
@@ -125,7 +141,7 @@ class NewJot extends Component {
   }
 }
 
-export default NewJot;
+export default JotPage;
 
 const styles = StyleSheet.create({
   container: {
