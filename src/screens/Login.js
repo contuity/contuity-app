@@ -35,22 +35,18 @@ class Login extends Component {
   }
 
   onChangeEmail(event) {
-    
     this.setState({email:event})
   }
 
   onChangePassword(event) {
-    
     this.setState({password:event})
   }
 
   onChangePasswordVerification(event) {
-    
     this.setState({passwordVerification: event})
   }
 
   backToSignIn() {
-
     this.setState({
       email: '',
       password: '',
@@ -132,12 +128,11 @@ class Login extends Component {
   render() {
 
     const navbarStyles = {
-        container: {
-          flex: 1,
-          marginTop: 200
-        },
-        
-      };
+      container: {
+        flex: 1,
+        marginTop: 200
+      },
+    };
 
     const styles = StyleSheet.create({
       container: {
@@ -147,15 +142,15 @@ class Login extends Component {
     });
 
     const userNameInputStyle = StyleSheet.create({
-        marginTop: 10,  
-        marginBottom: 10,
-        marginLeft: 25  
+      marginTop: 10,  
+      marginBottom: 10,
+      marginLeft: 25  
     });
 
     const passwordInputStyle = StyleSheet.create({
-        marginTop: 10,  
-        marginBottom: 10,
-        marginLeft: 25    
+      marginTop: 10,  
+      marginBottom: 10,
+      marginLeft: 25    
     });
 
     const createAccountButton = StyleSheet.create({
@@ -165,12 +160,9 @@ class Login extends Component {
     })
 
 
-
     let buttons;
     if (this.state.isShowingSignup) {
-
       buttons = [
-
           <Input
             key="0"
             inputStyle={passwordInputStyle}
@@ -213,9 +205,6 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <View style={navbarStyles.container}>
-          
-          
-
           <Input
             inputStyle={userNameInputStyle}
             placeholder='Email'
