@@ -15,9 +15,6 @@ const AUTH_URL = 'https://contuity-2.us1a.cloud.realm.io'
 class Login extends Component {
   constructor(props) {
     super(props);
-    // this.onChangeText = this.onChangeText.bind(this);
-    // this.onCancelHit = this.onCancelHit.bind(this);
-    // this.onCreateJobHit = this.onCreateJobHit.bind(this);
 
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
@@ -28,9 +25,6 @@ class Login extends Component {
 
     this.backToSignIn = this.backToSignIn.bind(this);
     this.signUpForAccount = this.signUpForAccount.bind(this);
-
-    
-    // this.onCreateJobHit = this.onCreateJobHit.bind(this);
 
     this.state = {
       email: '',
@@ -79,16 +73,13 @@ class Login extends Component {
 
     let creds = Realm.Sync.Credentials.usernamePassword(this.state.email, this.state.password, true) // createUser = true
 
-
-    let user = await Realm.Sync.User.login(AUTH_URL, creds)
-
-    console.log(user)
-
-
-
-    // Attempt to sign up for a new account 
-
-
+    try {
+        let user = await Realm.Sync.User.login(AUTH_URL, creds)
+        this.props.onLogin(user);
+    }
+    catch (err) {
+      console.error(err)
+    }
   }
 
 
@@ -105,16 +96,16 @@ class Login extends Component {
     }
 
 
-
     // Attempt to sign in 
-
     let creds = Realm.Sync.Credentials.usernamePassword(this.state.email, this.state.password, false) // createUser = true
 
-
-    let user = await Realm.Sync.User.login(AUTH_URL, creds)
-
-    console.log(user)
-
+    try {
+        let user = await Realm.Sync.User.login(AUTH_URL, creds)
+        this.props.onLogin(user);
+    }
+    catch (err) {
+      console.error(err)
+    }
 
   }
 
@@ -138,39 +129,7 @@ class Login extends Component {
     this.props.onJotFinished(null)
   }
 
-  // let creds = Realm.Sync.Credentials.usernamePassword('username', 'password', true) // createUser = true
-
   render() {
-
-
-
-
-
-    // let rightButtonConfig = {
-    //   title: 'Create',
-    //   handler: this.onCreateJobHit,
-    // };
-
-
-    // const leftButtonConfig = {
-    //   title: 'Cancel',
-    //   handler: this.onCancelHit,
-    // };
-
-    // const titleConfig = {
-    //   title: 'New Jot ',
-    // };
-
-
-    // const styles = StyleSheet.create({
-    //   container: {
-    //     flex: 1,
-    //     // justifyContent: 'center',
-    //     // alignItems: 'center',
-    //     backgroundColor: '#F5FCFF',
-    //   },
-    // });
-
 
     const navbarStyles = {
         container: {
@@ -183,8 +142,6 @@ class Login extends Component {
     const styles = StyleSheet.create({
       container: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
         backgroundColor: '#F5FCFF',
       },
     });
@@ -193,37 +150,18 @@ class Login extends Component {
         marginTop: 10,  
         marginBottom: 10,
         marginLeft: 25  
-      // display: 'flex',
-      
     });
 
     const passwordInputStyle = StyleSheet.create({
         marginTop: 10,  
         marginBottom: 10,
         marginLeft: 25    
-      // marginBottom: 'auto'
     });
-
-    // let buttonC
 
     const createAccountButton = StyleSheet.create({
       width: 150,
       marginLeft: 120,
       marginTop: 20,
-      // marginLeft: 'auto',
-      // marginRight: 'auto',
-      // alignSelf: 'center',
-      // flex: 1,
-      // justifyContent: 'center',
-
-
-      // headline: {
-      //   textAlign: 'center'  
-      // }
-      
-
-
-
     })
 
 
@@ -240,6 +178,7 @@ class Login extends Component {
             onChangeText={this.onChangePasswordVerification}
             leftIcon={{ type: 'font-awesome', name: 'key' }}
             secureTextEntry={true}
+            value={this.state.passwordVerification}
           />,
           <Button
             key="1"
@@ -281,6 +220,7 @@ class Login extends Component {
             inputStyle={userNameInputStyle}
             placeholder='Email'
             onChangeText={this.onChangeEmail}
+            value={this.state.email}
             leftIcon={{ type: 'font-awesome', name: 'envelope' }}
           />
 
@@ -288,6 +228,7 @@ class Login extends Component {
             inputStyle={passwordInputStyle}
             placeholder='Password'
             onChangeText={this.onChangePassword}
+            value={this.state.password}
             leftIcon={{ type: 'font-awesome', name: 'key' }}
             secureTextEntry={true}
           />
@@ -301,11 +242,3 @@ class Login extends Component {
 
 export default Login;
 
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
