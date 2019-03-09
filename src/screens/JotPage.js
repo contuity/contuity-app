@@ -12,25 +12,50 @@ class JotPage extends Component {
     super(props);
     this.onChangeText = this.onChangeText.bind(this);
     this.onCancelHit = this.onCancelHit.bind(this);
-    this.onCreateJobHit = this.onCreateJobHit.bind(this);
+    this.onRightButtonClick = this.onRightButtonClick.bind(this);
 
     let content = '';
+    let id = null;
     if (props.jot) {
       content = props.jot.content
+      id = props.jot.id;
     }
 
+
+
     this.state = {
+      id: id
       content: content,
       isEditing: props.isEditing,
 
     };
   }
 
+  getJot() {
+
+    if (this.) {}
+
+    new 
+  }
+
   onChangeText(event) {
     this.setState({content:event})
   }
 
-  onCreateJobHit() {
+  onRightButtonClick() {
+
+    if (this.state.isEditing) {
+
+      // Save the jot and go to view jot mode
+      JotService.update()
+
+
+      this.setState({
+        isEditing: false,
+      })
+      return;
+    }
+
     console.log("Jot created with ", this.state.content);
 
     let jot = new Jot('Jot 1', this.state.content)
@@ -47,13 +72,21 @@ class JotPage extends Component {
 
     let rightButtonConfig = {
       title: 'Create',
-      handler: this.onCreateJobHit,
+      handler: this.onRightButtonClick,
     };
+
+
+    if (this.state.isEditing) {
+      rightButtonConfig.title = 'Save'
+    }
+    else {
+      rightButtonConfig.title = 'Edit'
+    }
 
     // rightButtonConfig = ( 
     //   <Button
     //     buttonStyle={{height:12, paddingTop:10, marginTop:15, marginRight:20, paddingRight:10, height: 15}}
-    //     onPress={this.onCreateJobHit}
+    //     onPress={this.onRightButtonClick}
     //     title="Create jot"
     //   >HII</Button> )
 
@@ -67,10 +100,19 @@ class JotPage extends Component {
       handler: this.onCancelHit,
     };
 
-    const titleConfig = {
-      title: 'New Jot ',
+
+
+
+    let titleConfig = {
+      height: 100
     };
 
+    if (this.state.isEditing) {
+      titleConfig.title = 'Edit Jot'
+    }
+    else {
+      titleConfig.title = 'New Jot'
+    }
 
     const styles = StyleSheet.create({
       container: {
@@ -120,6 +162,7 @@ class JotPage extends Component {
             rightButton={rightButtonConfig}
             leftButton={leftButtonConfig}
           />
+          {content}
         </View>
       </View>
     )

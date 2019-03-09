@@ -42,6 +42,9 @@ class AllJotsScreen extends Component {
 
     // New jot creation was cancelled
     if (jot == null) {
+      this.setState({
+        isShowingNewJotPage: false
+      })
       return;
     }
 
