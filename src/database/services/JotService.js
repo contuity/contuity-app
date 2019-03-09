@@ -21,9 +21,17 @@ let JotService = {
     });
   },
 
-  update: function(jot) {
+  update: function(jot, newObj) {
     realm.write(() => {
       jot.dateModified = new Date();
+
+      if (newObj) {
+        for (let attr of Object.keys(newObj)){
+          jot[attr] = newObj[attr]
+        }
+      }
+
+
       realm.create('Jot', jot, true);
     });
   },

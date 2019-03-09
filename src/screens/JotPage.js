@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import JotService from '../database/services/JotService';
 import NavigationBar from 'react-native-navbar';
 import { AppRegistry, TextInput } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Input } from 'react-native-elements';
 import Jot from '../database/models/Jot'
 
 
@@ -13,33 +13,75 @@ class JotPage extends Component {
     this.onChangeText = this.onChangeText.bind(this);
     this.onCancelHit = this.onCancelHit.bind(this);
     this.onRightButtonClick = this.onRightButtonClick.bind(this);
+    this.onJotTitleChange = this.onJotTitleChange.bind(this);
 
     let content = '';
+    let title = '';
     let id = null;
     if (props.jot) {
-      content = props.jot.content
+      content = props.jot.content;
       id = props.jot.id;
+      title = props.jot.title;
     }
 
 
+    // If we started with a jot, just edit it and return it... ?
+    // this violates react...
+    // TODO: create a new jot with the same ID
+    let jot = this.props.jot;
+
 
     this.state = {
-      id: id
+
+      // Keep track of the jot, in case we are creating a new jot and it goes (null -> Jot)
+      jot: jot,
+      // id: id
+
+      title: title,
       content: content,
       isEditing: props.isEditing,
 
     };
   }
 
-  getJot() {
+  onJotTitleChange(event) {
+    this.setState({
+      title: event
+    })
+  }
 
-    if (this.) {}
+  saveAndGetJot() {
 
-    new 
+    // If the user didn't enter anything, don't save anything
+    if (this.state.content == null || this.state.content === '') {
+      return null;
+    }
+
+
+    // TODO: fix - we shouldn't be editing objects on the state
+    let jot = this.state.jot
+    let newAttrs = {};
+    if (jot) {
+      newAttrs.content = this.state.content
+      newAttrs.title = this.state.title
+    }
+    else {
+
+      // Make a new jot
+      jot = new Jot(this.state.title, this.state.content);
+    }
+
+
+    // save it 
+    JotService.update(jot, newAttrs);
+
+    return jot;
   }
 
   onChangeText(event) {
-    this.setState({content:event})
+    this.setState({
+      content: event
+    })
   }
 
   onRightButtonClick() {
@@ -47,25 +89,31 @@ class JotPage extends Component {
     if (this.state.isEditing) {
 
       // Save the jot and go to view jot mode
-      JotService.update()
-
+      this.saveAndGetJot();
 
       this.setState({
         isEditing: false,
       })
-      return;
+    }
+    else {
+      // Edit the existing Jot
+
+      this.setState({
+        isEditing: true,
+      })
+
     }
 
-    console.log("Jot created with ", this.state.content);
+    // console.log("Jot created with ", this.state.content);
 
-    let jot = new Jot('Jot 1', this.state.content)
+    // let jot = new Jot('Jot 1', this.state.content)
 
-    this.props.onJotFinished(jot)
-
+    // this.props.onJotFinished(jot)
   }
 
   onCancelHit() {
-    this.props.onJotFinished(null)
+    let jot = this.saveAndGetJot();
+    this.props.onJotFinished(jot);
   }
 
   render() {
@@ -96,7 +144,7 @@ class JotPage extends Component {
 
 
     const leftButtonConfig = {
-      title: 'Cancel',
+      title: 'Back',
       handler: this.onCancelHit,
     };
 
@@ -129,6 +177,13 @@ class JotPage extends Component {
     };
 
 
+    const jotTitleStyle = StyleSheet.create({
+      marginTop: 10,
+      marginBottom: 10,
+      marginLeft: 25
+    });
+
+
           // <Button
           //   title="Create new Jot"
           // />
@@ -137,21 +192,33 @@ class JotPage extends Component {
 
     let content;
     if (this.state.isEditing) {
-      content = (
+      content = [
+        <Input
+          key="0"
+          inputStyle={jotTitleStyle}
+          placeholder='Jot title'
+          onChangeText={this.onJotTitleChange}
+          value={this.state.title}
+        />,
         <TextInput
+          key="1"
           style={{height: 600, borderColor: 'gray', borderWidth: 1}}
+          placeholder='Jot content'
           onChangeText={this.onChangeText}
           value={this.state.content}
           multiline={true}
         />
-      )
+      ]
     }
     else {
-      content = (
-        <Text style={{height: 600, borderColor: 'gray', borderWidth: 1}}>
+      content = [
+        <Text key="0" style={{height: 100, borderColor: 'gray', borderWidth: 1}}>
+          Title: {this.state.title}
+        </Text>,
+        <Text key="1" style={{height: 600, borderColor: 'gray', borderWidth: 1}}>
           {this.state.content}
-        </Text>  
-      )
+        </Text>
+      ]
     }
  
     return (
