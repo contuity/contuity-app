@@ -159,7 +159,7 @@ class JotPage extends Component {
       titleConfig.title = 'Edit Jot'
     }
     else {
-      titleConfig.title = 'New Jot'
+      titleConfig.title = 'View Jot'
     }
 
     const styles = StyleSheet.create({
