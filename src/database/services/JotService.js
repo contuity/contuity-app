@@ -31,6 +31,8 @@ let JotService = {
         }
       }
 
+      console.log(jot.id)
+
 
       realm.create('Jot', jot, true);
     });

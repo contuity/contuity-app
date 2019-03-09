@@ -49,7 +49,9 @@ class AllJotsScreen extends Component {
     }
 
     let newJots = this.state.latestJots.slice();
-    newJots.push(jot);
+    if (!newJots.includes(jot)) {
+      newJots.push(jot);  
+    }
 
 
     this.setState({
