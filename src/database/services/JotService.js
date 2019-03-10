@@ -25,8 +25,7 @@ class JotService {
         }
       }
 
-      console.log(jot.id)
-
+      console.log('Saving jot with id', jot.id)
 
       realm.create('Jot', jot, true);
     });

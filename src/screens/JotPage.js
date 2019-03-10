@@ -103,12 +103,6 @@ class JotPage extends Component {
       })
 
     }
-
-    // console.log("Jot created with ", this.state.content);
-
-    // let jot = new Jot('Jot 1', this.state.content)
-
-    // this.props.onJotFinished(jot)
   }
 
   onCancelHit() {
@@ -131,6 +125,8 @@ class JotPage extends Component {
       rightButtonConfig.title = 'Edit'
     }
 
+
+    // Unfinished code for having a button
     // rightButtonConfig = ( 
     //   <Button
     //     buttonStyle={{height:12, paddingTop:10, marginTop:15, marginRight:20, paddingRight:10, height: 15}}
@@ -143,13 +139,16 @@ class JotPage extends Component {
     //   )
 
 
+    // <Button
+    //   title="Create new Jot"
+    // />
+
+
+
     const leftButtonConfig = {
       title: 'Back',
       handler: this.onCancelHit,
     };
-
-
-
 
     let titleConfig = {
       height: 100
@@ -182,11 +181,6 @@ class JotPage extends Component {
       marginBottom: 10,
       marginLeft: 25
     });
-
-
-          // <Button
-          //   title="Create new Jot"
-          // />
 
 
 
@@ -232,32 +226,8 @@ class JotPage extends Component {
           {content}
         </View>
       </View>
-    )
-
-    
-
-    
-
-
-    // let textElements = [];
-    // for (let item of this.state.latestJots) {
-    //   textElements.push(<Text>{item.content}</Text>);
-    // }
-
-    // return <View style={styles.container}>{textElements}</View>;
-
-
-    
+    )    
   }
 }
 
 export default JotPage;
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});

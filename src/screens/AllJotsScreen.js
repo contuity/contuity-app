@@ -92,7 +92,7 @@ class AllJotsScreen extends Component {
 
     let newJotPage = null;
     if (this.state.isShowingNewJotPage) {
-      return <JotPage  onJotFinished={this.onJotFinished} isEditing={this.state.startInEditMode} jot={this.state.startWithJot} />
+      return <JotPage onJotFinished={this.onJotFinished} isEditing={this.state.startInEditMode} jot={this.state.startWithJot} />
     }
 
 
