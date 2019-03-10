@@ -6,10 +6,8 @@ import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Realm from 'realm';
+import LoginService from '../database/services/LoginService';
 
-
-const AUTH_URL = 'https://contuity-2.us1a.cloud.realm.io'
 
 
 class Login extends Component {
@@ -67,10 +65,9 @@ class Login extends Component {
     }
 
 
-    let creds = Realm.Sync.Credentials.usernamePassword(this.state.email, this.state.password, true) // createUser = true
-
     try {
-        let user = await Realm.Sync.User.login(AUTH_URL, creds)
+        let user = await LoginService.login(this.state.email, this.state.password, true);
+
         this.props.onLogin(user);
     }
     catch (err) {
@@ -93,10 +90,8 @@ class Login extends Component {
 
 
     // Attempt to sign in 
-    let creds = Realm.Sync.Credentials.usernamePassword(this.state.email, this.state.password, false) // createUser = true
-
     try {
-        let user = await Realm.Sync.User.login(AUTH_URL, creds)
+        let user = await LoginService.login(this.state.email, this.state.password, false);
         this.props.onLogin(user);
     }
     catch (err) {
