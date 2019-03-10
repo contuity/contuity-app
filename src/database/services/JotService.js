@@ -28,7 +28,7 @@ class JotService {
 
   // If a jot with this Jot's ID already exists, this will override the existing data in the DB
   // if a jot does not exist, this will create the jot from scratch
-  // If jot is given, newObj can also be givin which are properties that will be copied to jot.
+  // if newObj is given its properties will be copied to jot.
   update(jot, newObj) {
     realm.write(() => {
       jot.dateModified = new Date();

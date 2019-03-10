@@ -1,4 +1,3 @@
-import realm from '../realm.js';
 import Realm from "realm";
 import Jot from '../models/Jot.js';
 
@@ -17,8 +16,5 @@ class LoginService {
 }
 
 
-
-// Initialize the Singleton
-let loginServiceInstance = new LoginService();
-
-export default loginServiceInstance;
+// Export a Singleton
+export default new LoginService();
