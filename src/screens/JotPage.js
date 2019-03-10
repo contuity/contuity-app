@@ -73,7 +73,7 @@ class JotPage extends Component {
 
 
     // save it 
-    JotService.update(jot, newAttrs);
+    JotService.save(jot, newAttrs);
 
     return jot;
   }
