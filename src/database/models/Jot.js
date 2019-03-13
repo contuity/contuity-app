@@ -17,7 +17,7 @@ export default class Jot {
   };
 
   constructor(title, content) {
-    this.id = Math.random();
+    this.id = Number(String(Math.random()).slice(2));
     this.title = title;
     this.content = content;
     this.dateCreated = new Date();
