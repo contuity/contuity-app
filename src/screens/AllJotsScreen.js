@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { Button, ListItem } from 'react-native-elements';
-import { ScrollView, SafeAreaView, SectionList, Text, StyleSheet } from 'react-native';
+import {
+  ScrollView,
+  SafeAreaView,
+  SectionList,
+  Text,
+  StyleSheet,
+} from 'react-native';
 import JotService from '../database/services/JotService';
 import JotPage from './JotPage';
 import Jot from '../database/models/Jot.js';
-
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -16,11 +21,10 @@ class AllJotsScreen extends Component {
     this.state = {
       latestJots: [],
 
-      // These variables keep track of how and when to show a Jot detail page. 
+      // These variables keep track of how and when to show a Jot detail page.
       isShowingNewJotPage: false,
       startWithJot: null,
-      startInEditMode: false
-
+      startInEditMode: false,
     };
   }
 
@@ -32,45 +36,41 @@ class AllJotsScreen extends Component {
     this.setState({
       isShowingNewJotPage: true,
       startWithJot: null,
-      startInEditMode: true
-    })
+      startInEditMode: true,
+    });
   }
 
-
   onJotFinished(jot) {
-    console.log(jot)
+    console.log(jot);
 
     // New jot creation was cancelled
     if (jot == null) {
       this.setState({
-        isShowingNewJotPage: false
-      })
+        isShowingNewJotPage: false,
+      });
       return;
     }
 
     let newJots = this.state.latestJots.slice();
     if (!newJots.includes(jot)) {
-      newJots.push(jot);  
+      newJots.push(jot);
     }
-
 
     this.setState({
       latestJots: newJots,
-      isShowingNewJotPage: false
-    })
+      isShowingNewJotPage: false,
+    });
   }
 
   onJotSelect(jot) {
-    console.log(jot)
+    console.log(jot);
 
     this.setState({
       isShowingNewJotPage: true,
       startWithJot: jot,
       startInEditMode: false,
-    })
+    });
   }
-
-
 
   renderJotItem(item) {
     let jot = item.item;
@@ -89,22 +89,24 @@ class AllJotsScreen extends Component {
   }
 
   render() {
-
     let newJotPage = null;
     if (this.state.isShowingNewJotPage) {
-      return <JotPage onJotFinished={this.onJotFinished} isEditing={this.state.startInEditMode} jot={this.state.startWithJot} />
+      return (
+        <JotPage
+          onJotFinished={this.onJotFinished}
+          isEditing={this.state.startInEditMode}
+          jot={this.state.startWithJot}
+        />
+      );
     }
-
-
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
-          <Button
-            buttonStyle={styles.editButton}
-            type="clear"
-            title="Edit"
-          />
+        <ScrollView
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.scrollContent}
+        >
+          <Button buttonStyle={styles.editButton} type="clear" title="Edit" />
           <SectionList
             style={styles.allJotsList}
             renderItem={this.renderJotItem}
@@ -120,10 +122,10 @@ class AllJotsScreen extends Component {
           />
           <Button
             icon={{
-              name: "pencil",
-              type: "material-community",
+              name: 'pencil',
+              type: 'material-community',
               size: 15,
-              color: "black"
+              color: 'black',
             }}
             onPress={this.createNewJot}
             title="Create jot"
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 15,
     paddingBottom: 5,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   jotListItem: {
     width: '100%',

@@ -1,7 +1,6 @@
 import realm from '../realm.js';
 import Jot from '../models/Jot.js';
 
-
 class JotService {
   findAll(sortBy) {
     if (!sortBy) {
@@ -20,19 +19,17 @@ class JotService {
       jot.dateModified = new Date();
 
       if (newObj) {
-        for (let attr of Object.keys(newObj)){
-          jot[attr] = newObj[attr]
+        for (let attr of Object.keys(newObj)) {
+          jot[attr] = newObj[attr];
         }
       }
 
-      console.log('Saving jot with id', jot.id)
+      console.log('Saving jot with id', jot.id);
 
       realm.create('Jot', jot, true);
     });
   }
 }
-
-
 
 // Initialize the Singleton
 let jotServiceInstance = new JotService();

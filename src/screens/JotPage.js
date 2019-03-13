@@ -4,8 +4,7 @@ import JotService from '../database/services/JotService';
 import NavigationBar from 'react-native-navbar';
 import { AppRegistry, TextInput } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import Jot from '../database/models/Jot'
-
+import Jot from '../database/models/Jot';
 
 class JotPage extends Component {
   constructor(props) {
@@ -24,15 +23,12 @@ class JotPage extends Component {
       title = props.jot.title;
     }
 
-
     // If we started with a jot, just edit it and return it... ?
     // this violates react...
     // TODO: create a new jot with the same ID
     let jot = this.props.jot;
 
-
     this.state = {
-
       // Keep track of the jot, in case we are creating a new jot and it goes (null -> Jot)
       jot: jot,
       // id: id
@@ -40,39 +36,33 @@ class JotPage extends Component {
       title: title,
       content: content,
       isEditing: props.isEditing,
-
     };
   }
 
   onJotTitleChange(event) {
     this.setState({
-      title: event
-    })
+      title: event,
+    });
   }
 
   saveAndGetJot() {
-
     // If the user didn't enter anything, don't save anything
     if (this.state.content == null || this.state.content === '') {
       return null;
     }
 
-
     // TODO: fix - we shouldn't be editing objects on the state
-    let jot = this.state.jot
+    let jot = this.state.jot;
     let newAttrs = {};
     if (jot) {
-      newAttrs.content = this.state.content
-      newAttrs.title = this.state.title
-    }
-    else {
-
+      newAttrs.content = this.state.content;
+      newAttrs.title = this.state.title;
+    } else {
       // Make a new jot
       jot = new Jot(this.state.title, this.state.content);
     }
 
-
-    // save it 
+    // save it
     JotService.save(jot, newAttrs);
 
     return jot;
@@ -80,28 +70,24 @@ class JotPage extends Component {
 
   onChangeText(event) {
     this.setState({
-      content: event
-    })
+      content: event,
+    });
   }
 
   onRightButtonClick() {
-
     if (this.state.isEditing) {
-
       // Save the jot and go to view jot mode
       this.saveAndGetJot();
 
       this.setState({
         isEditing: false,
-      })
-    }
-    else {
+      });
+    } else {
       // Edit the existing Jot
 
       this.setState({
         isEditing: true,
-      })
-
+      });
     }
   }
 
@@ -111,39 +97,31 @@ class JotPage extends Component {
   }
 
   render() {
-
     let rightButtonConfig = {
       title: 'Create',
       handler: this.onRightButtonClick,
     };
 
-
     if (this.state.isEditing) {
-      rightButtonConfig.title = 'Save'
+      rightButtonConfig.title = 'Save';
+    } else {
+      rightButtonConfig.title = 'Edit';
     }
-    else {
-      rightButtonConfig.title = 'Edit'
-    }
-
 
     // Unfinished code for having a button
-    // rightButtonConfig = ( 
+    // rightButtonConfig = (
     //   <Button
     //     buttonStyle={{height:12, paddingTop:10, marginTop:15, marginRight:20, paddingRight:10, height: 15}}
     //     onPress={this.onRightButtonClick}
     //     title="Create jot"
     //   >HII</Button> )
 
-
     // rightButtonConfig = (
     //   )
-
 
     // <Button
     //   title="Create new Jot"
     // />
-
-
 
     const leftButtonConfig = {
       title: 'Back',
@@ -151,14 +129,13 @@ class JotPage extends Component {
     };
 
     let titleConfig = {
-      height: 100
+      height: 100,
     };
 
     if (this.state.isEditing) {
-      titleConfig.title = 'Edit Jot'
-    }
-    else {
-      titleConfig.title = 'View Jot'
+      titleConfig.title = 'Edit Jot';
+    } else {
+      titleConfig.title = 'View Jot';
     }
 
     const styles = StyleSheet.create({
@@ -168,21 +145,17 @@ class JotPage extends Component {
       },
     });
 
-
     const navbarStyles = {
       container: {
         flex: 1,
       },
     };
 
-
     const jotTitleStyle = StyleSheet.create({
       marginTop: 10,
       marginBottom: 10,
-      marginLeft: 25
+      marginLeft: 25,
     });
-
-
 
     let content;
     if (this.state.isEditing) {
@@ -190,31 +163,36 @@ class JotPage extends Component {
         <Input
           key="0"
           inputStyle={jotTitleStyle}
-          placeholder='Jot title'
+          placeholder="Jot title"
           onChangeText={this.onJotTitleChange}
           value={this.state.title}
         />,
         <TextInput
           key="1"
-          style={{height: 600, borderColor: 'gray', borderWidth: 1}}
-          placeholder='Jot content'
+          style={{ height: 600, borderColor: 'gray', borderWidth: 1 }}
+          placeholder="Jot content"
           onChangeText={this.onChangeText}
           value={this.state.content}
           multiline={true}
-        />
-      ]
-    }
-    else {
+        />,
+      ];
+    } else {
       content = [
-        <Text key="0" style={{height: 100, borderColor: 'gray', borderWidth: 1}}>
+        <Text
+          key="0"
+          style={{ height: 100, borderColor: 'gray', borderWidth: 1 }}
+        >
           Title: {this.state.title}
         </Text>,
-        <Text key="1" style={{height: 600, borderColor: 'gray', borderWidth: 1}}>
+        <Text
+          key="1"
+          style={{ height: 600, borderColor: 'gray', borderWidth: 1 }}
+        >
           {this.state.content}
-        </Text>
-      ]
+        </Text>,
+      ];
     }
- 
+
     return (
       <View style={styles.container}>
         <View style={navbarStyles.container}>
@@ -226,7 +204,7 @@ class JotPage extends Component {
           {content}
         </View>
       </View>
-    )    
+    );
   }
 }
 
