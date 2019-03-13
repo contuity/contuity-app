@@ -24,8 +24,6 @@ class JotService {
         }
       }
 
-      console.log('Saving jot with id', jot.id);
-
       realm.create('Jot', jot, true);
     });
   }

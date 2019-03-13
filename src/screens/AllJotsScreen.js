@@ -41,7 +41,6 @@ class AllJotsScreen extends Component {
   }
 
   onJotFinished(jot) {
-    console.log(jot);
 
     // New jot creation was cancelled
     if (jot == null) {
@@ -63,8 +62,6 @@ class AllJotsScreen extends Component {
   }
 
   onJotSelect(jot) {
-    console.log(jot);
-
     this.setState({
       isShowingNewJotPage: true,
       startWithJot: jot,
