@@ -1,11 +1,30 @@
 import React, { Component } from 'react';
 import AllJotsScreen from './src/screens/AllJotsScreen';
-import NewJot from './src/screens/NewJot';
+import Login from './src/screens/Login';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: null,
+    };
+
+    this.onLogin = this.onLogin.bind(this);
+  }
+
+  onLogin(user) {
+    this.setState({
+      user: user,
+    });
+  }
+
   render() {
-    // return <NewJot />;
-    return <AllJotsScreen />;
+    if (this.state.user == null) {
+      return <Login onLogin={this.onLogin} />;
+    } else {
+      return <AllJotsScreen user={this.state.user} />;
+    }
   }
 }
 

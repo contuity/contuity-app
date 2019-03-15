@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "fix": "./node_modules/.bin/eslint src/ --fix",
     "test": "jest"
   },
   "dependencies": {
@@ -13,7 +14,7 @@
     "react-native-elements": "^1.0.0",
     "react-native-navbar": "^2.1.0",
     "react-native-vector-icons": "^6.3.0",
-    "realm": "^2.23.0"
+    "realm": "^2.24.0"
   },
   "devDependencies": {
     "@nuscout/eslint-config": "^0.2.1",

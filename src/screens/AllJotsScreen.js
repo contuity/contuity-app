@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
 import { Button } from 'react-native-elements';
 import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
-import NewJot from './NewJot';
-import Jot from '../database/models/Jot.js';
 import JotService from '../database/services/JotService';
 import JotList from '../components/JotList';
+import JotPage from './JotPage';
 
 class AllJotsScreen extends Component {
   constructor(props) {
     super(props);
-    this.showNewJotPage = this.showNewJotPage.bind(this);
+    this.createNewJot = this.createNewJot.bind(this);
     this.onJotFinished = this.onJotFinished.bind(this);
+    this.onJotSelect = this.onJotSelect.bind(this);
+
     this.state = {
       latestJots: [],
       todaysJots: [],
       thisWeeksJots: [],
+      // These variables keep track of how and when to show a Jot detail page.
       isShowingNewJotPage: false,
+      startWithJot: null,
+      startInEditMode: false,
     };
   }
 
@@ -27,22 +31,27 @@ class AllJotsScreen extends Component {
     });
   }
 
-  showNewJotPage() {
+  createNewJot() {
     this.setState({
       isShowingNewJotPage: true,
+      startWithJot: null,
+      startInEditMode: true,
     });
   }
 
-  onJotFinished(jotInfo) {
+  onJotFinished(jot) {
     // New jot creation was cancelled
-    if (jotInfo == null) {
+    if (jot == null) {
+      this.setState({
+        isShowingNewJotPage: false,
+      });
       return;
     }
 
-    let jot = new Jot(Date.now(), 'Jot 1', jotInfo.text);
-
-    let newJots = this.state.latestJots.slice();
-    newJots.push(jot);
+    let newJots = this.state.todaysJots.slice();
+    if (!newJots.includes(jot)) {
+      newJots.push(jot);
+    }
 
     this.setState({
       todaysJots: newJots,
@@ -54,14 +63,29 @@ class AllJotsScreen extends Component {
     return [
       { title: 'Today', data: this.state.todaysJots },
       { title: 'This week', data: this.state.thisWeeksJots },
-      { title: 'This month', data: this.state.latestJots },
+      // TODO: Group all other jots by month
+      // { title: 'This month', data: this.state.latestJots },
     ];
+  }
+
+  onJotSelect(jot) {
+    this.setState({
+      isShowingNewJotPage: true,
+      startWithJot: jot,
+      startInEditMode: false,
+    });
   }
 
   render() {
     let newJotPage = null;
     if (this.state.isShowingNewJotPage) {
-      return <NewJot onJotFinished={this.onJotFinished} />;
+      return (
+        <JotPage
+          onJotFinished={this.onJotFinished}
+          isEditing={this.state.startInEditMode}
+          jot={this.state.startWithJot}
+        />
+      );
     }
 
     return (
@@ -70,7 +94,10 @@ class AllJotsScreen extends Component {
           <View style={styles.editBtn}>
             <Button title="Edit" type="clear" />
           </View>
-          <JotList sections={this.getSections()} />
+          <JotList
+            sections={this.getSections()}
+            onJotPress={this.onJotSelect}
+          />
         </ScrollView>
         <Button
           style={styles.createJotBtn}
@@ -81,7 +108,7 @@ class AllJotsScreen extends Component {
             color: '#2089dc',
           }}
           type="clear"
-          onPress={this.showNewJotPage}
+          onPress={this.createNewJot}
         />
       </SafeAreaView>
     );
