@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
-import { Button, ListItem } from 'react-native-elements';
-import {
-  ScrollView,
-  SafeAreaView,
-  SectionList,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { Button } from 'react-native-elements';
+import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import JotService from '../database/services/JotService';
+import JotList from '../components/JotList';
 import JotPage from './JotPage';
-import Jot from '../database/models/Jot.js';
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -17,10 +11,11 @@ class AllJotsScreen extends Component {
     this.createNewJot = this.createNewJot.bind(this);
     this.onJotFinished = this.onJotFinished.bind(this);
     this.onJotSelect = this.onJotSelect.bind(this);
-    this.renderJotItem = this.renderJotItem.bind(this);
+
     this.state = {
       latestJots: [],
-
+      todaysJots: [],
+      thisWeeksJots: [],
       // These variables keep track of how and when to show a Jot detail page.
       isShowingNewJotPage: false,
       startWithJot: null,
@@ -29,7 +24,11 @@ class AllJotsScreen extends Component {
   }
 
   componentWillMount() {
-    this.setState({ latestJots: JotService.findAll() });
+    this.setState({
+      latestJots: JotService.findAll(),
+      todaysJots: JotService.findAllCreatedToday(),
+      thisWeeksJots: JotService.findAllCreatedThisWeek(),
+    });
   }
 
   createNewJot() {
@@ -41,7 +40,6 @@ class AllJotsScreen extends Component {
   }
 
   onJotFinished(jot) {
-
     // New jot creation was cancelled
     if (jot == null) {
       this.setState({
@@ -50,15 +48,24 @@ class AllJotsScreen extends Component {
       return;
     }
 
-    let newJots = this.state.latestJots.slice();
+    let newJots = this.state.todaysJots.slice();
     if (!newJots.includes(jot)) {
       newJots.push(jot);
     }
 
     this.setState({
-      latestJots: newJots,
+      todaysJots: newJots,
       isShowingNewJotPage: false,
     });
+  }
+
+  getSections() {
+    return [
+      { title: 'Today', data: this.state.todaysJots },
+      { title: 'This week', data: this.state.thisWeeksJots },
+      // TODO: Group all other jots by month
+      // { title: 'This month', data: this.state.latestJots },
+    ];
   }
 
   onJotSelect(jot) {
@@ -67,22 +74,6 @@ class AllJotsScreen extends Component {
       startWithJot: jot,
       startInEditMode: false,
     });
-  }
-
-  renderJotItem(item) {
-    let jot = item.item;
-
-    return (
-      <ListItem
-        style={styles.jotListItem}
-        key={jot.id}
-        title={jot.title}
-        subtitle={jot.content}
-        rightSubtitle={jot.dateCreated.toDateString()}
-        chevron={true}
-        onPress={this.onJotSelect.bind(null, jot)}
-      />
-    );
   }
 
   render() {
@@ -99,35 +90,26 @@ class AllJotsScreen extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView
-          style={styles.scrollContainer}
-          contentContainerStyle={styles.scrollContent}
-        >
-          <Button buttonStyle={styles.editButton} type="clear" title="Edit" />
-          <SectionList
-            style={styles.allJotsList}
-            renderItem={this.renderJotItem}
-            renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles.sectionHeader}>{title}</Text>
-            )}
-            sections={[
-              { title: 'Today', data: this.state.latestJots },
-              { title: 'This week', data: this.state.latestJots },
-              { title: 'This month', data: this.state.latestJots },
-            ]}
-            keyExtractor={(item, index) => index}
-          />
-          <Button
-            icon={{
-              name: 'pencil',
-              type: 'material-community',
-              size: 15,
-              color: 'black',
-            }}
-            onPress={this.createNewJot}
-            title="Create jot"
+        <ScrollView style={styles.scrollContainer}>
+          <View style={styles.editBtn}>
+            <Button title="Edit" type="clear" />
+          </View>
+          <JotList
+            sections={this.getSections()}
+            onJotPress={this.onJotSelect}
           />
         </ScrollView>
+        <Button
+          style={styles.createJotBtn}
+          icon={{
+            name: 'pencil',
+            type: 'material-community',
+            size: 36,
+            color: '#2089dc',
+          }}
+          type="clear"
+          onPress={this.createNewJot}
+        />
       </SafeAreaView>
     );
   }
@@ -138,30 +120,29 @@ export default AllJotsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF',
   },
   scrollContainer: {
-    width: '100%',
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    width: '100%',
   },
-  scrollContent: {
+  editBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginRight: 20,
+  },
+  createJotBtn: {
+    width: 70,
+    height: 70,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  sectionHeader: {
-    fontSize: 18,
-    backgroundColor: 'white',
-    paddingTop: 15,
-    paddingBottom: 5,
-    fontWeight: 'bold',
-  },
-  jotListItem: {
-    width: '100%',
-    borderBottomColor: 'grey',
-    borderBottomWidth: 1,
-  },
-  allJotsList: {
-    width: '100%',
+    position: 'absolute',
+    bottom: 10,
+    right: 20,
+    borderWidth: 1.5,
+    borderColor: '#2089dc',
+    borderRadius: 70,
   },
 });

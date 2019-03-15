@@ -6,9 +6,35 @@ class JotService {
     if (!sortBy) {
       sortBy = ['dateCreated', false];
     }
-
-    // TODO: use the sortBy variable
     return realm.objects('Jot');
+  }
+
+  findAllCreatedToday() {
+    let dayStart = new Date();
+    dayStart.setHours(0, 0, 0);
+    let dayEnd = new Date();
+    dayEnd.setHours(23, 59, 59);
+
+    let allJots = realm.objects('Jot');
+    return allJots.filtered(
+      'dateCreated >= $0 && dateCreated < $1',
+      dayStart,
+      dayEnd
+    );
+  }
+
+  findAllCreatedThisWeek() {
+    let dayStart = new Date();
+    dayStart.setDate(dayStart.getDate() - 7);
+    let dayEnd = new Date();
+    dayEnd.setHours(-1, 59, 59);
+
+    let allJots = realm.objects('Jot');
+    return allJots.filtered(
+      'dateCreated >= $0 && dateCreated < $1',
+      dayStart,
+      dayEnd
+    );
   }
 
   // If a jot with this Jot's ID already exists, this will override the existing data in the DB
