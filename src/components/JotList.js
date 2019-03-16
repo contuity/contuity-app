@@ -6,7 +6,11 @@ const JotList = props => {
   return (
     <SectionList
       renderItem={item => (
-        <JotCard jot={item.item} onPress={props.onJotPress} />
+        <JotCard
+          jot={item.item}
+          onPress={props.onJotPress}
+          selectionMode={props.listSelectionMode}
+        />
       )}
       renderSectionHeader={({ section: { title } }) => (
         <Text style={styles}>{title}</Text>

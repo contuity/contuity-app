@@ -53,14 +53,22 @@ class JotService {
       realm.create('Jot', jot, true);
     });
   }
+
+  delete(jot) {
+    realm.write(() => {
+      let allJots = realm.objects('Jot');
+      let jotToDelete = allJots.filtered('id == $0', jot.id);
+      realm.delete(jotToDelete);
+    });
+  }
 }
 
 // Initialize the Singleton
 let jotServiceInstance = new JotService();
 
 // populate Jot table
-jotServiceInstance.save(new Jot('Jot 1', 'This is my first jot.'));
-jotServiceInstance.save(new Jot('Jot 2', 'This is my second jot.'));
-jotServiceInstance.save(new Jot('Jot 3', 'This is my third jot.'));
+// jotServiceInstance.save(new Jot('Jot 1', 'This is my first jot.'));
+// jotServiceInstance.save(new Jot('Jot 2', 'This is my second jot.'));
+// jotServiceInstance.save(new Jot('Jot 3', 'This is my third jot.'));
 
 export default jotServiceInstance;

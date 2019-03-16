@@ -20,6 +20,7 @@ class AllJotsScreen extends Component {
       isShowingNewJotPage: false,
       startWithJot: null,
       startInEditMode: false,
+      listSelectionMode: false,
     };
   }
 
@@ -92,9 +93,14 @@ class AllJotsScreen extends Component {
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.editBtn}>
-            <Button title="Edit" type="clear" />
+            <Button
+              title="Edit"
+              type="clear"
+              onPress={() => this.setState({ listSelectionMode: true })}
+            />
           </View>
           <JotList
+            listSelectionMode={this.state.listSelectionMode}
             sections={this.getSections()}
             onJotPress={this.onJotSelect}
           />
