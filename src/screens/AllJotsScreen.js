@@ -23,7 +23,7 @@ class AllJotsScreen extends Component {
     this.onJotSelect = this.onJotSelect.bind(this);
 
     this.state = {
-      latestJots: [],
+      allJots: [],
       todaysJots: [],
       thisWeeksJots: [],
       // These variables keep track of how and when to show a Jot detail page.
@@ -36,16 +36,16 @@ class AllJotsScreen extends Component {
 
   componentWillMount() {
     this.setState({
-      latestJots: JotService.findAll(),
+      allJots: JotService.findAll(),
       todaysJots: JotService.findAllCreatedToday(),
       thisWeeksJots: JotService.findAllCreatedThisWeek(),
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.latestJots != this.state.latestJots) {
+    if (prevState.allJots != this.state.allJots) {
       this.setState({
-        latestJots: JotService.findAll(),
+        allJots: JotService.findAll(),
         todaysJots: JotService.findAllCreatedToday(),
         thisWeeksJots: JotService.findAllCreatedThisWeek(),
       });
@@ -77,7 +77,12 @@ class AllJotsScreen extends Component {
   }
 
   deleteSelectedJots() {
-    JotService.deleteJots(this.selectedJots);
+    if (this.selectedJots.length === 0) {
+      JotService.deleteJots(this.allJots);
+    } else {
+      JotService.deleteJots(this.selectedJots);
+    }
+
     this.selectedJots = [];
     this.setState({
       listSelectionMode: false,
@@ -109,14 +114,18 @@ class AllJotsScreen extends Component {
       { title: 'Today', data: this.state.todaysJots },
       { title: 'This week', data: this.state.thisWeeksJots },
       // TODO: Group all other jots by month
-      // { title: 'This month', data: this.state.latestJots },
+      // { title: 'This month', data: this.state.allJots },
     ];
   }
 
   onJotSelect(jot) {
+    // force refresh to update delete button text
+    if (this.selectedJots.length === 0) this.setState({});
+
     for (let i = 0; i < this.selectedJots.length; i++) {
       if (this.selectedJots[i].id == jot.id) {
         this.selectedJots.splice(i, 1);
+        if (this.selectedJots.length === 0) this.setState({});
         return;
       }
     }
@@ -160,11 +169,12 @@ class AllJotsScreen extends Component {
 
     let bottomRightBtn = this.state.listSelectionMode ? (
       <Button
-        style={styles.createJotBtn}
+        style={styles.deleteJotsBtn}
+        title={this.selectedJots.length === 0 ? 'Delete All' : 'Delete'}
         icon={{
           name: 'delete',
           type: 'material-community',
-          size: 36,
+          size: 18,
           color: '#2089dc',
         }}
         type="clear"
@@ -253,5 +263,18 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: '#2089dc',
     borderRadius: 70,
+  },
+  deleteJotsBtn: {
+    width: 150,
+    height: 50,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    right: 20,
+    borderWidth: 1.5,
+    borderColor: '#2089dc',
+    borderRadius: 10,
   },
 });
