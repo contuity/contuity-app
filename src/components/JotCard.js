@@ -12,6 +12,7 @@ class JotCard extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    // reset selected flag whenever mode changes
     if (prevProps.selectionMode != this.props.selectionMode) {
       this.setState({
         selected: false,

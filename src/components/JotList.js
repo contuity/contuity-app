@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionList, StyleSheet, Text } from 'react-native';
+import { SectionList, Text } from 'react-native';
 import JotCard from './JotCard';
 
 const JotList = props => {

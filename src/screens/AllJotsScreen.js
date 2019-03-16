@@ -118,17 +118,16 @@ class AllJotsScreen extends Component {
     });
   }
 
-  getSections() {
-    return [
-      { title: 'Today', data: this.state.todaysJots },
-      { title: 'This week', data: this.state.thisWeeksJots },
-      // TODO: Group all other jots by month
-      // { title: 'This month', data: this.state.allJots },
-    ];
+  onJotPress(jot) {
+    this.setState({
+      isShowingNewJotPage: true,
+      startWithJot: jot,
+      startInEditMode: false,
+    });
   }
 
   onJotSelect(jot) {
-    // force refresh to update delete button text
+    // force refresh in order to update delete button text
     if (this.selectedJots.length === 0) this.setState({});
 
     for (let i = 0; i < this.selectedJots.length; i++) {
@@ -147,16 +146,16 @@ class AllJotsScreen extends Component {
     this.setState({ listSelectionMode: false });
   }
 
-  onJotPress(jot) {
-    this.setState({
-      isShowingNewJotPage: true,
-      startWithJot: jot,
-      startInEditMode: false,
-    });
+  getSections() {
+    return [
+      { title: 'Today', data: this.state.todaysJots },
+      { title: 'This week', data: this.state.thisWeeksJots },
+      // TODO: Group all other jots by month
+      // { title: 'This month', data: this.state.allJots },
+    ];
   }
 
   render() {
-    let newJotPage = null;
     let topRightBtn = this.state.listSelectionMode ? (
       <Button title="Cancel" type="clear" onPress={this.onCancelJotSelect} />
     ) : (
