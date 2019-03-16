@@ -134,6 +134,16 @@ class AllJotsScreen extends Component {
 
   render() {
     let newJotPage = null;
+    let topLeftBtn = this.state.listSelectionMode ? (
+      <Button
+        title="Cancel"
+        type="clear"
+        onPress={() => this.setState({ listSelectionMode: false })}
+      />
+    ) : (
+      undefined
+    );
+
     let topRightBtn = this.state.listSelectionMode ? (
       <Button
         title="Done"
@@ -187,7 +197,16 @@ class AllJotsScreen extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
-          <View style={styles.editBtn}>{topRightBtn}</View>
+          <View
+            style={
+              this.state.listSelectionMode
+                ? styles.topBtnRowSelectionMode
+                : styles.topBtnRowListMode
+            }
+          >
+            {topLeftBtn}
+            {topRightBtn}
+          </View>
           <JotList
             listSelectionMode={this.state.listSelectionMode}
             sections={this.getSections()}
@@ -212,11 +231,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  editBtn: {
+  topBtnRowListMode: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginRight: 20,
+  },
+  topBtnRowSelectionMode: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   createJotBtn: {
     width: 70,
