@@ -25,6 +25,8 @@ class JotCard extends Component {
 
     const selectionBtn = (
       <CheckBox
+        containerStyle={styles.selectBtn}
+        size={20}
         checkedIcon="dot-circle-o"
         uncheckedIcon="circle-o"
         onPress={() => this.onJotSelect(jot)}
@@ -35,7 +37,9 @@ class JotCard extends Component {
       <View style={styles.jotContainer}>
         {this.props.selectionMode && selectionBtn}
         <ListItem
-          style={styles.jotItem}
+          style={
+            this.props.selectionMode ? styles.jotItemSelectMode : styles.jotItem
+          }
           key={jot.id}
           title={jot.title}
           subtitle={jot.content}
@@ -56,9 +60,18 @@ const styles = StyleSheet.create({
   jotContainer: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  selectBtn: {
+    width: 10,
   },
   jotItem: {
     width: '100%',
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    borderBottomWidth: 1,
+  },
+  jotItemSelectMode: {
+    width: '90%',
     borderBottomColor: 'rgba(0, 0, 0, 0.2)',
     borderBottomWidth: 1,
   },
