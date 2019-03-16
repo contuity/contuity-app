@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { Button } from 'react-native-elements';
-import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import {
+  Alert,
+  View,
+  ScrollView,
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
 import JotService from '../database/services/JotService';
 import JotList from '../components/JotList';
 import JotPage from './JotPage';
@@ -10,6 +16,7 @@ class AllJotsScreen extends Component {
     super(props);
     this.selectedJots = [];
     this.createNewJot = this.createNewJot.bind(this);
+    this.triggerDeleteJotsAlert = this.triggerDeleteJotsAlert.bind(this);
     this.deleteSelectedJots = this.deleteSelectedJots.bind(this);
     this.onJotFinished = this.onJotFinished.bind(this);
     this.onJotPress = this.onJotPress.bind(this);
@@ -36,7 +43,6 @@ class AllJotsScreen extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // only update chart if the data has changed
     if (prevState.latestJots != this.state.latestJots) {
       this.setState({
         latestJots: JotService.findAll(),
@@ -54,8 +60,24 @@ class AllJotsScreen extends Component {
     });
   }
 
+  triggerDeleteJotsAlert() {
+    Alert.alert(
+      'Are you sure?',
+      `Delete ${this.selectedJots.length} jots?`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'Delete', onPress: this.deleteSelectedJots },
+      ],
+      { cancelable: true }
+    );
+  }
+
   deleteSelectedJots() {
-    this.selectedJots.forEach(jot => JotService.delete(jot));
+    JotService.deleteJots(this.selectedJots);
     this.selectedJots = [];
     this.setState({
       listSelectionMode: false,
@@ -136,7 +158,7 @@ class AllJotsScreen extends Component {
           color: '#2089dc',
         }}
         type="clear"
-        onPress={this.deleteSelectedJots}
+        onPress={this.triggerDeleteJotsAlert}
       />
     ) : (
       <Button

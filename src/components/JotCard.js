@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Button, CheckBox, ListItem } from 'react-native-elements';
-import JotService from '../database/services/JotService';
+import { CheckBox, ListItem } from 'react-native-elements';
 
 class JotCard extends Component {
   constructor(props) {
@@ -42,7 +41,11 @@ class JotCard extends Component {
           subtitle={jot.content}
           rightSubtitle={dateFormat}
           chevron={true}
-          onPress={() => this.props.onPress(jot)}
+          onPress={
+            this.props.selectionMode
+              ? () => this.onJotSelect(jot)
+              : () => this.props.onPress(jot)
+          }
         />
       </View>
     );
