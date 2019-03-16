@@ -21,6 +21,7 @@ class AllJotsScreen extends Component {
     this.onJotFinished = this.onJotFinished.bind(this);
     this.onJotPress = this.onJotPress.bind(this);
     this.onJotSelect = this.onJotSelect.bind(this);
+    this.onCancelJotSelect = this.onCancelJotSelect.bind(this);
 
     this.state = {
       allJots: [],
@@ -61,13 +62,21 @@ class AllJotsScreen extends Component {
   }
 
   triggerDeleteJotsAlert() {
+    let msg;
+    if (this.selectedJots.length === 0) {
+      msg = `Delete all ${this.state.allJots.length} jots?`;
+    } else if (this.selectedJots.length === 1) {
+      msg = `Delete 1 jot?`;
+    } else {
+      msg = `Delete ${this.selectedJots.length} jots?`;
+    }
+
     Alert.alert(
       'Are you sure?',
-      `Delete ${this.selectedJots.length} jots?`,
+      msg,
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         { text: 'Delete', onPress: this.deleteSelectedJots },
@@ -133,6 +142,11 @@ class AllJotsScreen extends Component {
     this.selectedJots.push(jot);
   }
 
+  onCancelJotSelect() {
+    this.selectedJots = [];
+    this.setState({ listSelectionMode: false });
+  }
+
   onJotPress(jot) {
     this.setState({
       isShowingNewJotPage: true,
@@ -143,22 +157,8 @@ class AllJotsScreen extends Component {
 
   render() {
     let newJotPage = null;
-    let topLeftBtn = this.state.listSelectionMode ? (
-      <Button
-        title="Cancel"
-        type="clear"
-        onPress={() => this.setState({ listSelectionMode: false })}
-      />
-    ) : (
-      undefined
-    );
-
     let topRightBtn = this.state.listSelectionMode ? (
-      <Button
-        title="Done"
-        type="clear"
-        onPress={() => this.setState({ listSelectionMode: false })}
-      />
+      <Button title="Cancel" type="clear" onPress={this.onCancelJotSelect} />
     ) : (
       <Button
         title="Edit"
@@ -207,16 +207,7 @@ class AllJotsScreen extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
-          <View
-            style={
-              this.state.listSelectionMode
-                ? styles.topBtnRowSelectionMode
-                : styles.topBtnRowListMode
-            }
-          >
-            {topLeftBtn}
-            {topRightBtn}
-          </View>
+          <View style={styles.topBtnRow}>{topRightBtn}</View>
           <JotList
             listSelectionMode={this.state.listSelectionMode}
             sections={this.getSections()}
@@ -241,15 +232,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  topBtnRowListMode: {
+  topBtnRow: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-  },
-  topBtnRowSelectionMode: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   createJotBtn: {
     width: 70,

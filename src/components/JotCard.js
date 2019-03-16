@@ -11,6 +11,14 @@ class JotCard extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.selectionMode != this.props.selectionMode) {
+      this.setState({
+        selected: false,
+      });
+    }
+  }
+
   onJotSelect(jot) {
     this.props.onSelect(jot);
     this.setState({
