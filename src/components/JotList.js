@@ -9,6 +9,7 @@ const JotList = props => {
         <JotCard
           jot={item.item}
           onPress={props.onJotPress}
+          onSelect={props.onJotSelect}
           selectionMode={props.listSelectionMode}
         />
       )}
