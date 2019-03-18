@@ -14,7 +14,6 @@ import JotPage from './JotPage';
 class AllJotsScreen extends Component {
   constructor(props) {
     super(props);
-    this.selectedJots = [];
     this.createNewJot = this.createNewJot.bind(this);
     this.triggerDeleteJotsAlert = this.triggerDeleteJotsAlert.bind(this);
     this.deleteSelectedJots = this.deleteSelectedJots.bind(this);
@@ -27,6 +26,7 @@ class AllJotsScreen extends Component {
       allJots: [],
       todaysJots: [],
       thisWeeksJots: [],
+      selectedJots: [],
       // These variables keep track of how and when to show a Jot detail page.
       isShowingNewJotPage: false,
       startWithJot: null,
@@ -63,12 +63,12 @@ class AllJotsScreen extends Component {
 
   triggerDeleteJotsAlert() {
     let msg;
-    if (this.selectedJots.length === 0) {
+    if (this.state.selectedJots.length === 0) {
       msg = `Delete all ${this.state.allJots.length} jots?`;
-    } else if (this.selectedJots.length === 1) {
+    } else if (this.state.selectedJots.length === 1) {
       msg = `Delete 1 jot?`;
     } else {
-      msg = `Delete ${this.selectedJots.length} jots?`;
+      msg = `Delete ${this.state.selectedJots.length} jots?`;
     }
 
     Alert.alert(
@@ -86,16 +86,13 @@ class AllJotsScreen extends Component {
   }
 
   deleteSelectedJots() {
-    if (this.selectedJots.length === 0) {
+    if (this.state.selectedJots.length === 0) {
       JotService.deleteJots(this.allJots);
     } else {
-      JotService.deleteJots(this.selectedJots);
+      JotService.deleteJots(this.state.selectedJots);
     }
 
-    this.selectedJots = [];
-    this.setState({
-      listSelectionMode: false,
-    });
+    this.setState({ selectedJots: [], listSelectionMode: false });
   }
 
   onJotFinished(jot) {
@@ -127,23 +124,20 @@ class AllJotsScreen extends Component {
   }
 
   onJotSelect(jot) {
-    // force refresh in order to update delete button text
-    if (this.selectedJots.length === 0) this.setState({});
+    // un-select jot if jot is already selected
+    let newSelected = this.state.selectedJots.filter(
+      selectedJot => selectedJot.id !== jot.id
+    );
 
-    for (let i = 0; i < this.selectedJots.length; i++) {
-      if (this.selectedJots[i].id == jot.id) {
-        this.selectedJots.splice(i, 1);
-        if (this.selectedJots.length === 0) this.setState({});
-        return;
-      }
+    if (newSelected.length < this.state.selectedJots.length) {
+      this.setState({ selectedJots: newSelected });
+    } else {
+      this.setState({ selectedJots: [...this.state.selectedJots, jot] });
     }
-
-    this.selectedJots.push(jot);
   }
 
   onCancelJotSelect() {
-    this.selectedJots = [];
-    this.setState({ listSelectionMode: false });
+    this.setState({ selectedJots: [], listSelectionMode: false });
   }
 
   getSections() {
@@ -156,42 +150,49 @@ class AllJotsScreen extends Component {
   }
 
   render() {
-    let topRightBtn = this.state.listSelectionMode ? (
-      <Button title="Cancel" type="clear" onPress={this.onCancelJotSelect} />
-    ) : (
-      <Button
-        title="Edit"
-        type="clear"
-        onPress={() => this.setState({ listSelectionMode: true })}
-      />
-    );
+    let topRightBtn;
+    let bottomRightBtn;
 
-    let bottomRightBtn = this.state.listSelectionMode ? (
-      <Button
-        style={styles.deleteJotsBtn}
-        title={this.selectedJots.length === 0 ? 'Delete All' : 'Delete'}
-        icon={{
-          name: 'delete',
-          type: 'material-community',
-          size: 18,
-          color: '#2089dc',
-        }}
-        type="clear"
-        onPress={this.triggerDeleteJotsAlert}
-      />
-    ) : (
-      <Button
-        style={styles.createJotBtn}
-        icon={{
-          name: 'pencil',
-          type: 'material-community',
-          size: 36,
-          color: '#2089dc',
-        }}
-        type="clear"
-        onPress={this.createNewJot}
-      />
-    );
+    if (this.state.listSelectionMode) {
+      topRightBtn = (
+        <Button title="Cancel" type="clear" onPress={this.onCancelJotSelect} />
+      );
+      bottomRightBtn = (
+        <Button
+          style={styles.deleteJotsBtn}
+          title={this.state.selectedJots.length === 0 ? 'Delete All' : 'Delete'}
+          icon={{
+            name: 'delete',
+            type: 'material-community',
+            size: 18,
+            color: '#2089dc',
+          }}
+          type="clear"
+          onPress={this.triggerDeleteJotsAlert}
+        />
+      );
+    } else {
+      topRightBtn = (
+        <Button
+          title="Edit"
+          type="clear"
+          onPress={() => this.setState({ listSelectionMode: true })}
+        />
+      );
+      bottomRightBtn = (
+        <Button
+          style={styles.createJotBtn}
+          icon={{
+            name: 'pencil',
+            type: 'material-community',
+            size: 36,
+            color: '#2089dc',
+          }}
+          type="clear"
+          onPress={this.createNewJot}
+        />
+      );
+    }
 
     if (this.state.isShowingNewJotPage) {
       return (

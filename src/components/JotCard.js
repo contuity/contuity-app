@@ -21,6 +21,10 @@ class JotCard extends Component {
   }
 
   onJotSelect(jot) {
+    if (!this.props.selectionMode) {
+      this.props.onPress(jot);
+      return;
+    }
     this.props.onSelect(jot);
     this.setState({
       selected: !this.state.selected,
@@ -54,11 +58,7 @@ class JotCard extends Component {
           subtitle={jot.content}
           rightSubtitle={dateFormat}
           chevron={true}
-          onPress={
-            this.props.selectionMode
-              ? () => this.onJotSelect(jot)
-              : () => this.props.onPress(jot)
-          }
+          onPress={() => this.onJotSelect(jot)}
         />
       </View>
     );
