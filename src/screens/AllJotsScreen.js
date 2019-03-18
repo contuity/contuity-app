@@ -43,6 +43,31 @@ class AllJotsScreen extends Component {
     });
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state === nextState) {
+      return false;
+    }
+
+    // do not re-render if when selecting multiple jots
+    if (this.state.listSelectionMode && nextState.listSelectionMode) {
+      if (
+        this.state.selectedJots.length === 0 &&
+        nextState.selectedJots.length !== 1
+      ) {
+        return false;
+      }
+
+      if (
+        this.state.selectedJots.length === 1 &&
+        nextState.selectedJots.length !== 0
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.allJots != this.state.allJots) {
       this.setState({
