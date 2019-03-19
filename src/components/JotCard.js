@@ -1,29 +1,89 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { CheckBox, ListItem } from 'react-native-elements';
 
-const JotCard = props => {
-  let jot = props.jot;
-  let dateCreated = jot.dateCreated;
-  let dateFormat = dateCreated.getMonth() + 1 + '/' + dateCreated.getDate();
+class JotCard extends Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <ListItem
-      style={styles}
-      key={jot.id}
-      title={jot.title}
-      subtitle={jot.content}
-      rightSubtitle={dateFormat}
-      chevron={true}
-      onPress={() => props.onPress(jot)}
-    />
-  );
-};
+    this.state = {
+      selected: false,
+    };
+  }
 
-const styles = {
-  width: '100%',
-  borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-  borderBottomWidth: 1,
-};
+  componentDidUpdate(prevProps) {
+    // reset selected flag whenever mode changes
+    if (prevProps.selectionMode != this.props.selectionMode) {
+      this.setState({
+        selected: false,
+      });
+    }
+  }
+
+  onJotSelect(jot) {
+    if (!this.props.selectionMode) {
+      this.props.onPress(jot);
+      return;
+    }
+    this.props.onSelect(jot);
+    this.setState({
+      selected: !this.state.selected,
+    });
+  }
+
+  render() {
+    let jot = this.props.jot;
+    let dateCreated = jot.dateCreated;
+    let dateFormat = dateCreated.getMonth() + 1 + '/' + dateCreated.getDate();
+
+    const selectionBtn = (
+      <CheckBox
+        containerStyle={styles.selectBtn}
+        size={20}
+        checkedIcon="dot-circle-o"
+        uncheckedIcon="circle-o"
+        onPress={() => this.onJotSelect(jot)}
+        checked={this.state.selected}
+      />
+    );
+    return (
+      <View style={styles.jotContainer}>
+        {this.props.selectionMode && selectionBtn}
+        <ListItem
+          style={
+            this.props.selectionMode ? styles.jotItemSelectMode : styles.jotItem
+          }
+          key={jot.id}
+          title={jot.title}
+          subtitle={jot.content}
+          rightSubtitle={dateFormat}
+          chevron={true}
+          onPress={() => this.onJotSelect(jot)}
+        />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  jotContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  selectBtn: {
+    width: 10,
+  },
+  jotItem: {
+    width: '100%',
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    borderBottomWidth: 1,
+  },
+  jotItemSelectMode: {
+    width: '90%',
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    borderBottomWidth: 1,
+  },
+});
 
 export default JotCard;

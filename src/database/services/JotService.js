@@ -1,5 +1,4 @@
 import realm from '../realm.js';
-import Jot from '../models/Jot.js';
 
 class JotService {
   findAll(sortBy) {
@@ -53,14 +52,17 @@ class JotService {
       realm.create('Jot', jot, true);
     });
   }
+
+  deleteJots(jots) {
+    realm.write(() => {
+      // let allJots = realm.objects('Jot');
+      // let jotToDelete = allJots.filtered('id == $0', jot.id);
+      realm.delete(jots);
+    });
+  }
 }
 
 // Initialize the Singleton
 let jotServiceInstance = new JotService();
-
-// populate Jot table
-jotServiceInstance.save(new Jot('Jot 1', 'This is my first jot.'));
-jotServiceInstance.save(new Jot('Jot 2', 'This is my second jot.'));
-jotServiceInstance.save(new Jot('Jot 3', 'This is my third jot.'));
 
 export default jotServiceInstance;
