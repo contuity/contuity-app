@@ -13,10 +13,15 @@ A people-oriented note taking tool 💡
 Run the following commands in a Terminal or Bash window on your computer.
 
 1. `brew install yarn`
-2. `git clone https://github.com/Scout-NU/contuity-app.git`
-3. `cd contuity-app`
-4. `yarn install`
-5. `react-native run-ios`
+2. `yarn global add react-native-cli`
+3. `git clone https://github.com/Scout-NU/contuity-app.git`
+4. `cd contuity-app`
+5. `yarn`
+6. `react-native run-ios`
+
+You can also install this package, which may help development.
+
+- `yarn global add react-devtools`
 
 After a few moments, an iPhone simulator should appear on your screen with the app running! 🏃‍♀️
 
