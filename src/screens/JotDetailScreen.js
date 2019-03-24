@@ -6,7 +6,7 @@ import { AppRegistry, TextInput } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import Jot from '../database/models/Jot';
 
-class JotPage extends Component {
+class JotDetailScreen extends Component {
   constructor(props) {
     super(props);
     this.onChangeText = this.onChangeText.bind(this);
@@ -208,4 +208,4 @@ class JotPage extends Component {
   }
 }
 
-export default JotPage;
+export default JotDetailScreen;

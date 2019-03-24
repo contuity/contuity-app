@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import JotService from '../database/services/JotService';
 import JotList from '../components/JotList';
-import JotPage from './JotPage';
+import JotDetailScreen from './JotDetailScreen';
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -223,7 +223,7 @@ class AllJotsScreen extends Component {
 
     if (this.state.isShowingNewJotPage) {
       return (
-        <JotPage
+        <JotDetailScreen
           onJotFinished={this.onJotFinished}
           isEditing={this.state.startInEditMode}
           jot={this.state.startWithJot}
