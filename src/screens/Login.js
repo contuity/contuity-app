@@ -26,10 +26,11 @@ class Login extends Component {
     );
 
     this.signIn = this.signIn.bind(this);
-    this.onCreateAnAccountClick = this.onCreateAnAccountClick.bind(this);
+    this.onCreateAnAccountPress = this.onCreateAnAccountPress.bind(this);
 
-    this.backToSignIn = this.backToSignIn.bind(this);
+    // this.backToSignIn = this.backToSignIn.bind(this);
     this.signUpForAccount = this.signUpForAccount.bind(this);
+    this.onLoginPress = this.onLoginPress.bind(this);
 
     this.state = {
       email: '',
@@ -103,16 +104,6 @@ class Login extends Component {
 
   // Naviation methods
 
-
-  // onCreateAnAccountClick() {
-  //   this.setState({
-  //     email: '',
-  //     password: '',
-  //     currentScreen: showingScreen.login
-  //   });
-  // }
-
-
   // Buttons from the choose screen
   onLoginPress() {
     this.setState({
@@ -122,7 +113,7 @@ class Login extends Component {
     });
   }
 
-  onCreateAnAccountClick() {
+  onCreateAnAccountPress() {
     this.setState({
       email: '',
       password: '',
@@ -130,14 +121,6 @@ class Login extends Component {
       currentScreen: showingScreen.signup
     });
   }
-
-  backToChooseScreen() {
-    this.setState({
-      currentScreen: showingScreen.choose
-    });
-  }
-
-
 
   render() {
     const navbarStyles = {
@@ -173,8 +156,6 @@ class Login extends Component {
     });
 
 
-
-
     let usernameInput = ( <Input
       inputStyle={userNameInputStyle}
       placeholder="Email"
@@ -200,13 +181,13 @@ class Login extends Component {
         <Button
           key="0"
           buttonStyle={createAccountButton}
-          onPress={this.signUpForAccount}
+          onPress={this.onLoginPress}
           title="Sign In"
         />,
         <Button
           key="1"
           buttonStyle={createAccountButton}
-          onPress={this.signUpForAccount}
+          onPress={this.onCreateAnAccountPress}
           title="Sign Up"
           type="outline"
         />,
@@ -221,29 +202,37 @@ class Login extends Component {
           buttonStyle={createAccountButton}
           onPress={this.signIn}
           title="Login"
+          disabled={this.state.email.length == 0 || this.state.password.length == 0}
         />,
         <Button
           key="1"
           buttonStyle={createAccountButton}
-          onPress={this.onCreateAnAccountClick}
+          onPress={this.onCreateAnAccountPress}
           title="Create an account"
           type="outline"
-          disabled={this.state.email.length == 0 || this.state.password.length == 0}
         />,
       ]
     }
     else if (this.state.currentScreen == showingScreen.signup) {
+
+      let isValid = this.state.email.length !== 0;
+
+      if (this.state.password.length === 0 || this.state.password !== this.state.passwordVerification) {
+        isValid = false;
+      }
+
+      let textStyle = {
+        alignItems: 'center',
+        color: '#2267B7',
+        fontSize: 18,
+        textAlign: 'center',
+        paddingTop: 12,
+
+      }
+
       content = [
         usernameInput,
         firstPasswordEntry,
-        
-
-
-
-      ]
-    }
-
-      buttons = [
         <Input
           key="0"
           inputStyle={passwordInputStyle}
@@ -257,37 +246,21 @@ class Login extends Component {
           key="1"
           buttonStyle={createAccountButton}
           onPress={this.signUpForAccount}
-          title="Sign Up"
-        />,
-        <Button
-          key="2"
-          buttonStyle={createAccountButton}
-          onPress={this.backToSignIn}
-          title="Back"
-        />,
-      ];
-    } else {
-      buttons = [
-        <Button
-          key="0"
-          buttonStyle={createAccountButton}
-          onPress={this.signIn}
-          title="Login"
-        />,
-        <Button
-          key="1"
-          buttonStyle={createAccountButton}
-          onPress={this.onCreateAnAccountClick}
           title="Create an account"
+          disabled={!isValid}
         />,
-      ];
+        <Text 
+          style={textStyle}
+          onPress = {this.onLoginPress}
+          >Already have an account?</Text>
+      ]
     }
 
     return (
       <View style={styles.container}>
         <View style={navbarStyles.container}>
           
-          {buttons}
+          {content}
         </View>
       </View>
     );
