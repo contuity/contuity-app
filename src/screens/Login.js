@@ -8,6 +8,13 @@ import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
 
+// Enum of different pages to show
+const showingScreen = {
+  choose: 'CHOOSE',
+  login: 'LOGIN',
+  signup: 'SIGNUP'
+}
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +35,8 @@ class Login extends Component {
       email: '',
       password: '',
       passwordVerification: '',
-      isShowingSignup: false,
+      currentScreen: showingScreen.choose,
+      // isShowingSignup: false,
     };
   }
 
@@ -44,13 +52,6 @@ class Login extends Component {
     this.setState({ passwordVerification: event });
   }
 
-  backToSignIn() {
-    this.setState({
-      email: '',
-      password: '',
-      isShowingSignup: false,
-    });
-  }
 
   async signUpForAccount() {
     if (this.state.password == '') {
@@ -100,13 +101,43 @@ class Login extends Component {
     }
   }
 
+  // Naviation methods
+
+
+  // onCreateAnAccountClick() {
+  //   this.setState({
+  //     email: '',
+  //     password: '',
+  //     currentScreen: showingScreen.login
+  //   });
+  // }
+
+
+  // Buttons from the choose screen
+  onLoginPress() {
+    this.setState({
+      email: '',
+      password: '',
+      currentScreen: showingScreen.login
+    });
+  }
+
   onCreateAnAccountClick() {
     this.setState({
       email: '',
       password: '',
-      isShowingSignup: true,
+      passwordVerification: '',
+      currentScreen: showingScreen.signup
     });
   }
+
+  backToChooseScreen() {
+    this.setState({
+      currentScreen: showingScreen.choose
+    });
+  }
+
+
 
   render() {
     const navbarStyles = {
@@ -141,8 +172,77 @@ class Login extends Component {
       marginTop: 20,
     });
 
-    let buttons;
-    if (this.state.isShowingSignup) {
+
+
+
+    let usernameInput = ( <Input
+      inputStyle={userNameInputStyle}
+      placeholder="Email"
+      onChangeText={this.onChangeEmail}
+      value={this.state.email}
+      leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+    /> )
+
+    let firstPasswordEntry = ( <Input
+      inputStyle={passwordInputStyle}
+      placeholder="Password"
+      onChangeText={this.onChangePassword}
+      value={this.state.password}
+      leftIcon={{ type: 'font-awesome', name: 'key' }}
+      secureTextEntry={true}
+    /> )
+
+
+
+    let content;
+    if (this.state.currentScreen == showingScreen.choose) {
+      content = [
+        <Button
+          key="0"
+          buttonStyle={createAccountButton}
+          onPress={this.signUpForAccount}
+          title="Sign In"
+        />,
+        <Button
+          key="1"
+          buttonStyle={createAccountButton}
+          onPress={this.signUpForAccount}
+          title="Sign Up"
+          type="outline"
+        />,
+      ]
+    }
+    else if (this.state.currentScreen == showingScreen.login) {
+      content = [
+        usernameInput,
+        firstPasswordEntry,
+        <Button
+          key="0"
+          buttonStyle={createAccountButton}
+          onPress={this.signIn}
+          title="Login"
+        />,
+        <Button
+          key="1"
+          buttonStyle={createAccountButton}
+          onPress={this.onCreateAnAccountClick}
+          title="Create an account"
+          type="outline"
+          disabled={this.state.email.length == 0 || this.state.password.length == 0}
+        />,
+      ]
+    }
+    else if (this.state.currentScreen == showingScreen.signup) {
+      content = [
+        usernameInput,
+        firstPasswordEntry,
+        
+
+
+
+      ]
+    }
+
       buttons = [
         <Input
           key="0"
@@ -186,22 +286,7 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <View style={navbarStyles.container}>
-          <Input
-            inputStyle={userNameInputStyle}
-            placeholder="Email"
-            onChangeText={this.onChangeEmail}
-            value={this.state.email}
-            leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-          />
-
-          <Input
-            inputStyle={passwordInputStyle}
-            placeholder="Password"
-            onChangeText={this.onChangePassword}
-            value={this.state.password}
-            leftIcon={{ type: 'font-awesome', name: 'key' }}
-            secureTextEntry={true}
-          />
+          
           {buttons}
         </View>
       </View>
