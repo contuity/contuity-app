@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import JotService from '../database/services/JotService';
 import NavigationBar from 'react-native-navbar';
 import { AppRegistry, TextInput } from 'react-native';
@@ -7,6 +7,7 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
+// import logo from '../resources/logo.svg'
 
 // Enum of different pages to show
 const showingScreen = {
@@ -177,7 +178,26 @@ class Login extends Component {
 
     let content;
     if (this.state.currentScreen == showingScreen.choose) {
+
+      let logoStyle = {
+        width: 100,
+        height: 100,
+      }
+
+      let logoContainerStyle = {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        height: 100,
+      }
+
+
       content = [
+        <View style={logoContainerStyle} key="image">
+          <Image
+            source={require('../resources/logo.png')}
+            style={logoStyle}
+          />
+        </View>,
         <Button
           key="0"
           buttonStyle={createAccountButton}
