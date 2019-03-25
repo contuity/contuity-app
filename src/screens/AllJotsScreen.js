@@ -23,9 +23,9 @@ class AllJotsScreen extends Component {
     this.onCancelJotSelect = this.onCancelJotSelect.bind(this);
 
     this.state = {
-      allJots: [],
-      todaysJots: [],
-      thisWeeksJots: [],
+      allJots: JotService.findAll(),
+      todaysJots: JotService.findAllCreatedToday(),
+      thisWeeksJots: JotService.findAllCreatedThisWeek(),
       selectedJots: [],
       // These variables keep track of how and when to show a Jot detail page.
       isShowingNewJotPage: false,
@@ -33,14 +33,6 @@ class AllJotsScreen extends Component {
       startInEditMode: false,
       listSelectionMode: false,
     };
-  }
-
-  componentWillMount() {
-    this.setState({
-      allJots: JotService.findAll(),
-      todaysJots: JotService.findAllCreatedToday(),
-      thisWeeksJots: JotService.findAllCreatedThisWeek(),
-    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -69,17 +61,6 @@ class AllJotsScreen extends Component {
 
     return true;
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.allJots != this.state.allJots) {
-      this.setState({
-        allJots: JotService.findAll(),
-        todaysJots: JotService.findAllCreatedToday(),
-        thisWeeksJots: JotService.findAllCreatedThisWeek(),
-      });
-    }
-  }
-
   createNewJot() {
     this.setState({
       isShowingNewJotPage: true,
@@ -114,7 +95,7 @@ class AllJotsScreen extends Component {
 
   deleteSelectedJots() {
     if (this.state.selectedJots.length === 0) {
-      JotService.deleteJots(this.allJots);
+      JotService.deleteJots(this.state.allJots);
     } else {
       JotService.deleteJots(this.state.selectedJots);
     }
@@ -131,13 +112,10 @@ class AllJotsScreen extends Component {
       return;
     }
 
-    let newJots = this.state.todaysJots.slice();
-    if (!newJots.includes(jot)) {
-      newJots.push(jot);
-    }
-
     this.setState({
-      todaysJots: newJots,
+      allJots: JotService.findAll(),
+      todaysJots: JotService.findAllCreatedToday(),
+      thisWeeksJots: JotService.findAllCreatedThisWeek(),
       isShowingNewJotPage: false,
     });
   }
@@ -153,7 +131,9 @@ class AllJotsScreen extends Component {
   onJotSelect(jot) {
     // un-select jot if jot is already selected
     let newSelected = this.state.selectedJots.filter(
-      selectedJot => selectedJot.id !== jot.id
+      (selectedJot) => {
+        return selectedJot.id !== jot.id
+      }
     );
 
     if (newSelected.length < this.state.selectedJots.length) {
