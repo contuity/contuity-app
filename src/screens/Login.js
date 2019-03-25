@@ -7,7 +7,8 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
-// import logo from '../resources/logo.svg'
+import logo from '../resources/logo.png';
+// require('../resources/logo.png')
 
 // Enum of different pages to show
 const showingScreen = {
@@ -193,7 +194,7 @@ class Login extends Component {
 
       content = [
         <View style={logoContainerStyle} key="image">
-          <Image source={require('../resources/logo.png')} style={logoStyle} />
+          <Image source={logo} style={logoStyle} />
         </View>,
         <Button
           key="0"
