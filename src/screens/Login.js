@@ -13,8 +13,8 @@ import LoginService from '../database/services/LoginService';
 const showingScreen = {
   choose: 'CHOOSE',
   login: 'LOGIN',
-  signup: 'SIGNUP'
-}
+  signup: 'SIGNUP',
+};
 
 class Login extends Component {
   constructor(props) {
@@ -53,7 +53,6 @@ class Login extends Component {
   onChangePasswordVerification(event) {
     this.setState({ passwordVerification: event });
   }
-
 
   async signUpForAccount() {
     if (this.state.password == '') {
@@ -110,7 +109,7 @@ class Login extends Component {
     this.setState({
       email: '',
       password: '',
-      currentScreen: showingScreen.login
+      currentScreen: showingScreen.login,
     });
   }
 
@@ -119,7 +118,7 @@ class Login extends Component {
       email: '',
       password: '',
       passwordVerification: '',
-      currentScreen: showingScreen.signup
+      currentScreen: showingScreen.signup,
     });
   }
 
@@ -156,49 +155,45 @@ class Login extends Component {
       marginTop: 20,
     });
 
+    let usernameInput = (
+      <Input
+        key="username"
+        inputStyle={userNameInputStyle}
+        placeholder="Email"
+        onChangeText={this.onChangeEmail}
+        value={this.state.email}
+        leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+      />
+    );
 
-    let usernameInput = ( <Input
-      key="username"
-      inputStyle={userNameInputStyle}
-      placeholder="Email"
-      onChangeText={this.onChangeEmail}
-      value={this.state.email}
-      leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-    /> )
-
-    let firstPasswordEntry = ( <Input
-      key="password1"
-      inputStyle={passwordInputStyle}
-      placeholder="Password"
-      onChangeText={this.onChangePassword}
-      value={this.state.password}
-      leftIcon={{ type: 'font-awesome', name: 'key' }}
-      secureTextEntry={true}
-    /> )
-
-
+    let firstPasswordEntry = (
+      <Input
+        key="password1"
+        inputStyle={passwordInputStyle}
+        placeholder="Password"
+        onChangeText={this.onChangePassword}
+        value={this.state.password}
+        leftIcon={{ type: 'font-awesome', name: 'key' }}
+        secureTextEntry={true}
+      />
+    );
 
     let content;
     if (this.state.currentScreen == showingScreen.choose) {
-
       let logoStyle = {
         width: 100,
         height: 100,
-      }
+      };
 
       let logoContainerStyle = {
         flexDirection: 'row',
         justifyContent: 'center',
         height: 100,
-      }
-
+      };
 
       content = [
         <View style={logoContainerStyle} key="image">
-          <Image
-            source={require('../resources/logo.png')}
-            style={logoStyle}
-          />
+          <Image source={require('../resources/logo.png')} style={logoStyle} />
         </View>,
         <Button
           key="0"
@@ -213,9 +208,8 @@ class Login extends Component {
           title="Sign Up"
           type="outline"
         />,
-      ]
-    }
-    else if (this.state.currentScreen == showingScreen.login) {
+      ];
+    } else if (this.state.currentScreen == showingScreen.login) {
       content = [
         usernameInput,
         firstPasswordEntry,
@@ -224,7 +218,9 @@ class Login extends Component {
           buttonStyle={createAccountButton}
           onPress={this.signIn}
           title="Login"
-          disabled={this.state.email.length == 0 || this.state.password.length == 0}
+          disabled={
+            this.state.email.length == 0 || this.state.password.length == 0
+          }
         />,
         <Button
           key="1"
@@ -233,13 +229,14 @@ class Login extends Component {
           title="Create an account"
           type="outline"
         />,
-      ]
-    }
-    else if (this.state.currentScreen == showingScreen.signup) {
-
+      ];
+    } else if (this.state.currentScreen == showingScreen.signup) {
       let isValid = this.state.email.length !== 0;
 
-      if (this.state.password.length === 0 || this.state.password !== this.state.passwordVerification) {
+      if (
+        this.state.password.length === 0 ||
+        this.state.password !== this.state.passwordVerification
+      ) {
         isValid = false;
       }
 
@@ -249,8 +246,7 @@ class Login extends Component {
         fontSize: 18,
         textAlign: 'center',
         paddingTop: 12,
-
-      }
+      };
 
       content = [
         usernameInput,
@@ -271,19 +267,19 @@ class Login extends Component {
           title="Create an account"
           disabled={!isValid}
         />,
-        <Text 
+        <Text
           key="alreadyhaveanaccountext"
           style={textStyle}
-          onPress = {this.onLoginPress}
-          >Already have an account?</Text>
-      ]
+          onPress={this.onLoginPress}
+        >
+          Already have an account?
+        </Text>,
+      ];
     }
 
     return (
       <View style={styles.container}>
-        <View style={navbarStyles.container}>
-          {content}
-        </View>
+        <View style={navbarStyles.container}>{content}</View>
       </View>
     );
   }
