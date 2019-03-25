@@ -100,7 +100,13 @@ class AllJotsScreen extends Component {
       JotService.deleteJots(this.state.selectedJots);
     }
 
-    this.setState({ selectedJots: [], listSelectionMode: false });
+    this.setState({
+      allJots: JotService.findAll(),
+      todaysJots: JotService.findAllCreatedToday(),
+      thisWeeksJots: JotService.findAllCreatedThisWeek(),
+      selectedJots: [],
+      listSelectionMode: false,
+    });
   }
 
   onJotFinished(jot) {
@@ -130,11 +136,9 @@ class AllJotsScreen extends Component {
 
   onJotSelect(jot) {
     // un-select jot if jot is already selected
-    let newSelected = this.state.selectedJots.filter(
-      (selectedJot) => {
-        return selectedJot.id !== jot.id
-      }
-    );
+    let newSelected = this.state.selectedJots.filter(selectedJot => {
+      return selectedJot.id !== jot.id;
+    });
 
     if (newSelected.length < this.state.selectedJots.length) {
       this.setState({ selectedJots: newSelected });
