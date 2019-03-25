@@ -8,7 +8,6 @@ import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
-// require('../resources/logo.png')
 
 // Enum of different pages to show
 const showingScreen = {
@@ -30,7 +29,6 @@ class Login extends Component {
     this.signIn = this.signIn.bind(this);
     this.onCreateAnAccountPress = this.onCreateAnAccountPress.bind(this);
 
-    // this.backToSignIn = this.backToSignIn.bind(this);
     this.signUpForAccount = this.signUpForAccount.bind(this);
     this.onLoginPress = this.onLoginPress.bind(this);
 
@@ -39,7 +37,6 @@ class Login extends Component {
       password: '',
       passwordVerification: '',
       currentScreen: showingScreen.choose,
-      // isShowingSignup: false,
     };
   }
 
