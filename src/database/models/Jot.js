@@ -11,7 +11,7 @@ export default class Jot {
       dateCreated: 'date',
       dateModified: 'date',
       reminder: 'date?',
-      // space
+      space: 'string[]'
       // person
     },
   };
