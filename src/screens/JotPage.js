@@ -14,13 +14,19 @@ class JotPage extends Component {
     this.onRightButtonClick = this.onRightButtonClick.bind(this);
     this.onJotTitleChange = this.onJotTitleChange.bind(this);
 
+    this.onEditPersonPress = this.onEditPersonPress.bind(this);
+    this.onEditReminderPress = this.onEditReminderPress.bind(this);
+    this.onEditSpacesPress = this.onEditSpacesPress.bind(this);
+
     let content = '';
     let title = '';
     let id = null;
+    let spaces = []
     if (props.jot) {
       content = props.jot.content;
       id = props.jot.id;
       title = props.jot.title;
+      spaces = props.jot.spaces;
     }
 
     // If we started with a jot, just edit it and return it... ?
@@ -36,6 +42,7 @@ class JotPage extends Component {
       title: title,
       content: content,
       isEditing: props.isEditing,
+      spaces: spaces,
     };
   }
 
@@ -90,6 +97,20 @@ class JotPage extends Component {
         isEditing: true,
       });
     }
+  }
+
+  onEditPersonPress() {
+    console.log("add person hit");
+
+  }
+
+  onEditReminderPress() {
+    console.log("edit reminder hit");
+  }
+
+
+  onEditSpacesPress() {
+    console.log("edit space hit");
   }
 
   onCancelHit() {
@@ -158,6 +179,57 @@ class JotPage extends Component {
       marginLeft: 25,
     });
 
+
+    // Generate the add person/edit reminder/add space row of buttons
+    // keeing separate for now until we know how we are going to layout these buttons (top of keyboard or bottom of content)
+    // let editBar = ( 
+    //   <View key="3">
+    //   <Button
+    //     key="0"
+    //     title="Add Person"
+    //     onPress = {this.onEditPersonPress}
+    //     containerStyle={buttonRowStyle}
+    //   />,
+    //   <Button
+    //     key="1"
+    //     title="Edit reminder"
+    //     onPress = {this.onEditReminderPress}
+    //     containerStyle={buttonRowStyle}
+    //   />,
+    //   <Button
+    //     key="2"
+    //     title="Add Space"
+    //     onPress = {this.onEditSpacesPress}
+    //     containerStyle={buttonRowStyle}
+    //   />
+    // </View>
+
+    // );
+
+
+    // Generate the spaces buttons for the view mode
+    let spacesButtons = [];
+    if (this.state.spaces) {
+      for (var i = 0; i < this.state.spaces.length; i++) {
+        spacesButtons.push(
+          <Button
+            title={this.state.spaces[i]}
+            type="outline"
+          />)
+      }
+    }
+
+    let buttonRowStyle = {
+      // flex: 1,
+      // flexDirection: 'row',
+      width: 100,
+      display: 'flex',
+      // paddingRight: 10,
+      // paddingLeft: 10
+    }
+    
+
+
     let content;
     if (this.state.isEditing) {
       content = [
@@ -170,12 +242,32 @@ class JotPage extends Component {
         />,
         <TextInput
           key="1"
-          style={{ height: 600, borderColor: 'gray', borderWidth: 1 }}
+          style={{ height: 200, borderColor: 'gray', borderWidth: 1 }}
           placeholder="Jot content"
           onChangeText={this.onChangeText}
           value={this.state.content}
           multiline={true}
         />,
+        <View key="3">
+          <Button
+            key="0"
+            title="Add Person"
+            onPress = {this.onEditPersonPress}
+            containerStyle={buttonRowStyle}
+          />
+          <Button
+            key="1"
+            title="Edit reminder"
+            onPress = {this.onEditReminderPress}
+            containerStyle={buttonRowStyle}
+          />
+          <Button
+            key="2"
+            title="Add Space"
+            onPress = {this.onEditSpacesPress}
+            containerStyle={buttonRowStyle}
+          />
+        </View>,
       ];
     } else {
       content = [
@@ -187,9 +279,15 @@ class JotPage extends Component {
         </Text>,
         <Text
           key="1"
-          style={{ height: 600, borderColor: 'gray', borderWidth: 1 }}
+          style={{ height: 200, borderColor: 'gray', borderWidth: 1 }}
         >
           {this.state.content}
+        </Text>,
+        <Text
+          key="2"
+          style={{ height: 200, borderColor: 'gray', borderWidth: 1 }}
+        >
+          Spaces: {spacesButtons}
         </Text>,
       ];
     }
