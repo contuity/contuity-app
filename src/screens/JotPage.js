@@ -180,7 +180,6 @@ class JotPage extends Component {
     });
 
 
-    // Generate the add person/edit reminder/add space row of buttons
     // keeing separate for now until we know how we are going to layout these buttons (top of keyboard or bottom of content)
     // let editBar = ( 
     //   <View key="3">
@@ -220,15 +219,16 @@ class JotPage extends Component {
     }
 
     let buttonRowStyle = {
-      // flex: 1,
-      // flexDirection: 'row',
-      width: 100,
-      display: 'flex',
-      // paddingRight: 10,
-      // paddingLeft: 10
+      paddingRight: 5,
+      paddingLeft: 5
     }
-    
 
+    let buttonContainerStyle = {
+      flexDirection: 'row',
+      alignItems: 'center',
+      display: 'flex',
+      paddingTop: 10
+    }
 
     let content;
     if (this.state.isEditing) {
@@ -248,7 +248,7 @@ class JotPage extends Component {
           value={this.state.content}
           multiline={true}
         />,
-        <View key="3">
+        <View key="3" style={buttonContainerStyle}>
           <Button
             key="0"
             title="Add Person"
