@@ -9,19 +9,37 @@ import {
 } from 'react-native';
 import PersonService from '../database/services/PersonService';
 import PersonList from '../components/PersonList';
+import PersonDetailScreen from './PersonDetailScreen';
 
 class PeopleScreen extends Component {
   constructor(props) {
     super(props);
+    this.onPersonPress = this.onPersonPress.bind(this);
+    this.onPersonFinished = this.onPersonFinished.bind(this);
 
     this.state = {
       allPeople: [],
+      isShowingPersonScreen: false,
+      startWithPerson: null,
     };
   }
 
   componentWillMount() {
     this.setState({
       allPeople: PersonService.findAll(),
+    });
+  }
+
+  onPersonFinished() {
+    this.setState({
+      isShowingPersonScreen: false,
+    });
+  }
+
+  onPersonPress(person) {
+    this.setState({
+      isShowingPersonScreen: true,
+      startWithPerson: person,
     });
   }
 
@@ -47,12 +65,22 @@ class PeopleScreen extends Component {
   }
 
   render() {
+    if (this.state.isShowingPersonScreen) {
+      return (
+        <PersonDetailScreen
+          person={this.state.startWithPerson}
+          onPersonFinished={this.onPersonFinished}
+        />
+      );
+    }
+
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
           <PersonList
             listSelectionMode={this.state.listSelectionMode}
             sections={this.getAlphabatizedSections()}
+            onPersonPress={this.onPersonPress}
             numColumns={2}
           />
         </ScrollView>

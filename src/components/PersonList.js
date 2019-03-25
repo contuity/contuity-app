@@ -5,9 +5,10 @@ import PersonCard from './PersonCard';
 class PersonList extends Component {
   constructor(props) {
     super(props);
+    this.renderItem = this.renderItem.bind(this);
   }
 
-  _renderItem(item) {
+  renderItem(item) {
     if (item.index % 2 !== 0) {
       return null;
     }
@@ -19,7 +20,9 @@ class PersonList extends Component {
         break;
       }
 
-      items.push(<PersonCard person={item.item} />);
+      items.push(
+        <PersonCard person={item.item} onPress={this.props.onPersonPress} />
+      );
     }
 
     return <View style={styles.itemsContainer}>{items}</View>;
@@ -28,7 +31,7 @@ class PersonList extends Component {
   render() {
     return (
       <SectionList
-        renderItem={this._renderItem}
+        renderItem={this.renderItem}
         renderSectionHeader={({ section: { title } }) => (
           <Text style={styles.sectionHeader}>{title}</Text>
         )}

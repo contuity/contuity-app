@@ -14,6 +14,7 @@ class PersonCard extends Component {
           style={styles.personItem}
           key={this.props.person.id}
           title={this.props.person.firstName + ' ' + this.props.person.lastName}
+          onPress={() => this.props.onPress(this.props.person)}
         />
       </View>
     );
