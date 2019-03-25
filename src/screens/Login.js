@@ -158,6 +158,7 @@ class Login extends Component {
 
 
     let usernameInput = ( <Input
+      key="username"
       inputStyle={userNameInputStyle}
       placeholder="Email"
       onChangeText={this.onChangeEmail}
@@ -166,6 +167,7 @@ class Login extends Component {
     /> )
 
     let firstPasswordEntry = ( <Input
+      key="password1"
       inputStyle={passwordInputStyle}
       placeholder="Password"
       onChangeText={this.onChangePassword}
@@ -270,6 +272,7 @@ class Login extends Component {
           disabled={!isValid}
         />,
         <Text 
+          key="alreadyhaveanaccountext"
           style={textStyle}
           onPress = {this.onLoginPress}
           >Already have an account?</Text>
@@ -279,7 +282,6 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <View style={navbarStyles.container}>
-          
           {content}
         </View>
       </View>
