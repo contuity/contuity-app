@@ -55,8 +55,6 @@ class JotService {
 
   deleteJots(jots) {
     realm.write(() => {
-      // let allJots = realm.objects('Jot');
-      // let jotToDelete = allJots.filtered('id == $0', jot.id);
       realm.delete(jots);
     });
   }

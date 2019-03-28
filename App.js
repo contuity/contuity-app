@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AllJotsScreen from './src/screens/AllJotsScreen';
+import PeopleScreen from './src/screens/PeopleScreen';
 import Login from './src/screens/Login';
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
     } else {
       return <AllJotsScreen user={this.state.user} />;
     }
+    // return <PeopleScreen />;
   }
 }
 

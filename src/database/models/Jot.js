@@ -1,5 +1,3 @@
-import Realm from 'realm';
-
 export default class Jot {
   static schema = {
     name: 'Jot',
@@ -11,8 +9,12 @@ export default class Jot {
       dateCreated: 'date',
       dateModified: 'date',
       reminder: 'date?',
-      // space
-      // person
+      people: {
+        type: 'linkingObjects',
+        objectType: 'Person',
+        property: 'jots',
+      },
+      // persons
     },
   };
 
