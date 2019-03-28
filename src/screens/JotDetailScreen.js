@@ -77,9 +77,10 @@ class JotDetailScreen extends Component {
   onRightButtonClick() {
     if (this.state.isEditing) {
       // Save the jot and go to view jot mode
-      this.saveAndGetJot();
+      let jot = this.saveAndGetJot();
 
       this.setState({
+        jot: jot,
         isEditing: false,
       });
     } else {
