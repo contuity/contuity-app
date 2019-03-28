@@ -133,30 +133,43 @@ class Login extends Component {
         flex: 1,
         backgroundColor: '#F5FCFF',
       },
+      userNameInputStyle: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 25,
+      },
+      passwordInputStyle: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 25,
+      },
+      createAccountButton: {
+        width: 150,
+        marginLeft: 120,
+        marginTop: 20,
+      }
     });
 
-    const userNameInputStyle = StyleSheet.create({
-      marginTop: 10,
-      marginBottom: 10,
-      marginLeft: 25,
-    });
+    // const userNameInputStyle = StyleSheet.create({
+      
+    // });
 
-    const passwordInputStyle = StyleSheet.create({
-      marginTop: 10,
-      marginBottom: 10,
-      marginLeft: 25,
-    });
+    // const passwordInputStyle = StyleSheet.create({
+    //   marginTop: 10,
+    //   marginBottom: 10,
+    //   marginLeft: 25,
+    // });
 
-    const createAccountButton = StyleSheet.create({
-      width: 150,
-      marginLeft: 120,
-      marginTop: 20,
-    });
+    // const createAccountButton = StyleSheet.create({
+    //   width: 150,
+    //   marginLeft: 120,
+    //   marginTop: 20,
+    // });
 
     let usernameInput = (
       <Input
         key="username"
-        inputStyle={userNameInputStyle}
+        inputStyle={styles.userNameInputStyle}
         placeholder="Email"
         onChangeText={this.onChangeEmail}
         value={this.state.email}
@@ -167,7 +180,7 @@ class Login extends Component {
     let firstPasswordEntry = (
       <Input
         key="password1"
-        inputStyle={passwordInputStyle}
+        inputStyle={styles.passwordInputStyle}
         placeholder="Password"
         onChangeText={this.onChangePassword}
         value={this.state.password}
@@ -195,13 +208,13 @@ class Login extends Component {
         </View>,
         <Button
           key="0"
-          buttonStyle={createAccountButton}
+          buttonStyle={styles.createAccountButton}
           onPress={this.onLoginPress}
           title="Sign In"
         />,
         <Button
           key="1"
-          buttonStyle={createAccountButton}
+          buttonStyle={styles.createAccountButton}
           onPress={this.onCreateAnAccountPress}
           title="Sign Up"
           type="outline"
@@ -213,7 +226,7 @@ class Login extends Component {
         firstPasswordEntry,
         <Button
           key="0"
-          buttonStyle={createAccountButton}
+          buttonStyle={styles.createAccountButton}
           onPress={this.signIn}
           title="Login"
           disabled={
@@ -222,7 +235,7 @@ class Login extends Component {
         />,
         <Button
           key="1"
-          buttonStyle={createAccountButton}
+          buttonStyle={styles.createAccountButton}
           onPress={this.onCreateAnAccountPress}
           title="Create an account"
           type="outline"
@@ -260,7 +273,7 @@ class Login extends Component {
         />,
         <Button
           key="1"
-          buttonStyle={createAccountButton}
+          buttonStyle={styles.createAccountButton}
           onPress={this.signUpForAccount}
           title="Create an account"
           disabled={!isValid}
