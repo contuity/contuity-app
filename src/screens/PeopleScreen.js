@@ -18,16 +18,10 @@ class PeopleScreen extends Component {
     this.onPersonFinished = this.onPersonFinished.bind(this);
 
     this.state = {
-      allPeople: [],
+      allPeople: PersonService.findAll(),
       isShowingPersonScreen: false,
       startWithPerson: null,
     };
-  }
-
-  componentWillMount() {
-    this.setState({
-      allPeople: PersonService.findAll(),
-    });
   }
 
   onPersonFinished() {
@@ -45,20 +39,21 @@ class PeopleScreen extends Component {
 
   // TODO: think further about how to store this in order to improve performance
   getAlphabatizedSections() {
-    let initialToPeople = new Map();
+    let initialToPeople = {};
 
     this.state.allPeople.forEach(person => {
       let initial = person.firstName.substring(0, 1).toUpperCase();
-      if (!initialToPeople.has(initial)) {
-        initialToPeople.set(initial, [person]);
+      if (!initialToPeople.initial) {
+        initialToPeople[initial] = [person];
       } else {
-        initialToPeople.set(initial, [...initialToPeople.get(initial), person]);
+        initialToPeople[initial] = [...initialToPeople.get(initial), person];
       }
     });
 
     let sections = [];
-    initialToPeople.forEach((val, key) => {
-      sections.push({ title: key, data: val });
+
+    Object.keys(initialToPeople).forEach(key => {
+      sections.push({ title: key, data: initialToPeople[key] });
     });
 
     return sections;

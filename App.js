@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AllJotsScreen from './src/screens/AllJotsScreen';
+import PeopleScreen from './src/screens/PeopleScreen';
 import Login from './src/screens/Login';
 
 class App extends Component {
@@ -20,11 +21,12 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.user == null) {
-      return <Login onLogin={this.onLogin} />;
-    } else {
-      return <AllJotsScreen user={this.state.user} />;
-    }
+    // if (this.state.user == null) {
+    //   return <Login onLogin={this.onLogin} />;
+    // } else {
+    //   return <AllJotsScreen user={this.state.user} />;
+    // }
+    return <PeopleScreen />;
   }
 }
 
