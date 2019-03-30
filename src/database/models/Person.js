@@ -7,6 +7,8 @@ export default class Person {
       firstName: 'string',
       lastName: 'string',
       jots: 'Jot[]',
+      // phoneNumber: 'string?',
+      // email: 'string?',
       // picture: 'data?'
     },
   };

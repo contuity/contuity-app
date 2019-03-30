@@ -21,12 +21,12 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.user == null) {
-      return <Login onLogin={this.onLogin} />;
-    } else {
-      return <AllJotsScreen user={this.state.user} />;
-    }
-    // return <PeopleScreen />;
+    // if (this.state.user == null) {
+    //   return <Login onLogin={this.onLogin} />;
+    // } else {
+    //   return <AllJotsScreen user={this.state.user} />;
+    // }
+    return <PeopleScreen />;
   }
 }
 

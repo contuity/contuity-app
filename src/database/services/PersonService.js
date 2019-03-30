@@ -3,13 +3,11 @@ import Person from '../models/Person.js';
 
 class PersonService {
   findAll() {
-    // if (!sortBy) {
-    //   sortBy = ['dateCreated', false];
-    // }
     return realm.objects('Person').sorted('firstName');
   }
 
   save(person, newObj) {
+    console.log(person);
     realm.write(() => {
       if (newObj) {
         for (let attr of Object.keys(newObj)) {
@@ -21,7 +19,7 @@ class PersonService {
     });
   }
 
-  deleteJots(people) {
+  deletePeople(people) {
     realm.write(() => {
       realm.delete(people);
     });
@@ -31,6 +29,7 @@ class PersonService {
 // Initialize the Singleton
 let personServiceInstance = new PersonService();
 
+// personServiceInstance.deletePeople(realm.objects('Person'));
 // personServiceInstance.save(new Person('North', 'West'));
 
 export default personServiceInstance;

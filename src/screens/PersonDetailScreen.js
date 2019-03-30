@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, Text, StyleSheet } from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
+import { Input } from 'react-native-elements';
 import NavigationBar from 'react-native-navbar';
+import Person from '../database/models/Person';
+import PersonService from '../database/services/PersonService';
 
 class PersonDetailScreen extends Component {
   constructor(props) {
     super(props);
+    this.onFirstNameChange = this.onFirstNameChange.bind(this);
+    this.onLastNameChange = this.onLastNameChange.bind(this);
+    this.saveAndGetPerson = this.saveAndGetPerson.bind(this);
     this.onCancelHit = this.onCancelHit.bind(this);
+    this.onRightButtonClick = this.onRightButtonClick.bind(this);
 
     let firstName = '';
     let lastName = '';
@@ -21,28 +34,129 @@ class PersonDetailScreen extends Component {
       person: person,
       firstName: firstName,
       lastName: lastName,
+      isEditing: props.isEditing,
     };
   }
 
-  onCancelHit() {
-    this.props.onPersonFinished();
+  onFirstNameChange(event) {
+    this.setState({
+      firstName: event,
+    });
+  }
+
+  onLastNameChange(event) {
+    this.setState({
+      lastName: event,
+    });
+  }
+
+  saveAndGetPerson() {
+    if (
+      this.state.firstName == null ||
+      this.state.firstName === '' ||
+      this.state.lastName == null ||
+      this.state.lastName === ''
+    ) {
+      return null;
+    }
+
+    let person = this.state.person;
+    let newAttrs = {};
+    if (person) {
+      newAttrs.firstName = this.state.firstName;
+      newAttrs.lastName = this.state.lastName;
+    } else {
+      person = new Person(this.state.firstName, this.state.lastName);
+    }
+
+    PersonService.save(person, newAttrs);
+
+    return person;
+  }
+
+  onCancelHit(person) {
+    this.setState({
+      isEditing: false,
+    });
+    this.props.onPersonFinished(person);
+  }
+
+  onRightButtonClick() {
+    if (this.state.isEditing) {
+      let person = this.saveAndGetPerson();
+
+      this.setState({
+        person: person,
+        isEditing: false,
+      });
+    } else {
+    }
   }
 
   render() {
-    let fullName = `${this.state.firstName} ${this.state.lastName}`;
+    const titleConfig = {
+      title: `${this.state.firstName} ${this.state.lastName}`,
+    };
 
     const leftButtonConfig = {
       title: 'Back',
-      handler: this.onCancelHit,
+      handler: () => this.onCancelHit(this.state.person),
     };
+
+    const rightButtonConfig = {
+      title: 'Options',
+      handler: () => this.onRightButtonClick(),
+    };
+
+    if (this.state.isEditing) {
+      if (this.state.person) {
+        titleConfig.title = 'Edit';
+      } else {
+        titleConfig.title = 'Create Person';
+      }
+
+      leftButtonConfig.title = 'Cancel';
+      rightButtonConfig.title = 'Done';
+    }
+
+    let content;
+    if (this.state.isEditing) {
+      content = [
+        <Input
+          key="0"
+          // inputStyle={jotTitleStyle}
+          placeholder="First name"
+          onChangeText={this.onFirstNameChange}
+          value={this.state.firstName}
+        />,
+        <Input
+          key="1"
+          // style={{ height: 600, borderColor: 'gray', borderWidth: 1 }}
+          placeholder="Last name"
+          onChangeText={this.onLastNameChange}
+          value={this.state.lastName}
+        />,
+      ];
+    } else {
+      content = [
+        <Text
+          key="0"
+          style={{ height: 100, borderColor: 'gray', borderWidth: 1 }}
+        >
+          Jots
+        </Text>,
+      ];
+    }
 
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
           <NavigationBar
-            title={{ title: fullName }}
+            title={titleConfig}
             leftButton={leftButtonConfig}
+            rightButton={rightButtonConfig}
           />
+          {content}
         </ScrollView>
       </SafeAreaView>
     );
