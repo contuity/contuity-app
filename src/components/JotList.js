@@ -33,26 +33,12 @@ class JotList extends Component {
   }
 }
 
-// const styles = {
-//   paddingTop: 15,
-//   paddingBottom: 5,
-//   paddingLeft: 10,
-//   fontSize: 18,
-//   fontWeight: 'bold',
-//   backgroundColor: 'white',
-// };
 
 const styles = StyleSheet.create({
   sectionHeader: {
    ...h1
   },
 
-  // paddingTop: 15,
-  // paddingBottom: 5,
-  // paddingLeft: 10,
-  // fontSize: 18,
-  // fontWeight: 'bold',
-  // backgroundColor: 'white',
 });
 
 export default JotList;
