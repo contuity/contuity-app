@@ -24,7 +24,7 @@ class JotList extends Component {
           );
         }}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.h1}>{title}</Text>
+          <Text style={styles.sectionHeader}>{title}</Text>
         )}
         sections={this.props.sections}
         keyExtractor={(item, index) => index}
@@ -43,7 +43,7 @@ class JotList extends Component {
 // };
 
 const styles = StyleSheet.create({
-  h1: {
+  sectionHeader: {
    ...h1
   },
 
