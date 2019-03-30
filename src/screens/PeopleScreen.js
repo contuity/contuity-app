@@ -67,7 +67,7 @@ class PeopleScreen extends Component {
       if (!initialToPeople[initial]) {
         initialToPeople[initial] = [person];
       } else {
-        initialToPeople[initial] = [...initialToPeople[initial], person];
+        initialToPeople[initial] = initialToPeople[initial].concat([person]);
       }
     });
 
@@ -99,12 +99,11 @@ class PeopleScreen extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
-        <NavigationBar
+          <NavigationBar
             title={{ title: 'People' }}
             rightButton={rightButtonConfig}
           />
           <PersonList
-            listSelectionMode={this.state.listSelectionMode}
             sections={this.getAlphabatizedSections()}
             onPersonPress={this.onPersonPress}
             numColumns={2}

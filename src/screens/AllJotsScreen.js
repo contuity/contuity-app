@@ -61,7 +61,7 @@ class AllJotsScreen extends Component {
 
     return true;
   }
-  
+
   createNewJot() {
     this.setState({
       isShowingNewJotPage: true,

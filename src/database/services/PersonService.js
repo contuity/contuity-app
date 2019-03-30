@@ -3,11 +3,13 @@ import Person from '../models/Person.js';
 
 class PersonService {
   findAll() {
-    return realm.objects('Person').sorted('firstName');
+    return realm
+      .objects('Person')
+      .sorted('firstName')
+      .map(x => Object.assign({}, x));
   }
 
   save(person, newObj) {
-    console.log(person);
     realm.write(() => {
       if (newObj) {
         for (let attr of Object.keys(newObj)) {

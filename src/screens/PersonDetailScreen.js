@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TextInput,
-  StyleSheet,
-} from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
 import NavigationBar from 'react-native-navbar';
 import Person from '../database/models/Person';
 import PersonService from '../database/services/PersonService';
+import JotList from '../components/JotList';
 
 class PersonDetailScreen extends Component {
   constructor(props) {
@@ -85,12 +80,29 @@ class PersonDetailScreen extends Component {
     if (this.state.isEditing) {
       let person = this.saveAndGetPerson();
 
+      // tempoarary fix for lack of disabling nav buttons
+      if (!person) {
+        this.props.onPersonFinished(null);
+      }
+
       this.setState({
         person: person,
         isEditing: false,
       });
     } else {
+      PersonService.deletePeople([this.state.person]);
+      this.props.onPersonFinished(null);
     }
+  }
+
+  getJotSections() {
+    let allJotsForPerson = [];
+
+    if (this.state.person.jots) {
+      allJotsForPerson = this.state.person.jots;
+    }
+
+    return [{ title: 'Jots', data: allJotsForPerson }];
   }
 
   render() {
@@ -104,8 +116,8 @@ class PersonDetailScreen extends Component {
     };
 
     const rightButtonConfig = {
-      title: 'Options',
-      handler: () => this.onRightButtonClick(),
+      title: 'Delete',
+      handler: this.onRightButtonClick,
     };
 
     if (this.state.isEditing) {
@@ -124,28 +136,19 @@ class PersonDetailScreen extends Component {
       content = [
         <Input
           key="0"
-          // inputStyle={jotTitleStyle}
           placeholder="First name"
           onChangeText={this.onFirstNameChange}
           value={this.state.firstName}
         />,
         <Input
           key="1"
-          // style={{ height: 600, borderColor: 'gray', borderWidth: 1 }}
           placeholder="Last name"
           onChangeText={this.onLastNameChange}
           value={this.state.lastName}
         />,
       ];
     } else {
-      content = [
-        <Text
-          key="0"
-          style={{ height: 100, borderColor: 'gray', borderWidth: 1 }}
-        >
-          Jots
-        </Text>,
-      ];
+      content = [<JotList sections={this.getJotSections()} />];
     }
 
     return (
