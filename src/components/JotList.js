@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { SectionList, Text } from 'react-native';
 import JotCard from './JotCard';
+import { StyleSheet, View } from 'react-native';
+import {h1} from '../../assets/style/common.style';
+
 
 class JotList extends Component {
   constructor(props) {
@@ -21,7 +24,7 @@ class JotList extends Component {
           );
         }}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles}>{title}</Text>
+          <Text style={styles.h1}>{title}</Text>
         )}
         sections={this.props.sections}
         keyExtractor={(item, index) => index}
@@ -30,13 +33,26 @@ class JotList extends Component {
   }
 }
 
-const styles = {
-  paddingTop: 15,
-  paddingBottom: 5,
-  paddingLeft: 10,
-  fontSize: 18,
-  fontWeight: 'bold',
-  backgroundColor: 'white',
-};
+// const styles = {
+//   paddingTop: 15,
+//   paddingBottom: 5,
+//   paddingLeft: 10,
+//   fontSize: 18,
+//   fontWeight: 'bold',
+//   backgroundColor: 'white',
+// };
+
+const styles = StyleSheet.create({
+  h1: {
+   ...h1
+  },
+
+  // paddingTop: 15,
+  // paddingBottom: 5,
+  // paddingLeft: 10,
+  // fontSize: 18,
+  // fontWeight: 'bold',
+  // backgroundColor: 'white',
+});
 
 export default JotList;
