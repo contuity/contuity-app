@@ -9,21 +9,60 @@ class JotList extends Component {
 
   render() {
 
-    let leftColumn = []
-    let rightColumn = []
+    let newSectionsLeftColumn = [];
+    let newSectionsRightColumn = [];
 
-    let jots = this.props.sections[0].data
 
-    for (var i = 0; i < jots.length; i++) {
+    for (let [sectionIndex, section] of this.props.sections.entries()) {
 
-      // Is an odd index
-      if (i&1) {
-        rightColumn.push(jots[i])
+      console.log(section, sectionIndex)
+
+      newSectionsLeftColumn.push({
+        title: section.title,
+        data: []
+      })
+
+      newSectionsRightColumn.push({
+        title: section.title,
+        data: []
+      })
+
+      if (!section.data) {
+        continue;
       }
-      else {
-        leftColumn.push(jots[i])
+
+      for (let [index, jot] of section.data.entries()) {
+
+        // Is an odd index
+        if (index & 1) {
+          newSectionsRightColumn[sectionIndex].data.push(jot);
+        }
+        else {
+          newSectionsLeftColumn[sectionIndex].data.push(jot);
+        }
       }
     }
+
+    console.log(newSectionsLeftColumn)
+    console.log(newSectionsRightColumn)
+
+
+    // let leftColumn = []
+    // let rightColumn = []
+
+    // let jots = this.props.sections[0].data
+    // // console.log(this.props.sections[0].title)
+
+    // for (var i = 0; i < jots.length; i++) {
+
+    //   // Is an odd index
+    //   if (i&1) {
+    //     rightColumn.push(jots[i])
+    //   }
+    //   else {
+    //     leftColumn.push(jots[i])
+    //   }
+    // }
 
     let outerStyle = {
       display: 'flex',
@@ -59,7 +98,7 @@ class JotList extends Component {
             renderSectionHeader={({ section: { title } }) => (
               <Text style={styles}>{title}</Text>
             )}
-            sections={this.props.sections}
+            sections={newSectionsLeftColumn}
             keyExtractor={(item, index) => index}
           />
         </View>
@@ -78,7 +117,7 @@ class JotList extends Component {
             renderSectionHeader={({ section: { title } }) => (
               null
             )}
-            sections={this.props.sections}
+            sections={newSectionsRightColumn}
             keyExtractor={(item, index) => index}
           />
         </View>
