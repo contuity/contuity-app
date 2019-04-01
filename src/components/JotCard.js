@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { CheckBox, ListItem } from 'react-native-elements';
 
+let MAX_CONTENT_HEIGHT = 150;
+
 class JotCard extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +48,14 @@ class JotCard extends Component {
         checked={this.state.selected}
       />
     );
+
+
+    let content = jot.content.slice(0, MAX_CONTENT_HEIGHT);
+
+    if (jot.content.length > MAX_CONTENT_HEIGHT) {
+      content += '...'
+    }
+
     return (
       <View style={styles.jotContainer}>
         {this.props.selectionMode && selectionBtn}
@@ -55,7 +65,7 @@ class JotCard extends Component {
           }
           key={jot.id}
           title={jot.title}
-          subtitle={jot.content}
+          subtitle={content}
           containerStyle={styles.listItemContainer}
           onPress={() => this.onJotSelect(jot)}
         />
