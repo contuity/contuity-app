@@ -144,6 +144,11 @@ class JotDetailScreen extends Component {
         flex: 1,
         backgroundColor: '#F5FCFF',
       },
+      jotTitleStyle:{
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 25,
+      }
     });
 
     const navbarStyles = {
@@ -152,18 +157,13 @@ class JotDetailScreen extends Component {
       },
     };
 
-    const jotTitleStyle = StyleSheet.create({
-      marginTop: 10,
-      marginBottom: 10,
-      marginLeft: 25,
-    });
 
     let content;
     if (this.state.isEditing) {
       content = [
         <Input
           key="0"
-          inputStyle={jotTitleStyle}
+          inputStyle={styles.jotTitleStyle}
           placeholder="Jot title"
           onChangeText={this.onJotTitleChange}
           value={this.state.title}
