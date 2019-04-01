@@ -1,4 +1,10 @@
 {
+  "rnpm": {
+    "assets": [
+      "assets/fonts"
+    ]
+  },  
+
   "name": "contuityreactnative",
   "version": "0.0.1",
   "private": true,
