@@ -26,7 +26,7 @@ class App extends Component {
     } else {
       return <AllJotsScreen user={this.state.user} />;
     }
-    return <AllJotsScreen user={this.state.user} />;
+    // return <AllJotsScreen user={this.state.user} />;
     // return <PeopleScreen />;
   }
 }
