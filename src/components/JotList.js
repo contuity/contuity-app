@@ -67,7 +67,7 @@ class JotList extends Component {
     let outerStyle = {
       display: 'flex',
       flexDirection: 'row',
-      backgroundColor: 'blue',
+      backgroundColor: 'white',
       color: 'blue'
     }
 
@@ -132,7 +132,7 @@ const styles = {
   paddingLeft: 10,
   fontSize: 18,
   fontWeight: 'bold',
-  backgroundColor: 'blue',
+  // backgroundColor: 'white',
 };
 
 export default JotList;

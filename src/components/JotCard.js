@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   listItemContainer: {
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: 'red',
+    borderColor: 'gray',
     margin: 8,
   },
   jotContainer: {
