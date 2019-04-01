@@ -208,13 +208,13 @@ class JotDetailScreen extends Component {
       content = [
         <Text
           key="0"
-          style={{ height: 100, borderColor: 'gray', borderWidth: 1 }}
+          style={{ height: 50, borderColor: 'gray', borderWidth: 1 }}
         >
-          {this.state.title}
+          Title: {this.state.title}
         </Text>,
         <Text
           key="1"
-          style={{ height: 600, borderColor: 'gray', borderWidth: 1 }}
+          style={{ height: 400, borderColor: 'gray', borderWidth: 1 }}
         >
           {this.state.content}
         </Text>,

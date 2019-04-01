@@ -3,10 +3,7 @@ import Person from '../models/Person.js';
 
 class PersonService {
   findAll() {
-    return realm
-      .objects('Person')
-      .sorted('firstName')
-      .map(x => Object.assign({}, x));
+    return realm.objects('Person').sorted('firstName');
   }
 
   save(person, newObj) {

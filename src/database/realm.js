@@ -5,7 +5,7 @@ import Person from './models/Person';
 const databaseOptions = {
   path: 'contuity.realm',
   schema: [Jot.schema, Person.schema],
-  schemaVersion: 0,
+  schemaVersion: 2,
 };
 
 export default new Realm(databaseOptions);
