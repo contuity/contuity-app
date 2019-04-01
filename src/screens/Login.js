@@ -147,24 +147,8 @@ class Login extends Component {
         width: 150,
         marginLeft: 120,
         marginTop: 20,
-      }
+      },
     });
-
-    // const userNameInputStyle = StyleSheet.create({
-      
-    // });
-
-    // const passwordInputStyle = StyleSheet.create({
-    //   marginTop: 10,
-    //   marginBottom: 10,
-    //   marginLeft: 25,
-    // });
-
-    // const createAccountButton = StyleSheet.create({
-    //   width: 150,
-    //   marginLeft: 120,
-    //   marginTop: 20,
-    // });
 
     let usernameInput = (
       <Input

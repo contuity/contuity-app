@@ -144,11 +144,11 @@ class JotDetailScreen extends Component {
         flex: 1,
         backgroundColor: '#F5FCFF',
       },
-      jotTitleStyle:{
+      jotTitleStyle: {
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 25,
-      }
+      },
     });
 
     const navbarStyles = {
@@ -156,7 +156,6 @@ class JotDetailScreen extends Component {
         flex: 1,
       },
     };
-
 
     let content;
     if (this.state.isEditing) {
