@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { CheckBox, ListItem } from 'react-native-elements';
+import {h2, h3} from '../../assets/style/common.style';
 
 class JotCard extends Component {
   constructor(props) {
@@ -54,8 +55,10 @@ class JotCard extends Component {
             this.props.selectionMode ? styles.jotItemSelectMode : styles.jotItem
           }
           key={jot.id}
-          title={jot.title}
+          title = {jot.title}
+          titleStyle = {styles.jotTitle}
           subtitle={jot.content}
+          subtitleStyle = {styles.jotBody}
           rightSubtitle={dateFormat}
           chevron={true}
           onPress={() => this.onJotSelect(jot)}
@@ -84,6 +87,15 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(0, 0, 0, 0.2)',
     borderBottomWidth: 1,
   },
+  jotTitle: {
+    ...h2,
+    color: 'black',
+  },
+  jotBody: {
+    ...h3,
+    color: 'black',
+  }
+
 });
 
 export default JotCard;
