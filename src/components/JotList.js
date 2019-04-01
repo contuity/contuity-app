@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SectionList, Text } from 'react-native';
+import { SectionList, Text, View } from 'react-native';
 import JotCard from './JotCard';
 
 class JotList extends Component {
@@ -8,24 +8,79 @@ class JotList extends Component {
   }
 
   render() {
+
+    let leftColumn = []
+    let rightColumn = []
+
+    console.log(this.props)
+
+    let jots = this.props.sections[0].data
+
+    for (var i = 0; i < jots.length; i++) {
+
+      // Is an odd index
+      if (i&1) {
+        rightColumn.push(jots[i])
+      }
+      else {
+        leftColumn.push(jots[i])
+      }
+    }
+
+    let outerStyle = {
+      display: 'flex',
+      flexDirection: 'row',
+      backgroundColor: 'blue',
+      color: 'blue'
+
+    }
+
+    let style = {
+      flex: 1
+    }
+
+
     return (
-      <SectionList
-        renderItem={item => {
-          return (
-            <JotCard
-              jot={item.item}
-              onPress={this.props.onJotPress}
-              onSelect={this.props.onJotSelect}
-              selectionMode={this.props.listSelectionMode}
-            />
-          );
-        }}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles}>{title}</Text>
-        )}
-        sections={this.props.sections}
-        keyExtractor={(item, index) => index}
-      />
+      <View style={outerStyle}>
+        <View style={style}>
+          <SectionList
+            renderItem={item => {
+              return (
+                <JotCard
+                  jot={item.item}
+                  onPress={this.props.onJotPress}
+                  onSelect={this.props.onJotSelect}
+                  selectionMode={this.props.listSelectionMode}
+                />
+              );
+            }}
+            renderSectionHeader={({ section: { title } }) => (
+              <Text style={styles}>{title}</Text>
+            )}
+            sections={this.props.sections}
+            keyExtractor={(item, index) => index}
+          />
+        </View>
+        <View style={style}>
+          <SectionList
+            renderItem={item => {
+              return (
+                <JotCard
+                  jot={item.item}
+                  onPress={this.props.onJotPress}
+                  onSelect={this.props.onJotSelect}
+                  selectionMode={this.props.listSelectionMode}
+                />
+              );
+            }}
+            renderSectionHeader={({ section: { title } }) => (
+              <Text style={styles}>{title}</Text>
+            )}
+            sections={this.props.sections}
+            keyExtractor={(item, index) => index}
+          />
+        </View>
+      </View>
     );
   }
 }
@@ -36,7 +91,7 @@ const styles = {
   paddingLeft: 10,
   fontSize: 18,
   fontWeight: 'bold',
-  backgroundColor: 'white',
+  backgroundColor: 'blue',
 };
 
 export default JotList;

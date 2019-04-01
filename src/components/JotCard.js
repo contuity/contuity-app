@@ -56,8 +56,7 @@ class JotCard extends Component {
           key={jot.id}
           title={jot.title}
           subtitle={jot.content}
-          rightSubtitle={dateFormat}
-          chevron={true}
+          containerStyle={styles.listItemContainer}
           onPress={() => this.onJotSelect(jot)}
         />
       </View>
@@ -66,6 +65,12 @@ class JotCard extends Component {
 }
 
 const styles = StyleSheet.create({
+  listItemContainer: {
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'red',
+    margin: 8,
+  },
   jotContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -76,8 +81,11 @@ const styles = StyleSheet.create({
   },
   jotItem: {
     width: '100%',
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-    borderBottomWidth: 1,
+    // borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    // borderBottomWidth: 1,
+    // borderWidth: 2,
+    // borderColor: 'red',
+    // borderRadius: 10
   },
   jotItemSelectMode: {
     width: '90%',
