@@ -9,6 +9,7 @@ class JotList extends Component {
 
   render() {
 
+
     let newSectionsLeftColumn = [];
     let newSectionsRightColumn = [];
 
@@ -31,7 +32,9 @@ class JotList extends Component {
         continue;
       }
 
-      for (let [index, jot] of section.data.entries()) {
+      let entries = section.data.slice().reverse()
+
+      for (let [index, jot] of entries.entries()) {
 
         // Is an odd index
         if (index & 1) {
