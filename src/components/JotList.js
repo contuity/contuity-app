@@ -12,8 +12,6 @@ class JotList extends Component {
     let leftColumn = []
     let rightColumn = []
 
-    console.log(this.props)
-
     let jots = this.props.sections[0].data
 
     for (var i = 0; i < jots.length; i++) {
@@ -32,11 +30,15 @@ class JotList extends Component {
       flexDirection: 'row',
       backgroundColor: 'blue',
       color: 'blue'
-
     }
 
     let style = {
       flex: 1
+    }
+
+    let secondColumnStyle = {
+      flex: 1,
+      marginTop: 50
     }
 
 
@@ -61,7 +63,7 @@ class JotList extends Component {
             keyExtractor={(item, index) => index}
           />
         </View>
-        <View style={style}>
+        <View style={secondColumnStyle}>
           <SectionList
             renderItem={item => {
               return (
@@ -74,7 +76,7 @@ class JotList extends Component {
               );
             }}
             renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles}>{title}</Text>
+              null
             )}
             sections={this.props.sections}
             keyExtractor={(item, index) => index}
