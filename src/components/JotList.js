@@ -46,27 +46,6 @@ class JotList extends Component {
       }
     }
 
-    console.log(newSectionsLeftColumn)
-    console.log(newSectionsRightColumn)
-
-
-    // let leftColumn = []
-    // let rightColumn = []
-
-    // let jots = this.props.sections[0].data
-    // // console.log(this.props.sections[0].title)
-
-    // for (var i = 0; i < jots.length; i++) {
-
-    //   // Is an odd index
-    //   if (i&1) {
-    //     rightColumn.push(jots[i])
-    //   }
-    //   else {
-    //     leftColumn.push(jots[i])
-    //   }
-    // }
-
     let outerStyle = {
       display: 'flex',
       flexDirection: 'row',
@@ -82,7 +61,6 @@ class JotList extends Component {
       flex: 1,
       marginTop: 50
     }
-
 
     return (
       <View style={outerStyle}>
@@ -135,7 +113,6 @@ const styles = {
   paddingLeft: 10,
   fontSize: 18,
   fontWeight: 'bold',
-  // backgroundColor: 'white',
 };
 
 export default JotList;
