@@ -3,6 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import { CheckBox, ListItem } from 'react-native-elements';
 import {h2, h3} from '../../assets/style/common.style';
 
+let MAX_CONTENT_HEIGHT = 150;
+
 class JotCard extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +49,14 @@ class JotCard extends Component {
         checked={this.state.selected}
       />
     );
+
+
+    let content = jot.content.slice(0, MAX_CONTENT_HEIGHT);
+
+    if (jot.content.length > MAX_CONTENT_HEIGHT) {
+      content += '...'
+    }
+
     return (
       <View style={styles.jotContainer}>
         {this.props.selectionMode && selectionBtn}
@@ -55,12 +65,11 @@ class JotCard extends Component {
             this.props.selectionMode ? styles.jotItemSelectMode : styles.jotItem
           }
           key={jot.id}
-          title = {jot.title}
+          title={jot.title}
           titleStyle = {styles.jotTitle}
-          subtitle={jot.content}
+          subtitle={content}
           subtitleStyle = {styles.jotBody}
-          rightSubtitle={dateFormat}
-          chevron={true}
+          containerStyle={styles.listItemContainer}
           onPress={() => this.onJotSelect(jot)}
         />
       </View>
@@ -69,6 +78,12 @@ class JotCard extends Component {
 }
 
 const styles = StyleSheet.create({
+  listItemContainer: {
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'gray',
+    margin: 8,
+  },
   jotContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -79,8 +94,11 @@ const styles = StyleSheet.create({
   },
   jotItem: {
     width: '100%',
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-    borderBottomWidth: 1,
+    // borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    // borderBottomWidth: 1,
+    // borderWidth: 2,
+    // borderColor: 'red',
+    // borderRadius: 10
   },
   jotItemSelectMode: {
     width: '90%',
