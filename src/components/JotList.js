@@ -53,7 +53,7 @@ class JotList extends Component {
       color: 'blue'
     }
 
-    let style = {
+    let firstColumnStyle = {
       flex: 1
     }
 
@@ -64,7 +64,7 @@ class JotList extends Component {
 
     return (
       <View style={outerStyle}>
-        <View style={styles.firstColumnStyle}>
+        <View style={firstColumnStyle}>
           <SectionList
             renderItem={item => {
               return (
@@ -77,7 +77,7 @@ class JotList extends Component {
               );
             }}
             renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles}>{title}</Text>
+              <Text style={styles.sectionHeader}>{title}</Text>
             )}
             sections={newSectionsLeftColumn}
             keyExtractor={(item, index) => index}
@@ -110,14 +110,10 @@ class JotList extends Component {
 
 const styles = StyleSheet.create({
   sectionHeader: {
-   ...h1
-  },
-  firstColumnStyle: {
-    paddingTop: 15,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    fontSize: 18,
-    fontWeight: 'bold',
+   ...h1,
+
+   // Ryan added this - does it look good?
+   marginLeft: 3
   }
 });
 

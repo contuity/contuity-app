@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -46,6 +47,9 @@
 		6088A7B5C965447D80B68B0E /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D93B6A0B1634E7291C2D61A /* AntDesign.ttf */; };
 		76C6A6066F3946EB8F8BF8D7 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3A34F1C221D466EBA5CE516 /* Feather.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		9456B7EA2257D26F00A293D3 /* Assistant-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9456B7E72257D26E00A293D3 /* Assistant-Regular.ttf */; };
+		9456B7EB2257D26F00A293D3 /* Assistant-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9456B7E82257D26E00A293D3 /* Assistant-Light.ttf */; };
+		9456B7EC2257D26F00A293D3 /* Assistant-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9456B7E92257D26E00A293D3 /* Assistant-SemiBold.ttf */; };
 		97F323D425154C3A98BDDDA1 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA72B8791DDA4DC5B88AFC6F /* Entypo.ttf */; };
 		9A96258A42354EAA8E1B31D2 /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4979C7520F304DA391C5D5C5 /* libRNVectorIcons-tvOS.a */; };
 		A01FD28A2864402A83DB0614 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF8C346641784C99B68972EC /* MaterialIcons.ttf */; };
@@ -398,6 +402,9 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		86529A3CAAE84F4DA1FE820D /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		9456B7E72257D26E00A293D3 /* Assistant-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Assistant-Regular.ttf"; path = "../assets/fonts/Assistant-Regular.ttf"; sourceTree = "<group>"; };
+		9456B7E82257D26E00A293D3 /* Assistant-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Assistant-Light.ttf"; path = "../assets/fonts/Assistant-Light.ttf"; sourceTree = "<group>"; };
+		9456B7E92257D26E00A293D3 /* Assistant-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Assistant-SemiBold.ttf"; path = "../assets/fonts/Assistant-SemiBold.ttf"; sourceTree = "<group>"; };
 		AA72B8791DDA4DC5B88AFC6F /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B779AE1943EB4D1C81EBAF0B /* RealmReact.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RealmReact.xcodeproj; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; };
@@ -651,6 +658,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				9456B7E82257D26E00A293D3 /* Assistant-Light.ttf */,
+				9456B7E72257D26E00A293D3 /* Assistant-Regular.ttf */,
+				9456B7E92257D26E00A293D3 /* Assistant-SemiBold.ttf */,
 				13B07FAE1A68108700A75B9A /* contuityreactnative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* contuityreactnativeTests */,
@@ -1207,6 +1217,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9456B7EA2257D26F00A293D3 /* Assistant-Regular.ttf in Resources */,
+				9456B7EB2257D26F00A293D3 /* Assistant-Light.ttf in Resources */,
+				9456B7EC2257D26F00A293D3 /* Assistant-SemiBold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				6088A7B5C965447D80B68B0E /* AntDesign.ttf in Resources */,
