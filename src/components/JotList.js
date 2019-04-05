@@ -16,8 +16,6 @@ class JotList extends Component {
 
     for (let [sectionIndex, section] of this.props.sections.entries()) {
 
-      console.log(section, sectionIndex)
-
       newSectionsLeftColumn.push({
         title: section.title,
         data: []
