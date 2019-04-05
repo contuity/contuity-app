@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { SectionList, Text, View } from 'react-native';
+import { SectionList,StyleSheet, Text, View } from 'react-native';
 import JotCard from './JotCard';
+import {h1} from '../../assets/style/common.style';
+
 
 class JotList extends Component {
   constructor(props) {
@@ -62,7 +64,7 @@ class JotList extends Component {
 
     return (
       <View style={outerStyle}>
-        <View style={style}>
+        <View style={styles.firstColumnStyle}>
           <SectionList
             renderItem={item => {
               return (
@@ -105,12 +107,18 @@ class JotList extends Component {
   }
 }
 
-const styles = {
-  paddingTop: 15,
-  paddingBottom: 5,
-  paddingLeft: 10,
-  fontSize: 18,
-  fontWeight: 'bold',
-};
+
+const styles = StyleSheet.create({
+  sectionHeader: {
+   ...h1
+  },
+  firstColumnStyle: {
+    paddingTop: 15,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+  }
+});
 
 export default JotList;
