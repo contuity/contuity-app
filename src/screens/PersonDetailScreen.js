@@ -198,7 +198,6 @@ class PersonDetailScreen extends Component {
         <View style={styles.contentContainer}>
           <View style={styles.photo} />
           <Input
-            key="0"
             placeholder="First name (required)"
             containerStyle={styles.fullInputContainerStyle}
             inputContainerStyle={styles.inputContainerStyle}
@@ -206,7 +205,6 @@ class PersonDetailScreen extends Component {
             value={this.state.firstName}
           />
           <Input
-            key="1"
             placeholder="Last name"
             containerStyle={styles.fullInputContainerStyle}
             inputContainerStyle={styles.inputContainerStyle}
@@ -214,7 +212,6 @@ class PersonDetailScreen extends Component {
             value={this.state.lastName}
           />
           <Input
-            key="2"
             placeholder="Phone number"
             containerStyle={styles.fullInputContainerStyle}
             inputContainerStyle={styles.inputContainerStyle}
@@ -222,7 +219,6 @@ class PersonDetailScreen extends Component {
             value={this.state.phoneNumber}
           />
           <Input
-            key="3"
             placeholder="Email"
             containerStyle={styles.fullInputContainerStyle}
             inputContainerStyle={styles.inputContainerStyle}
