@@ -22,6 +22,7 @@ class JotDetailScreen extends Component {
     this.onCancelHit = this.onCancelHit.bind(this);
     this.onRightButtonClick = this.onRightButtonClick.bind(this);
     this.addPersonToJot = this.addPersonToJot.bind(this);
+    this.addJotToSelectedPeople = this.addJotToSelectedPeople.bind(this);
 
     let content = '';
     let title = '';
@@ -79,7 +80,15 @@ class JotDetailScreen extends Component {
       jot = new Jot(this.state.title, this.state.content);
     }
 
-    // add jot to selected people
+    this.addJotToSelectedPeople(jot);
+
+    JotService.save(jot, newAttrs);
+    return jot;
+  }
+
+  addJotToSelectedPeople(jot) {
+    let people = this.state.peopleToAdd;
+
     if (people.length > 0) {
       let personAttr = {};
       people.forEach(person => {
@@ -87,9 +96,6 @@ class JotDetailScreen extends Component {
         PersonService.save(person, personAttr);
       });
     }
-
-    JotService.save(jot, newAttrs);
-    return jot;
   }
 
   onCancelHit() {
@@ -129,7 +135,7 @@ class JotDetailScreen extends Component {
     let allPeopleForJot = [];
 
     if (jot && jot.people) {
-      allPeopleForJot = jot.people.map(x => Object.assign({}, x));
+      allPeopleForJot = jot.people.slice(0);
     }
     if (this.state.isEditing) {
       allPeopleForJot = allPeopleForJot.concat(this.state.peopleToAdd);
