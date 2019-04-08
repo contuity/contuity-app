@@ -155,7 +155,7 @@ class AllJotsScreen extends Component {
   getSections() {
     return [
       { title: 'Today', data: this.state.todaysJots },
-      { title: 'This week', data: this.state.thisWeeksJots },
+      // { title: 'This week', data: this.state.thisWeeksJots },
       // TODO: Group all other jots by month
       // { title: 'This month', data: this.state.allJots },
     ];
