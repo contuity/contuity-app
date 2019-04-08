@@ -12,6 +12,7 @@ import JotService from '../database/services/JotService';
 import PersonService from '../database/services/PersonService';
 import Jot from '../database/models/Jot';
 import PersonList from '../components/PersonList';
+import JotPeopleList from '../components/JotPeopleList';
 
 class JotDetailScreen extends Component {
   constructor(props) {
@@ -183,21 +184,21 @@ class JotDetailScreen extends Component {
       content = [
         <Input
           key="0"
-          inputStyle={styles.jotTitle}
+          inputStyle={styles.jotTitleInput}
           placeholder="Title"
           onChangeText={this.onJotTitleChange}
           value={this.state.title}
         />,
         <TextInput
           key="1"
-          style={{ height: 400, borderColor: 'gray', borderWidth: 1 }}
+          style={styles.jotContentInput}
           placeholder="Jot"
           onChangeText={this.onContentChange}
           value={this.state.content}
           multiline={true}
         />,
         // TODO Create new kind of list
-        <PersonList sections={this.getPeopleSections()} />,
+        <JotPeopleList sections={this.getPeopleSections()} />,
         <Button
           title="Add Person"
           type="clear"
@@ -206,19 +207,13 @@ class JotDetailScreen extends Component {
       ];
     } else {
       content = [
-        <Text
-          key="0"
-          style={{ height: 50, borderColor: 'gray', borderWidth: 1 }}
-        >
+        <Text key="0" style={styles.jotTitle}>
           Title: {this.state.title}
         </Text>,
-        <Text
-          key="1"
-          style={{ height: 400, borderColor: 'gray', borderWidth: 1 }}
-        >
+        <Text key="1" style={styles.jotContent}>
           {this.state.content}
         </Text>,
-        <PersonList sections={this.getPeopleSections()} />,
+        <JotPeopleList sections={this.getPeopleSections()} />,
       ];
     }
 
@@ -248,9 +243,24 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  jotTitle: {
+  jotTitleInput: {
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 25,
+  },
+  jotContentInput: {
+    height: 400,
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+  jotTitle: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+  jotContent: {
+    height: 400,
+    borderColor: 'gray',
+    borderWidth: 1,
   },
 });
