@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import JotService from '../database/services/JotService';
 import NavigationBar from 'react-native-navbar';
 import { AppRegistry, TextInput } from 'react-native';
@@ -7,6 +7,16 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
+import logo from '../resources/logo.png';
+import {primaryButton, secondaryButton, buttonText, h3, link, inputTextColor} from '../../assets/style/common.style';
+
+
+// Enum of different pages to show
+const showingScreen = {
+  choose: 'CHOOSE',
+  login: 'LOGIN',
+  signup: 'SIGNUP',
+};
 
 class Login extends Component {
   constructor(props) {
@@ -19,16 +29,16 @@ class Login extends Component {
     );
 
     this.signIn = this.signIn.bind(this);
-    this.onCreateAnAccountClick = this.onCreateAnAccountClick.bind(this);
+    this.onCreateAnAccountPress = this.onCreateAnAccountPress.bind(this);
 
-    this.backToSignIn = this.backToSignIn.bind(this);
     this.signUpForAccount = this.signUpForAccount.bind(this);
+    this.onLoginPress = this.onLoginPress.bind(this);
 
     this.state = {
       email: '',
       password: '',
       passwordVerification: '',
-      isShowingSignup: false,
+      currentScreen: showingScreen.choose,
     };
   }
 
@@ -42,14 +52,6 @@ class Login extends Component {
 
   onChangePasswordVerification(event) {
     this.setState({ passwordVerification: event });
-  }
-
-  backToSignIn() {
-    this.setState({
-      email: '',
-      password: '',
-      isShowingSignup: false,
-    });
   }
 
   async signUpForAccount() {
@@ -100,11 +102,23 @@ class Login extends Component {
     }
   }
 
-  onCreateAnAccountClick() {
+  // Naviation methods
+
+  // Buttons from the choose screen
+  onLoginPress() {
     this.setState({
       email: '',
       password: '',
-      isShowingSignup: true,
+      currentScreen: showingScreen.login,
+    });
+  }
+
+  onCreateAnAccountPress() {
+    this.setState({
+      email: '',
+      password: '',
+      passwordVerification: '',
+      currentScreen: showingScreen.signup,
     });
   }
 
@@ -116,97 +130,171 @@ class Login extends Component {
       },
     };
 
-    const styles = StyleSheet.create({
-      container: {
-        flex: 1,
-        backgroundColor: '#F5FCFF',
-      },
-    });
+    let usernameInput = (
+      <Input
+        key="username"
+        placeholder="Email"
+        inputStyle={styles.inputStyle}
+        onChangeText={this.onChangeEmail}
+        value={this.state.email}
+      />
+    );
 
-    const userNameInputStyle = StyleSheet.create({
-      marginTop: 10,
-      marginBottom: 10,
-      marginLeft: 25,
-    });
+    let firstPasswordEntry = (
+      <Input
+        key="password1"
+        inputStyle={styles.inputStyle}
+        placeholder="Password"
+        onChangeText={this.onChangePassword}
+        value={this.state.password}
+        secureTextEntry={true}
+      />
+    );
 
-    const passwordInputStyle = StyleSheet.create({
-      marginTop: 10,
-      marginBottom: 10,
-      marginLeft: 25,
-    });
+    let content;
+    if (this.state.currentScreen == showingScreen.choose) {
+      let logoStyle = {
+        width: 100,
+        height: 100,
+      };
 
-    const createAccountButton = StyleSheet.create({
-      width: 150,
-      marginLeft: 120,
-      marginTop: 20,
-    });
+      let logoContainerStyle = {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        height: 100,
+      };
 
-    let buttons;
-    if (this.state.isShowingSignup) {
-      buttons = [
+      content = [
+        <View style={logoContainerStyle} key="image">
+          <Image source={logo} style={logoStyle} />
+        </View>,
+        <Button
+          key="0"
+          buttonStyle={styles.primaryButton}
+          onPress={this.onLoginPress}
+          title="Sign In"
+          titleStyle= {buttonText}
+
+        />,
+        <Button
+          key="1"
+          buttonStyle={styles.secondaryButton}
+          onPress={this.onCreateAnAccountPress}
+          title="Sign Up"
+          titleStyle= {buttonText}
+        />,
+      ];
+    } else if (this.state.currentScreen == showingScreen.login) {
+      content = [
+        usernameInput,
+        firstPasswordEntry,
+        <Button
+          key="0"
+          buttonStyle={styles.primaryButton}
+          onPress={this.signIn}
+          title="Login"
+          titleStyle= {buttonText}
+          disabled={
+            this.state.email.length == 0 || this.state.password.length == 0
+          }
+        />,
+        <Button
+          key="1"
+          buttonStyle={styles.secondaryButton}
+          onPress={this.onCreateAnAccountPress}
+          title="Create an account"
+          titleStyle= {buttonText}
+        />,
+      ];
+    } else if (this.state.currentScreen == showingScreen.signup) {
+      let isValid = this.state.email.length !== 0;
+
+      if (
+        this.state.password.length === 0 ||
+        this.state.password !== this.state.passwordVerification
+      ) {
+        isValid = false;
+      }
+
+      content = [
+        usernameInput,
+        firstPasswordEntry,
         <Input
           key="0"
-          inputStyle={passwordInputStyle}
+          inputStyle={styles.inputStyle}
           placeholder="Password again"
           onChangeText={this.onChangePasswordVerification}
-          leftIcon={{ type: 'font-awesome', name: 'key' }}
           secureTextEntry={true}
           value={this.state.passwordVerification}
         />,
         <Button
           key="1"
-          buttonStyle={createAccountButton}
+          buttonStyle={styles.primaryButton}
           onPress={this.signUpForAccount}
-          title="Sign Up"
-        />,
-        <Button
-          key="2"
-          buttonStyle={createAccountButton}
-          onPress={this.backToSignIn}
-          title="Back"
-        />,
-      ];
-    } else {
-      buttons = [
-        <Button
-          key="0"
-          buttonStyle={createAccountButton}
-          onPress={this.signIn}
-          title="Login"
-        />,
-        <Button
-          key="1"
-          buttonStyle={createAccountButton}
-          onPress={this.onCreateAnAccountClick}
           title="Create an account"
+          titleStyle= {buttonText}
+          disabled={!isValid}
         />,
+        <Text
+          key="alreadyhaveanaccountext"
+          style={styles.link}
+          onPress={this.onLoginPress}
+        >
+          Already have an account?
+        </Text>,
       ];
     }
 
     return (
       <View style={styles.container}>
-        <View style={navbarStyles.container}>
-          <Input
-            inputStyle={userNameInputStyle}
-            placeholder="Email"
-            onChangeText={this.onChangeEmail}
-            value={this.state.email}
-            leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-          />
-
-          <Input
-            inputStyle={passwordInputStyle}
-            placeholder="Password"
-            onChangeText={this.onChangePassword}
-            value={this.state.password}
-            leftIcon={{ type: 'font-awesome', name: 'key' }}
-            secureTextEntry={true}
-          />
-          {buttons}
-        </View>
+       {content}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',    
+    alignItems: 'center', 
+    backgroundColor: '#A7BFD0',
+  },
+
+inputStyle: {
+  marginTop: 10,
+  marginBottom: 10,
+  flex:1,
+  backgroundColor: 'white',
+  height:40,
+  borderRadius: 24,
+  ...h3,
+  ...inputTextColor,
+  paddingLeft:20,
+  // trying to remove the gray lines underneath each input field with no sucess
+  borderBottomWidth: 0,
+  borderColor:'transparent',
+},
+
+primaryButton: {
+  ...primaryButton,
+  width: 190,
+  marginTop: 20,
+},
+
+secondaryButton: {
+  ...secondaryButton,
+  width: 190,
+  marginTop: 20,
+  marginBottom: 20,
+},
+
+link: {
+  ...h3,
+  ...link,
+  marginTop:20,
+},
+
+});
 
 export default Login;
