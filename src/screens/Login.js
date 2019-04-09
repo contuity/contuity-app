@@ -137,8 +137,10 @@ class Login extends Component {
         inputStyle={styles.inputStyle}
         onChangeText={this.onChangeEmail}
         value={this.state.email}
+        inputContainerStyle={styles.inputContainerStyle}
       />
     );
+
 
     let firstPasswordEntry = (
       <Input
@@ -148,6 +150,7 @@ class Login extends Component {
         onChangeText={this.onChangePassword}
         value={this.state.password}
         secureTextEntry={true}
+        inputContainerStyle={styles.inputContainerStyle}
       />
     );
 
@@ -259,6 +262,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',    
     alignItems: 'center', 
     backgroundColor: '#A7BFD0',
+  },
+  inputContainerStyle: {
+    borderBottomWidth: 0
   },
 
 inputStyle: {
