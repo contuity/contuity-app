@@ -10,10 +10,12 @@ import {
 import PersonService from '../database/services/PersonService';
 import PersonList from '../components/PersonList';
 import PersonDetailScreen from './PersonDetailScreen';
+import NavigationBar from 'react-native-navbar';
 
 class PeopleScreen extends Component {
   constructor(props) {
     super(props);
+    this.createNewPerson = this.createNewPerson.bind(this);
     this.onPersonPress = this.onPersonPress.bind(this);
     this.onPersonFinished = this.onPersonFinished.bind(this);
 
@@ -21,11 +23,29 @@ class PeopleScreen extends Component {
       allPeople: PersonService.findAll(),
       isShowingPersonScreen: false,
       startWithPerson: null,
+      startInEditMode: false,
     };
   }
 
-  onPersonFinished() {
+  createNewPerson() {
     this.setState({
+      isShowingPersonScreen: true,
+      startWithPerson: null,
+      startInEditMode: true,
+    });
+  }
+
+  onPersonFinished(person) {
+    // New person creation was cancelled
+    if (person == null) {
+      this.setState({
+        isShowingPersonScreen: false,
+      });
+      return;
+    }
+
+    this.setState({
+      allPeople: PersonService.findAll(),
       isShowingPersonScreen: false,
     });
   }
@@ -34,6 +54,7 @@ class PeopleScreen extends Component {
     this.setState({
       isShowingPersonScreen: true,
       startWithPerson: person,
+      startInEditMode: false,
     });
   }
 
@@ -43,10 +64,10 @@ class PeopleScreen extends Component {
 
     this.state.allPeople.forEach(person => {
       let initial = person.firstName.substring(0, 1).toUpperCase();
-      if (!initialToPeople.initial) {
+      if (!initialToPeople[initial]) {
         initialToPeople[initial] = [person];
       } else {
-        initialToPeople[initial] = [...initialToPeople.get(initial), person];
+        initialToPeople[initial] = initialToPeople[initial].concat([person]);
       }
     });
 
@@ -60,11 +81,17 @@ class PeopleScreen extends Component {
   }
 
   render() {
+    const rightButtonConfig = {
+      title: 'Add',
+      handler: this.createNewPerson,
+    };
+
     if (this.state.isShowingPersonScreen) {
       return (
         <PersonDetailScreen
-          person={this.state.startWithPerson}
           onPersonFinished={this.onPersonFinished}
+          isEditing={this.state.startInEditMode}
+          person={this.state.startWithPerson}
         />
       );
     }
@@ -72,8 +99,11 @@ class PeopleScreen extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
+          <NavigationBar
+            title={{ title: 'People' }}
+            rightButton={rightButtonConfig}
+          />
           <PersonList
-            listSelectionMode={this.state.listSelectionMode}
             sections={this.getAlphabatizedSections()}
             onPersonPress={this.onPersonPress}
             numColumns={2}

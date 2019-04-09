@@ -20,8 +20,10 @@ class PersonList extends Component {
         break;
       }
 
+      let itemToAdd = item.section.data[i];
+
       items.push(
-        <PersonCard person={item.item} onPress={this.props.onPersonPress} />
+        <PersonCard person={itemToAdd} onPress={this.props.onPersonPress} />
       );
     }
 
