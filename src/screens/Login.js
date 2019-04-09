@@ -229,6 +229,7 @@ class Login extends Component {
           onChangeText={this.onChangePasswordVerification}
           secureTextEntry={true}
           value={this.state.passwordVerification}
+          inputContainerStyle={styles.inputContainerStyle}
         />,
         <Button
           key="1"
