@@ -10,7 +10,6 @@ import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
 import {primaryButton, secondaryButton, buttonText, h3, link, inputTextColor} from '../../assets/style/common.style';
 
-
 // Enum of different pages to show
 const showingScreen = {
   choose: 'CHOOSE',
@@ -106,6 +105,7 @@ class Login extends Component {
 
   // Buttons from the choose screen
   onLoginPress() {
+
     this.setState({
       email: '',
       password: '',
@@ -237,6 +237,7 @@ class Login extends Component {
           onPress={this.signUpForAccount}
           title="Create an account"
           titleStyle= {buttonText}
+
           disabled={!isValid}
         />,
         <Text

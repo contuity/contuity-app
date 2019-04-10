@@ -5,15 +5,19 @@ export default class Person {
     properties: {
       id: 'int',
       firstName: 'string',
-      lastName: 'string',
+      lastName: 'string?',
       jots: 'Jot[]',
-      // picture: 'data?'
+      phoneNumber: 'string?',
+      email: 'string?',
+      picture: 'data?',
     },
   };
 
-  constructor(firstName, lastName) {
+  constructor(firstName, lastName, phoneNumber, email) {
     this.id = Number(String(Math.random()).slice(2));
     this.firstName = firstName;
     this.lastName = lastName;
+    this.phoneNumber = phoneNumber;
+    this.email = email;
   }
 }

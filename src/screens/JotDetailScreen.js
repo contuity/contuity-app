@@ -1,22 +1,33 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import JotService from '../database/services/JotService';
-import NavigationBar from 'react-native-navbar';
-import { AppRegistry, TextInput } from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
 import { Button, Input } from 'react-native-elements';
+import NavigationBar from 'react-native-navbar';
+import JotService from '../database/services/JotService';
+import PersonService from '../database/services/PersonService';
 import Jot from '../database/models/Jot';
+import PersonList from '../components/PersonList';
+import JotPeopleList from '../components/JotPeopleList';
 
 class JotDetailScreen extends Component {
   constructor(props) {
     super(props);
-    this.onChangeText = this.onChangeText.bind(this);
+    this.onJotTitleChange = this.onJotTitleChange.bind(this);
+    this.onContentChange = this.onContentChange.bind(this);
     this.onCancelHit = this.onCancelHit.bind(this);
     this.onRightButtonClick = this.onRightButtonClick.bind(this);
-    this.onJotTitleChange = this.onJotTitleChange.bind(this);
+    this.addPersonToJot = this.addPersonToJot.bind(this);
+    this.addJotToSelectedPeople = this.addJotToSelectedPeople.bind(this);
 
     let content = '';
     let title = '';
     let id = null;
+
     if (props.jot) {
       content = props.jot.content;
       id = props.jot.id;
@@ -30,11 +41,11 @@ class JotDetailScreen extends Component {
 
     this.state = {
       // Keep track of the jot, in case we are creating a new jot and it goes (null -> Jot)
-      jot: jot,
       // id: id
-
+      jot: jot,
       title: title,
       content: content,
+      peopleToAdd: [],
       isEditing: props.isEditing,
     };
   }
@@ -42,6 +53,12 @@ class JotDetailScreen extends Component {
   onJotTitleChange(event) {
     this.setState({
       title: event,
+    });
+  }
+
+  onContentChange(event) {
+    this.setState({
+      content: event,
     });
   }
 
@@ -53,6 +70,7 @@ class JotDetailScreen extends Component {
 
     // TODO: fix - we shouldn't be editing objects on the state
     let jot = this.state.jot;
+    let people = this.state.peopleToAdd;
     let newAttrs = {};
     if (jot) {
       newAttrs.content = this.state.content;
@@ -62,51 +80,94 @@ class JotDetailScreen extends Component {
       jot = new Jot(this.state.title, this.state.content);
     }
 
-    // save it
-    JotService.save(jot, newAttrs);
+    this.addJotToSelectedPeople(jot);
 
+    JotService.save(jot, newAttrs);
     return jot;
   }
 
-  onChangeText(event) {
-    this.setState({
-      content: event,
-    });
+  addJotToSelectedPeople(jot) {
+    let people = this.state.peopleToAdd;
+
+    if (people.length > 0) {
+      let personAttr = {};
+      people.forEach(person => {
+        personAttr = { jots: [...person.jots, jot] };
+        PersonService.save(person, personAttr);
+      });
+    }
+  }
+
+  onCancelHit() {
+    if (this.state.isEditing && this.state.jot) {
+      this.setState({ isEditing: false, peopleToAdd: [] });
+    } else {
+      this.props.onJotFinished(this.state.jot);
+    }
   }
 
   onRightButtonClick() {
     if (this.state.isEditing) {
       // Save the jot and go to view jot mode
       let jot = this.saveAndGetJot();
-
       this.setState({
         jot: jot,
         isEditing: false,
       });
     } else {
       // Edit the existing Jot
-
       this.setState({
         isEditing: true,
       });
     }
   }
 
-  onCancelHit() {
-    let jot = this.saveAndGetJot();
-    this.props.onJotFinished(jot);
+  addPersonToJot() {
+    let person = PersonService.findAll()[0];
+
+    this.setState({
+      peopleToAdd: [...this.state.peopleToAdd, person],
+    });
+  }
+
+  getPeopleSections() {
+    let jot = this.state.jot;
+    let allPeopleForJot = [];
+
+    if (jot && jot.people) {
+      allPeopleForJot = jot.people.slice(0);
+    }
+    if (this.state.isEditing) {
+      allPeopleForJot = allPeopleForJot.concat(this.state.peopleToAdd);
+    }
+
+    return [{ title: 'People', data: allPeopleForJot }];
   }
 
   render() {
-    let rightButtonConfig = {
-      title: 'Create',
+    const titleConfig = {
+      title: 'View Jot',
+    };
+
+    const leftButtonConfig = {
+      title: 'Back',
+      handler: this.onCancelHit,
+    };
+
+    const rightButtonConfig = {
+      title: 'Edit',
       handler: this.onRightButtonClick,
     };
 
     if (this.state.isEditing) {
-      rightButtonConfig.title = 'Save';
-    } else {
-      rightButtonConfig.title = 'Edit';
+      if (this.state.person) {
+        titleConfig.title = 'Edit Jot';
+      } else {
+        titleConfig.title = 'Create Jot';
+      }
+
+      leftButtonConfig.title = 'Cancel';
+      rightButtonConfig.title = 'Done';
     }
 
     // Unfinished code for having a button
@@ -124,89 +185,88 @@ class JotDetailScreen extends Component {
     //   title="Create new Jot"
     // />
 
-    const leftButtonConfig = {
-      title: 'Back',
-      handler: this.onCancelHit,
-    };
-
-    let titleConfig = {
-      height: 100,
-    };
-
-    if (this.state.isEditing) {
-      titleConfig.title = 'Edit Jot';
-    } else {
-      titleConfig.title = 'View Jot';
-    }
-
-    const styles = StyleSheet.create({
-      container: {
-        flex: 1,
-        backgroundColor: '#F5FCFF',
-      },
-    });
-
-    const navbarStyles = {
-      container: {
-        flex: 1,
-      },
-    };
-
-    const jotTitleStyle = StyleSheet.create({
-      marginTop: 10,
-      marginBottom: 10,
-      marginLeft: 25,
-    });
-
     let content;
     if (this.state.isEditing) {
       content = [
         <Input
           key="0"
-          inputStyle={jotTitleStyle}
-          placeholder="Jot title"
+          inputStyle={styles.jotTitleInput}
+          placeholder="Title"
           onChangeText={this.onJotTitleChange}
           value={this.state.title}
         />,
         <TextInput
           key="1"
-          style={{ height: 600, borderColor: 'gray', borderWidth: 1 }}
-          placeholder="Jot content"
-          onChangeText={this.onChangeText}
+          style={styles.jotContentInput}
+          placeholder="Jot"
+          onChangeText={this.onContentChange}
           value={this.state.content}
           multiline={true}
+        />,
+        // TODO Create new kind of list
+        <JotPeopleList sections={this.getPeopleSections()} />,
+        <Button
+          title="Add Person"
+          type="clear"
+          onPress={this.addPersonToJot}
         />,
       ];
     } else {
       content = [
-        <Text
-          key="0"
-          style={{ height: 100, borderColor: 'gray', borderWidth: 1 }}
-        >
+        <Text key="0" style={styles.jotTitle}>
           Title: {this.state.title}
         </Text>,
-        <Text
-          key="1"
-          style={{ height: 600, borderColor: 'gray', borderWidth: 1 }}
-        >
+        <Text key="1" style={styles.jotContent}>
           {this.state.content}
         </Text>,
+        <JotPeopleList sections={this.getPeopleSections()} />,
       ];
     }
 
     return (
-      <View style={styles.container}>
-        <View style={navbarStyles.container}>
+      <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.scrollContainer}>
           <NavigationBar
             title={titleConfig}
             rightButton={rightButtonConfig}
             leftButton={leftButtonConfig}
           />
           {content}
-        </View>
-      </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
 
 export default JotDetailScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  scrollContainer: {
+    flex: 1,
+    width: '100%',
+  },
+  jotTitleInput: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 25,
+  },
+  jotContentInput: {
+    height: 400,
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+  jotTitle: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+  jotContent: {
+    height: 400,
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+});
