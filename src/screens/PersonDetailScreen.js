@@ -194,7 +194,7 @@ class PersonDetailScreen extends Component {
 
     let content;
     if (this.state.isEditing) {
-      content = [
+      content = (
         <View style={styles.contentContainer}>
           <View style={styles.photo} />
           <Input
@@ -225,21 +225,23 @@ class PersonDetailScreen extends Component {
             onChangeText={this.onEmailChange}
             value={this.state.email}
           />
-        </View>,
-      ];
+        </View>
+      );
     } else {
-      content = [
-        <View style={styles.contentContainer}>
-          <View style={styles.photo} />
-          <Field name="Phone" value={this.state.person.phoneNumber} />
-          <Field name="Email" value={this.state.person.email} />
-        </View>,
-        <JotTabs />,
-        <JotList
-          sections={this.getJotSections()}
-          onJotPress={this.onJotPress}
-        />,
-      ];
+      content = (
+        <View>
+          <View style={styles.contentContainer}>
+            <View style={styles.photo} />
+            <Field name="Phone" value={this.state.person.phoneNumber} />
+            <Field name="Email" value={this.state.person.email} />
+          </View>
+          <JotTabs />
+          <JotList
+            sections={this.getJotSections()}
+            onJotPress={this.onJotPress}
+          />
+        </View>
+      );
     }
 
     return (
