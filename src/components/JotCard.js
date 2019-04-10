@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { CheckBox, ListItem } from 'react-native-elements';
-import {h2, h3} from '../../assets/style/common.style';
+import { h2, h3 } from '../../assets/style/common.style';
 
 let MAX_CONTENT_HEIGHT = 150;
 
@@ -50,11 +50,10 @@ class JotCard extends Component {
       />
     );
 
-
     let content = jot.content.slice(0, MAX_CONTENT_HEIGHT);
 
     if (jot.content.length > MAX_CONTENT_HEIGHT) {
-      content += '...'
+      content += '...';
     }
 
     return (
@@ -66,9 +65,9 @@ class JotCard extends Component {
           }
           key={jot.id}
           title={jot.title}
-          titleStyle = {styles.jotTitle}
+          titleStyle={styles.jotTitle}
           subtitle={content}
-          subtitleStyle = {styles.jotBody}
+          subtitleStyle={styles.jotBody}
           containerStyle={styles.listItemContainer}
           onPress={() => this.onJotSelect(jot)}
         />
@@ -112,8 +111,7 @@ const styles = StyleSheet.create({
   jotBody: {
     ...h3,
     color: 'black',
-  }
-
+  },
 });
 
 export default JotCard;
