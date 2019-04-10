@@ -12,7 +12,6 @@ import JotService from '../database/services/JotService';
 import PersonService from '../database/services/PersonService';
 import Jot from '../database/models/Jot';
 import PersonList from '../components/PersonList';
-import JotPeopleList from '../components/JotPeopleList';
 
 class JotDetailScreen extends Component {
   constructor(props) {
@@ -204,7 +203,7 @@ class JotDetailScreen extends Component {
           multiline={true}
         />,
         // TODO Create new kind of list
-        <JotPeopleList sections={this.getPeopleSections()} />,
+        <PersonList sections={this.getPeopleSections()} />,
         <Button
           title="Add Person"
           type="clear"
@@ -219,7 +218,7 @@ class JotDetailScreen extends Component {
         <Text key="1" style={styles.jotContent}>
           {this.state.content}
         </Text>,
-        <JotPeopleList sections={this.getPeopleSections()} />,
+        <PersonList sections={this.getPeopleSections()} />,
       ];
     }
 
