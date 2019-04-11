@@ -19,19 +19,22 @@ class JotDetailScreen extends Component {
     super(props);
     this.onJotTitleChange = this.onJotTitleChange.bind(this);
     this.onContentChange = this.onContentChange.bind(this);
-    this.onCancelHit = this.onCancelHit.bind(this);
-    this.onRightButtonClick = this.onRightButtonClick.bind(this);
-    this.addPersonToJot = this.addPersonToJot.bind(this);
+    this.onCancelPress = this.onCancelPress.bind(this);
+    this.onRightButtonPress = this.onRightButtonPress.bind(this);
     this.addJotToSelectedPeople = this.addJotToSelectedPeople.bind(this);
+    this.addPersonToJot = this.addPersonToJot.bind(this);
+    this.removePersonFromJot = this.removePersonFromJot.bind(this);
 
     let content = '';
     let title = '';
     let id = null;
+    let jotPeople = [];
 
     if (props.jot) {
       content = props.jot.content;
       id = props.jot.id;
       title = props.jot.title;
+      jotPeople = props.jot.people;
     }
 
     // If we started with a jot, just edit it and return it... ?
@@ -45,6 +48,7 @@ class JotDetailScreen extends Component {
       jot: jot,
       title: title,
       content: content,
+      jotPeople: jotPeople,
       peopleToAdd: [],
       isEditing: props.isEditing,
     };
@@ -70,7 +74,6 @@ class JotDetailScreen extends Component {
 
     // TODO: fix - we shouldn't be editing objects on the state
     let jot = this.state.jot;
-    let people = this.state.peopleToAdd;
     let newAttrs = {};
     if (jot) {
       newAttrs.content = this.state.content;
@@ -96,9 +99,11 @@ class JotDetailScreen extends Component {
         PersonService.save(person, personAttr);
       });
     }
+
+    this.setState({ jotPeople: jot.people, peopleToAdd: [] });
   }
 
-  onCancelHit() {
+  onCancelPress() {
     if (this.state.isEditing && this.state.jot) {
       this.setState({ isEditing: false, peopleToAdd: [] });
     } else {
@@ -106,7 +111,7 @@ class JotDetailScreen extends Component {
     }
   }
 
-  onRightButtonClick() {
+  onRightButtonPress() {
     if (this.state.isEditing) {
       // Save the jot and go to view jot mode
       let jot = this.saveAndGetJot();
@@ -125,17 +130,39 @@ class JotDetailScreen extends Component {
   addPersonToJot() {
     let person = PersonService.findAll()[0];
 
-    this.setState({
-      peopleToAdd: [...this.state.peopleToAdd, person],
-    });
+    let results = this.getAllPeople().filter(item => item.id === person.id);
+    if (results.length === 0) {
+      this.setState({
+        peopleToAdd: [...this.state.peopleToAdd, person],
+      });
+    }
   }
 
-  getPeople() {
+  removePersonFromJot(person) {
     let jot = this.state.jot;
+
+    // check if person is in peopleToAdd
+    this.state.peopleToAdd.forEach((element, index) => {
+      if (element.id === person.id) {
+        this.setState({
+          peopleToAdd: this.state.peopleToAdd.splice(index, index),
+        });
+        return;
+      }
+    });
+
+    // else remove from db
+    PersonService.removePersonFromJot(person, this.state.jot);
+    this.setState({ jotPeople: jot.people });
+  }
+
+  getAllPeople() {
+    let jot = this.state.jot;
+    let jotPeople = this.state.jotPeople;
     let allPeopleForJot = [];
 
-    if (jot && jot.people) {
-      allPeopleForJot = jot.people.slice(0);
+    if (jot && jotPeople) {
+      allPeopleForJot = jotPeople.slice(0);
     }
     if (this.state.isEditing) {
       allPeopleForJot = allPeopleForJot.concat(this.state.peopleToAdd);
@@ -151,16 +178,16 @@ class JotDetailScreen extends Component {
 
     const leftButtonConfig = {
       title: 'Back',
-      handler: this.onCancelHit,
+      handler: this.onCancelPress,
     };
 
     const rightButtonConfig = {
       title: 'Edit',
-      handler: this.onRightButtonClick,
+      handler: this.onRightButtonPress,
     };
 
     if (this.state.isEditing) {
-      if (this.state.person) {
+      if (this.state.jot) {
         titleConfig.title = 'Edit Jot';
       } else {
         titleConfig.title = 'Create Jot';
@@ -172,8 +199,15 @@ class JotDetailScreen extends Component {
 
     let peopleComponent = (
       <View key="2" style={styles.peopleContainer}>
-        {this.getPeople().map((person, index) => {
-          return <PersonPill key={index} person={person} />;
+        {this.getAllPeople().map((person, index) => {
+          return (
+            <PersonPill
+              key={index}
+              person={person}
+              onRemovePress={() => this.removePersonFromJot(person)}
+              isEditing={this.state.isEditing}
+            />
+          );
         })}
       </View>
     );

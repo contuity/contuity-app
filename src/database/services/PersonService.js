@@ -22,12 +22,23 @@ class PersonService {
       realm.delete(people);
     });
   }
+
+  removePersonFromJot(person, jot) {
+    person.jots.forEach((item, index) => {
+      if (item.id === jot.id) {
+        realm.write(() => {
+          realm.create(
+            'Person',
+            { id: person.id, jots: person.jots.splice(index, index) },
+            true
+          );
+        });
+      }
+    });
+  }
 }
 
 // Initialize the Singleton
 let personServiceInstance = new PersonService();
-
-// personServiceInstance.deletePeople(realm.objects('Person'));
-// personServiceInstance.save(new Person('North', 'West'));
 
 export default personServiceInstance;

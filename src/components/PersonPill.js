@@ -17,11 +17,14 @@ class PersonPill extends Component {
         title={this.props.person.firstName + ' ' + this.props.person.lastName}
         titleStyle={styles.personItemTitle}
         titleProps={{ numberOfLines: 1 }}
-        leftIcon={{
-          name: 'close',
-          close: 'material-community',
-          size: theme.fontSizeSmall,
-        }}
+        leftIcon={
+          this.props.isEditing && {
+            name: 'close',
+            close: 'material-community',
+            size: theme.fontSizeSmall,
+            onPress: this.props.onRemovePress,
+          }
+        }
         containerStyle={styles.pillContainer}
         contentContainerStyle={styles.pillContentContainer}
         pad={10}
