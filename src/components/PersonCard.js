@@ -29,9 +29,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'gray',
-    margin: 8,
     aspectRatio: 1,
-    width: '90%',
+    width: '100%',
   },
   personContainer: {
     flex: 1,
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   personItem: {
-    width: '100%',
+    margin: 8,
   },
   personName: {
     ...h2,

@@ -5,13 +5,14 @@ import {
   Text,
   TextInput,
   StyleSheet,
+  View,
 } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import NavigationBar from 'react-native-navbar';
 import JotService from '../database/services/JotService';
 import PersonService from '../database/services/PersonService';
 import Jot from '../database/models/Jot';
-import PersonList from '../components/PersonList';
+import PersonPill from '../components/PersonPill';
 
 class JotDetailScreen extends Component {
   constructor(props) {
@@ -129,7 +130,7 @@ class JotDetailScreen extends Component {
     });
   }
 
-  getPeopleSections() {
+  getPeople() {
     let jot = this.state.jot;
     let allPeopleForJot = [];
 
@@ -140,7 +141,7 @@ class JotDetailScreen extends Component {
       allPeopleForJot = allPeopleForJot.concat(this.state.peopleToAdd);
     }
 
-    return [{ title: 'People', data: allPeopleForJot }];
+    return allPeopleForJot;
   }
 
   render() {
@@ -169,20 +170,13 @@ class JotDetailScreen extends Component {
       rightButtonConfig.title = 'Done';
     }
 
-    // Unfinished code for having a button
-    // rightButtonConfig = (
-    //   <Button
-    //     buttonStyle={{height:12, paddingTop:10, marginTop:15, marginRight:20, paddingRight:10, height: 15}}
-    //     onPress={this.onRightButtonClick}
-    //     title="Create jot"
-    //   >HII</Button> )
-
-    // rightButtonConfig = (
-    //   )
-
-    // <Button
-    //   title="Create new Jot"
-    // />
+    let peopleComponent = (
+      <View key="2" style={styles.peopleContainer}>
+        {this.getPeople().map((person, index) => {
+          return <PersonPill key={index} person={person} />;
+        })}
+      </View>
+    );
 
     let content;
     if (this.state.isEditing) {
@@ -202,9 +196,9 @@ class JotDetailScreen extends Component {
           value={this.state.content}
           multiline={true}
         />,
-        // TODO Create new kind of list
-        <PersonList sections={this.getPeopleSections()} />,
+        peopleComponent,
         <Button
+          key="3"
           title="Add Person"
           type="clear"
           onPress={this.addPersonToJot}
@@ -218,7 +212,7 @@ class JotDetailScreen extends Component {
         <Text key="1" style={styles.jotContent}>
           {this.state.content}
         </Text>,
-        <PersonList sections={this.getPeopleSections()} />,
+        peopleComponent,
       ];
     }
 
@@ -267,5 +261,11 @@ const styles = StyleSheet.create({
     height: 400,
     borderColor: 'gray',
     borderWidth: 1,
+  },
+  peopleContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
   },
 });

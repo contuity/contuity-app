@@ -8,7 +8,14 @@ import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
-import {primaryButton, secondaryButton, buttonText, h3, link, inputTextColor} from '../../assets/style/common.style';
+import {
+  primaryButton,
+  secondaryButton,
+  buttonText,
+  h3,
+  link,
+  inputTextColor,
+} from '../../assets/style/common.style';
 
 // Enum of different pages to show
 const showingScreen = {
@@ -105,7 +112,6 @@ class Login extends Component {
 
   // Buttons from the choose screen
   onLoginPress() {
-
     this.setState({
       email: '',
       password: '',
@@ -141,7 +147,6 @@ class Login extends Component {
       />
     );
 
-
     let firstPasswordEntry = (
       <Input
         key="password1"
@@ -176,15 +181,14 @@ class Login extends Component {
           buttonStyle={styles.primaryButton}
           onPress={this.onLoginPress}
           title="Sign In"
-          titleStyle= {buttonText}
-
+          titleStyle={buttonText}
         />,
         <Button
           key="1"
           buttonStyle={styles.secondaryButton}
           onPress={this.onCreateAnAccountPress}
           title="Sign Up"
-          titleStyle= {buttonText}
+          titleStyle={buttonText}
         />,
       ];
     } else if (this.state.currentScreen == showingScreen.login) {
@@ -196,7 +200,7 @@ class Login extends Component {
           buttonStyle={styles.primaryButton}
           onPress={this.signIn}
           title="Login"
-          titleStyle= {buttonText}
+          titleStyle={buttonText}
           disabled={
             this.state.email.length == 0 || this.state.password.length == 0
           }
@@ -206,7 +210,7 @@ class Login extends Component {
           buttonStyle={styles.secondaryButton}
           onPress={this.onCreateAnAccountPress}
           title="Create an account"
-          titleStyle= {buttonText}
+          titleStyle={buttonText}
         />,
       ];
     } else if (this.state.currentScreen == showingScreen.signup) {
@@ -236,8 +240,7 @@ class Login extends Component {
           buttonStyle={styles.primaryButton}
           onPress={this.signUpForAccount}
           title="Create an account"
-          titleStyle= {buttonText}
-
+          titleStyle={buttonText}
           disabled={!isValid}
         />,
         <Text
@@ -250,59 +253,54 @@ class Login extends Component {
       ];
     }
 
-    return (
-      <View style={styles.container}>
-       {content}
-      </View>
-    );
+    return <View style={styles.container}>{content}</View>;
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',    
-    alignItems: 'center', 
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#A7BFD0',
   },
   inputContainerStyle: {
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
   },
 
-inputStyle: {
-  marginTop: 10,
-  marginBottom: 10,
-  flex:1,
-  backgroundColor: 'white',
-  height:40,
-  borderRadius: 24,
-  ...h3,
-  ...inputTextColor,
-  paddingLeft:20,
-  // trying to remove the gray lines underneath each input field with no sucess
-  borderBottomWidth: 0,
-  borderColor:'transparent',
-},
+  inputStyle: {
+    marginTop: 10,
+    marginBottom: 10,
+    flex: 1,
+    backgroundColor: 'white',
+    height: 40,
+    borderRadius: 24,
+    ...h3,
+    ...inputTextColor,
+    paddingLeft: 20,
+    // trying to remove the gray lines underneath each input field with no sucess
+    borderBottomWidth: 0,
+    borderColor: 'transparent',
+  },
 
-primaryButton: {
-  ...primaryButton,
-  width: 190,
-  marginTop: 20,
-},
+  primaryButton: {
+    ...primaryButton,
+    width: 190,
+    marginTop: 20,
+  },
 
-secondaryButton: {
-  ...secondaryButton,
-  width: 190,
-  marginTop: 20,
-  marginBottom: 20,
-},
+  secondaryButton: {
+    ...secondaryButton,
+    width: 190,
+    marginTop: 20,
+    marginBottom: 20,
+  },
 
-link: {
-  ...h3,
-  ...link,
-  marginTop:20,
-},
-
+  link: {
+    ...h3,
+    ...link,
+    marginTop: 20,
+  },
 });
 
 export default Login;

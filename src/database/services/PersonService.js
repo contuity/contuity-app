@@ -1,5 +1,4 @@
 import realm from '../realm.js';
-import Person from '../models/Person.js';
 
 class PersonService {
   findAll() {

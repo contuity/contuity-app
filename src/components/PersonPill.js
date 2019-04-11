@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { buttonText } from '../../assets/style/common.style';
+import theme from '../../assets/style/theme.style';
 
 class PersonPill extends Component {
   constructor(props) {
@@ -9,35 +11,45 @@ class PersonPill extends Component {
 
   render() {
     return (
-      <View style={styles.personContainer}>
-        <ListItem
-          style={styles.personItem}
-          key={this.props.person.id}
-          title={this.props.person.firstName + ' ' + this.props.person.lastName}
-          titleStyle={styles.personItemTitle}
-          rightElement={{ name: 'close', close: 'material-community' }}
-        />
-      </View>
+      <ListItem
+        style={styles.personItem}
+        key={this.props.person.id}
+        title={this.props.person.firstName + ' ' + this.props.person.lastName}
+        titleStyle={styles.personItemTitle}
+        titleProps={{ numberOfLines: 1 }}
+        leftIcon={{
+          name: 'close',
+          close: 'material-community',
+          size: theme.fontSizeSmall,
+        }}
+        containerStyle={styles.pillContainer}
+        contentContainerStyle={styles.pillContentContainer}
+        pad={10}
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  personContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    //alignItems: 'flex-start',
-  },
-  personItem: {
-    width: '100%',
+  pillContainer: {
+    width: 160,
     height: 50,
-    borderColor: 'rgba(0, 0, 0, 0.2)',
+    borderColor: 'grey',
     borderWidth: 1,
     borderRadius: 25,
-    overflow: 'hidden',
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  pillContentContainer: {
+    flex: 1,
+    flexDirection: 'row',
   },
   personItemTitle: {
-    fontSize: 12,
+    ...buttonText,
+    flex: 1,
+  },
+  personItem: {
+    padding: 5,
   },
 });
 
