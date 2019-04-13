@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { h2 } from '../../assets/style/common.style';
+import { h2, h3 } from '../../assets/style/common.style';
 
 class PersonCard extends Component {
   constructor(props) {
@@ -16,6 +16,8 @@ class PersonCard extends Component {
           key={this.props.person.id}
           title={this.props.person.firstName + ' ' + this.props.person.lastName}
           titleStyle={styles.personName}
+          subtitle={`${this.props.person.jots.length} jots`}
+          subtitleStyle={styles.personSubtitle}
           onPress={() => this.props.onPress(this.props.person)}
           containerStyle={styles.listItemContainer}
         />
@@ -42,7 +44,9 @@ const styles = StyleSheet.create({
   },
   personName: {
     ...h2,
-    textAlign: 'center',
+  },
+  personSubtitle: {
+    ...h3,
   },
 });
 
