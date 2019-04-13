@@ -9,7 +9,7 @@ class TwoColumnList extends Component {
   render() {
     let leftColumn = [];
     let rightColumn = [];
-    let data = this.props.section.data.slice().reverse();
+    let data = this.props.section.data;
 
     data.forEach((item, index) => {
       if (index % 2 === 1) {

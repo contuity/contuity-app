@@ -1,11 +1,8 @@
 import realm from '../realm.js';
 
 class JotService {
-  findAll(sortBy) {
-    if (!sortBy) {
-      sortBy = ['dateCreated', false];
-    }
-    return realm.objects('Jot');
+  findAll() {
+    return realm.objects('Jot').sorted('dateCreated', false);
   }
 
   findById(jotId) {
@@ -19,11 +16,9 @@ class JotService {
     dayEnd.setHours(23, 59, 59);
 
     let allJots = realm.objects('Jot');
-    return allJots.filtered(
-      'dateCreated >= $0 && dateCreated < $1',
-      dayStart,
-      dayEnd
-    );
+    return allJots
+      .filtered('dateCreated >= $0 && dateCreated < $1', dayStart, dayEnd)
+      .sorted('dateCreated', true);
   }
 
   findAllCreatedThisWeek() {
@@ -33,11 +28,9 @@ class JotService {
     dayEnd.setHours(-1, 59, 59);
 
     let allJots = realm.objects('Jot');
-    return allJots.filtered(
-      'dateCreated >= $0 && dateCreated < $1',
-      dayStart,
-      dayEnd
-    );
+    return allJots
+      .filtered('dateCreated >= $0 && dateCreated < $1', dayStart, dayEnd)
+      .sorted('dateCreated', true);
   }
 
   // If a jot with this Jot's ID already exists, this will override the existing data in the DB
