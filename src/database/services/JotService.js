@@ -8,6 +8,10 @@ class JotService {
     return realm.objects('Jot');
   }
 
+  findById(jotId) {
+    return realm.objectForPrimaryKey('Jot', jotId);
+  }
+
   findAllCreatedToday() {
     let dayStart = new Date();
     dayStart.setHours(0, 0, 0);
@@ -40,6 +44,7 @@ class JotService {
   // if a jot does not exist, this will create the jot from scratch
   // if newObj is given its properties will be copied to jot.
   save(jot, newObj) {
+    let newJot;
     realm.write(() => {
       jot.dateModified = new Date();
 
@@ -49,8 +54,10 @@ class JotService {
         }
       }
 
-      realm.create('Jot', jot, true);
+      newJot = realm.create('Jot', jot, true);
     });
+
+    return newJot;
   }
 
   deleteJots(jots) {

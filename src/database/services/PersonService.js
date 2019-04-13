@@ -24,17 +24,8 @@ class PersonService {
   }
 
   removePersonFromJot(person, jot) {
-    person.jots.forEach((item, index) => {
-      if (item.id === jot.id) {
-        realm.write(() => {
-          realm.create(
-            'Person',
-            { id: person.id, jots: person.jots.splice(index, index) },
-            true
-          );
-        });
-      }
-    });
+    let newJots = person.jots.filter(j => j.id !== jot.id);
+    this.save(person, { jots: newJots });
   }
 }
 
