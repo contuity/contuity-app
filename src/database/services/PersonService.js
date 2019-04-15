@@ -16,7 +16,7 @@ class PersonService {
   findPeopleBySearchTerm(searchTerm) {
     let people = this.findAll();
     return people.filtered(
-      'firstName CONTAINS[c] $0 OR lastName CONTAINS[c] $0',
+      'firstName BEGINSWITH[c] $0 OR lastName BEGINSWITH[c] $0',
       searchTerm
     );
   }
