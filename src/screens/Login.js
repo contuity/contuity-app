@@ -8,7 +8,9 @@ import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
-import {primaryButton, secondaryButton, buttonText, h3, link, inputTextColor} from '../../assets/style/common.style';
+import {primaryButton, secondaryButton, buttonText, h1, h3, link, inputTextColor} from '../../assets/style/common.style';
+import LinearGradient from 'react-native-linear-gradient';
+import themeStyle from '../../assets/style/theme.style';
 
 // Enum of different pages to show
 const showingScreen = {
@@ -123,13 +125,6 @@ class Login extends Component {
   }
 
   render() {
-    const navbarStyles = {
-      container: {
-        flex: 1,
-        marginTop: 200,
-      },
-    };
-
     let usernameInput = (
       <Input
         key="username"
@@ -156,39 +151,29 @@ class Login extends Component {
 
     let content;
     if (this.state.currentScreen == showingScreen.choose) {
-      let logoStyle = {
-        width: 100,
-        height: 100,
-      };
-
-      let logoContainerStyle = {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        height: 100,
-      };
 
       content = [
-        <View style={logoContainerStyle} key="image">
-          <Image source={logo} style={logoStyle} />
-        </View>,
+        <Image source={logo} style={styles.logoStyle} key = "image" />,
+        <Text key ="title" style = {styles.contuity}>contuity</Text>,
         <Button
           key="0"
           buttonStyle={styles.primaryButton}
           onPress={this.onLoginPress}
           title="Sign In"
           titleStyle= {buttonText}
-
         />,
         <Button
           key="1"
           buttonStyle={styles.secondaryButton}
           onPress={this.onCreateAnAccountPress}
           title="Sign Up"
-          titleStyle= {buttonText}
+          titleStyle= {styles.buttonTextSecondary}
         />,
       ];
     } else if (this.state.currentScreen == showingScreen.login) {
       content = [
+        <Image source={logo} style={styles.logoStyle} key = "image" />,
+        <Text key ="title" style = {styles.contuity}>contuity</Text>,
         usernameInput,
         firstPasswordEntry,
         <Button
@@ -201,12 +186,20 @@ class Login extends Component {
             this.state.email.length == 0 || this.state.password.length == 0
           }
         />,
+        //Forgot password needs to be set-up
+        <Text
+          key="forgotpassword"
+          style={styles.link}
+          onPress={this.onLoginPress}
+        >
+          Forgot Password?
+        </Text>,
         <Button
           key="1"
           buttonStyle={styles.secondaryButton}
           onPress={this.onCreateAnAccountPress}
-          title="Create an account"
-          titleStyle= {buttonText}
+          title="Sign Up"
+          titleStyle= {styles.buttonTextSecondary}
         />,
       ];
     } else if (this.state.currentScreen == showingScreen.signup) {
@@ -220,6 +213,8 @@ class Login extends Component {
       }
 
       content = [
+        <Image source={logo} style={styles.logoStyle} key = "image" />,
+        <Text key ="title" style = {styles.contuity}>contuity</Text>,
         usernameInput,
         firstPasswordEntry,
         <Input
@@ -235,7 +230,7 @@ class Login extends Component {
           key="1"
           buttonStyle={styles.primaryButton}
           onPress={this.signUpForAccount}
-          title="Create an account"
+          title="Sign Up"
           titleStyle= {buttonText}
 
           disabled={!isValid}
@@ -251,9 +246,9 @@ class Login extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <LinearGradient colors={['#F9DCD8', '#A7BFD0', '#6576A8']} style={styles.container}>
        {content}
-      </View>
+      </LinearGradient>
     );
   }
 }
@@ -265,8 +260,11 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     backgroundColor: '#A7BFD0',
   },
+
   inputContainerStyle: {
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
+    width: '80%',
+    marginLeft: '10%',
   },
 
 inputStyle: {
@@ -279,9 +277,6 @@ inputStyle: {
   ...h3,
   ...inputTextColor,
   paddingLeft:20,
-  // trying to remove the gray lines underneath each input field with no sucess
-  borderBottomWidth: 0,
-  borderColor:'transparent',
 },
 
 primaryButton: {
@@ -297,11 +292,31 @@ secondaryButton: {
   marginBottom: 20,
 },
 
+buttonTextSecondary: {
+  ...link,
+  ...buttonText,
+  
+},
+
 link: {
   ...h3,
   ...link,
   marginTop:20,
+  marginBottom:20,
 },
+
+logoStyle: {
+  width: 72,
+  height: 84,
+},
+
+contuity: {
+  ...link,
+  ...h1,
+  paddingTop:10,
+  fontSize:36,
+  paddingBottom: 20,
+}
 
 });
 

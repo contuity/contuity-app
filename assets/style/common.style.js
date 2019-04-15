@@ -2,7 +2,7 @@ import theme from './theme.style';
 
 export const h1 = {
     fontSize: theme.fontSizeLarge,
-    fontFamily: theme.assistantNorm,
+    fontFamily: theme.varelaRound,
     fontWeight: theme.fontWeightNorm,
 }
 
@@ -19,15 +19,17 @@ export const h3 = {
 }
 
 export const primaryButton = {
-    backgroundColor: theme.primaryColor,
+    backgroundColor: theme.secondaryColor,
     borderRadius: 23,
     paddingTop: 10,
     paddingBottom: 10,
 }
 
 export const secondaryButton = {
-    backgroundColor: theme.secondaryColor,
+    backgroundColor: 'transparent',
     borderRadius: 23,
+    borderWidth: 2,
+    borderColor: theme.primaryColor,
     paddingTop: 10,
     paddingBottom: 10,
 }
