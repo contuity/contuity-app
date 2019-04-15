@@ -1,8 +1,34 @@
 import realm from '../realm.js';
 
 class PersonService {
-  findAll() {
-    return realm.objects('Person').sorted('firstName');
+  findAll(sortBy, desc) {
+    let sortPeopleBy = sortBy;
+    let descending = desc;
+
+    if (!sortPeopleBy) {
+      sortPeopleBy = 'firstName';
+      descending = false;
+    }
+
+    return realm.objects('Person').sorted(sortPeopleBy, descending);
+  }
+
+  findPeopleBySearchTerm(searchTerm) {
+    let people = this.findAll();
+    return people.filtered(
+      'firstName CONTAINS[c] $0 OR lastName CONTAINS[c] $0',
+      searchTerm
+    );
+  }
+
+  findPeopleWithMostJots(numResults) {
+    let people = this.findAll().slice();
+
+    people.sort((a, b) => {
+      return b.jots.length - a.jots.length;
+    });
+
+    return people.slice(0, numResults);
   }
 
   save(person, newObj) {
