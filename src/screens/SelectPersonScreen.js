@@ -10,8 +10,7 @@ class SelectPersonScreen extends Component {
     super(props);
     this.onSearchTermChange = this.onSearchTermChange.bind(this);
     this.onCancelPress = this.onCancelPress.bind(this);
-    this.onRightButtonPress = this.onRightButtonPress.bind(this);
-    // this.onPersonPress = this.onPersonPress.bind(this);
+    this.onPersonPress = this.onPersonPress.bind(this);
 
     this.state = {
       searchTerm: '',
@@ -28,8 +27,8 @@ class SelectPersonScreen extends Component {
     this.props.onSelectPersonFinished(null);
   }
 
-  onRightButtonPress() {
-    this.props.onSelectPersonFinished(null);
+  onPersonPress(person) {
+    this.props.onSelectPersonFinished(person);
   }
 
   getSearchResults() {
@@ -39,7 +38,7 @@ class SelectPersonScreen extends Component {
     if (this.state.searchTerm != '') {
       results = PersonService.findPeopleBySearchTerm(this.state.searchTerm);
     } else {
-      results = PersonService.findPeopleWithMostJots(5);
+      results = PersonService.findPeopleWithMostJots(4);
     }
 
     sections.push({ title: 'Results', data: results });

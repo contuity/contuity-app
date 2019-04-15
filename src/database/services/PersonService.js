@@ -21,14 +21,14 @@ class PersonService {
     );
   }
 
-  findPeopleWithMostJots(numResults) {
+  findPeopleWithMostJots(numPeople) {
     let people = this.findAll().slice();
 
     people.sort((a, b) => {
       return b.jots.length - a.jots.length;
     });
 
-    return people.slice(0, numResults);
+    return people.slice(0, numPeople);
   }
 
   save(person, newObj) {
