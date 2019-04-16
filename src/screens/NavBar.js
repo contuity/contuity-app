@@ -160,7 +160,6 @@ class NavBar extends Component {
     let spacesIcon;
     if (this.state.showingPage == showingPage.SPACES) {
       spacesIcon = spacesSelectedIcon
-      currentPage = <PeopleScreen/>;
     }
     else {
       spacesIcon = spacesUnselectedIcon
@@ -170,6 +169,7 @@ class NavBar extends Component {
     let peopleIcon;
     if (this.state.showingPage == showingPage.PEOPLE) {
       peopleIcon = peopleSelectedIcon
+      currentPage = <PeopleScreen/>;
     }
     else {
       peopleIcon = peopleUnselectedIcon
