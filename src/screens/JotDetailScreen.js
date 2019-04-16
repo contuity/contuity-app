@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     marginLeft: 25,
   },
   jotContentInput: {
-    height: 400,
+    height: 100,
     borderColor: 'gray',
     borderWidth: 1,
   },
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   jotContent: {
-    height: 400,
+    height: 100,
     borderColor: 'gray',
     borderWidth: 1,
   },
