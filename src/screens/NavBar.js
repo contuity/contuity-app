@@ -53,39 +53,19 @@ class NavBar extends Component {
 
   getButton(src, text, onPress) {
 
-    let a = parseInt(String(Math.random()).slice(3,5)).toString(16)
-    let b = parseInt(String(Math.random()).slice(3,5)).toString(16)
-    let c = parseInt(String(Math.random()).slice(3,5)).toString(16)
-
-
-    let buttonStyle = {
+    
+    let leftButton = {
       flex: 1,
       flexDirection: 'row',
       padding: 'auto',
-      backgroundColor: '#' + a + b + c
-
-    }
-
-    let leftButton = {
-      ...buttonStyle,
       width: '100%',
       justifyContent: "center",
       alignItems: "center",
     }
 
-    let middleButton = {
-      ...buttonStyle,
-      backgroundColor: 'green'
-    }
-
-
-    let leftButtonIcon = {
+    let imageStyle = {
       margin: 'auto',
-
-
-      // backgroundColor: 'blue'
     }
-
 
     let middleContainer = {
 
@@ -107,7 +87,7 @@ class NavBar extends Component {
     return (
       <TouchableOpacity style={leftButton} onPress={onPress}>
         <View style={middleContainer}>
-          <Image source={src} style={leftButtonIcon}/>
+          <Image source={src} style={imageStyle}/>
           <Text style={iconSubtitleText}>{text}</Text>
         </View>
       </TouchableOpacity>)
@@ -126,10 +106,8 @@ class NavBar extends Component {
 
     let navBarStyle = {
       height: 72,
-      // flex: 1,
       flexDirection: 'row',
       width: '100%',
-      // backgroundColor: 'red',
       backgroundColor: "rgba(54, 50, 60, 0.82)",
       backdropFilter: 'blur(4px)',
       zIndex: -1
@@ -138,10 +116,8 @@ class NavBar extends Component {
     let contentView = {
       height: '90%',
       position: 'relative',
-
       flex: 1
     }
-
 
     let currentPage = null;
 
