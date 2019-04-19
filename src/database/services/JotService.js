@@ -17,19 +17,46 @@ class JotService {
 
     let allJots = realm.objects('Jot');
     return allJots
-      .filtered('dateCreated >= $0 && dateCreated < $1', dayStart, dayEnd)
+      .filtered('dateCreated >= $0 && dateCreated <= $1', dayStart, dayEnd)
+      .sorted('dateCreated', true);
+  }
+
+  findAllCreatedYesterday() {
+    let dayStart = new Date();
+    dayStart.setHours(0, 0, 0);
+    dayStart.setDate(dayStart.getDate() - 1);
+    let dayEnd = new Date();
+    dayEnd.setHours(23, 59, 59);
+    dayEnd.setDate(dayEnd.getDate() - 1);
+
+    let allJots = realm.objects('Jot');
+    return allJots
+      .filtered('dateCreated >= $0 && dateCreated <= $1', dayStart, dayEnd)
       .sorted('dateCreated', true);
   }
 
   findAllCreatedThisWeek() {
     let dayStart = new Date();
+    dayStart.setHours(0, 0, 0);
     dayStart.setDate(dayStart.getDate() - 7);
     let dayEnd = new Date();
-    dayEnd.setHours(-1, 59, 59);
+    dayEnd.setHours(23, 59, 59);
+    dayEnd.setDate(dayEnd.getDate() - 2);
 
     let allJots = realm.objects('Jot');
     return allJots
-      .filtered('dateCreated >= $0 && dateCreated < $1', dayStart, dayEnd)
+      .filtered('dateCreated >= $0 && dateCreated <= $1', dayStart, dayEnd)
+      .sorted('dateCreated', true);
+  }
+
+  findAllOtherJots() {
+    let dayStart = new Date();
+    dayStart.setHours(0, 0, 0);
+    dayStart.setDate(dayStart.getDate() - 7);
+
+    let allJots = realm.objects('Jot');
+    return allJots
+      .filtered('dateCreated < $0', dayStart)
       .sorted('dateCreated', true);
   }
 

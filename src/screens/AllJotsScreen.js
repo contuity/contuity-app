@@ -10,6 +10,7 @@ import {
 import JotService from '../database/services/JotService';
 import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
+import moment from 'moment';
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -25,7 +26,9 @@ class AllJotsScreen extends Component {
     this.state = {
       allJots: JotService.findAll(),
       todaysJots: JotService.findAllCreatedToday(),
+      yesterdaysJots: JotService.findAllCreatedYesterday(),
       thisWeeksJots: JotService.findAllCreatedThisWeek(),
+      allOtherJots: JotService.findAllOtherJots(),
       selectedJots: [],
       // These variables keep track of how and when to show a Jot detail page.
       isShowingNewJotPage: false,
@@ -104,7 +107,9 @@ class AllJotsScreen extends Component {
     this.setState({
       allJots: JotService.findAll(),
       todaysJots: JotService.findAllCreatedToday(),
+      yesterdaysJots: JotService.findAllCreatedYesterday(),
       thisWeeksJots: JotService.findAllCreatedThisWeek(),
+      allOtherJots: JotService.findAllOtherJots(),
       selectedJots: [],
       listSelectionMode: false,
     });
@@ -122,7 +127,9 @@ class AllJotsScreen extends Component {
     this.setState({
       allJots: JotService.findAll(),
       todaysJots: JotService.findAllCreatedToday(),
+      yesterdaysJots: JotService.findAllCreatedYesterday(),
       thisWeeksJots: JotService.findAllCreatedThisWeek(),
+      allOtherJots: JotService.findAllOtherJots(),
       isShowingNewJotPage: false,
     });
   }
@@ -155,10 +162,30 @@ class AllJotsScreen extends Component {
   getSections() {
     return [
       { title: 'Today', data: this.state.todaysJots },
+      { title: 'Yesterday', data: this.state.yesterdaysJots },
       { title: 'This week', data: this.state.thisWeeksJots },
-      // TODO: Group all other jots by month
-      // { title: 'This month', data: this.state.allJots },
-    ];
+    ].concat(this.getAllOtherJotsByMonth());
+  }
+
+  getAllOtherJotsByMonth() {
+    let monthToJots = {};
+
+    this.state.allOtherJots.forEach(jot => {
+      let key = moment(jot.findAllCreatedThisWeek).format('MMMM YYYY');
+
+      if (!monthToJots[key]) {
+        monthToJots[key] = [jot];
+      } else {
+        monthToJots[key] = [...monthToJots[key], jot];
+      }
+    });
+
+    let sections = [];
+    Object.keys(monthToJots).forEach(key => {
+      sections.push({ title: key, data: monthToJots[key] });
+    });
+
+    return sections;
   }
 
   render() {

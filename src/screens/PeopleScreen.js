@@ -60,7 +60,7 @@ class PeopleScreen extends Component {
       if (!initialToPeople[initial]) {
         initialToPeople[initial] = [person];
       } else {
-        initialToPeople[initial] = initialToPeople[initial].concat([person]);
+        initialToPeople[initial] = [...initialToPeople[initial], person];
       }
     });
 
