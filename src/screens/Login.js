@@ -8,7 +8,16 @@ import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
-import {primaryButton, secondaryButton, buttonText, h1, h3, link, inputTextColor} from '../../assets/style/common.style';
+import {
+  primaryButton,
+  outlineButton,
+  buttonText,
+  h1,
+  h3,
+  link,
+} from '../../assets/style/common.style';
+
+import styleConstants from '../../assets/style/theme.style.js';
 import LinearGradient from 'react-native-linear-gradient';
 import themeStyle from '../../assets/style/theme.style';
 
@@ -107,7 +116,6 @@ class Login extends Component {
 
   // Buttons from the choose screen
   onLoginPress() {
-
     this.setState({
       email: '',
       password: '',
@@ -136,7 +144,6 @@ class Login extends Component {
       />
     );
 
-
     let firstPasswordEntry = (
       <Input
         key="password1"
@@ -151,29 +158,32 @@ class Login extends Component {
 
     let content;
     if (this.state.currentScreen == showingScreen.choose) {
-
       content = [
-        <Image source={logo} style={styles.logoStyle} key = "image" />,
-        <Text key ="title" style = {styles.contuity}>contuity</Text>,
+        <Image source={logo} style={styles.logoStyle} key="image" />,
+        <Text key="title" style={styles.contuity}>
+          contuity
+        </Text>,
         <Button
           key="0"
           buttonStyle={styles.primaryButton}
           onPress={this.onLoginPress}
           title="Sign In"
-          titleStyle= {buttonText}
+          titleStyle={buttonText}
         />,
         <Button
           key="1"
-          buttonStyle={styles.secondaryButton}
+          buttonStyle={styles.outlineButton}
           onPress={this.onCreateAnAccountPress}
           title="Sign Up"
-          titleStyle= {styles.buttonTextSecondary}
+          titleStyle={styles.buttonTextSecondary}
         />,
       ];
     } else if (this.state.currentScreen == showingScreen.login) {
       content = [
-        <Image source={logo} style={styles.logoStyle} key = "image" />,
-        <Text key ="title" style = {styles.contuity}>contuity</Text>,
+        <Image source={logo} style={styles.logoStyle} key="image" />,
+        <Text key="title" style={styles.contuity}>
+          contuity
+        </Text>,
         usernameInput,
         firstPasswordEntry,
         <Button
@@ -181,7 +191,7 @@ class Login extends Component {
           buttonStyle={styles.primaryButton}
           onPress={this.signIn}
           title="Login"
-          titleStyle= {buttonText}
+          titleStyle={buttonText}
           disabled={
             this.state.email.length == 0 || this.state.password.length == 0
           }
@@ -196,10 +206,10 @@ class Login extends Component {
         </Text>,
         <Button
           key="1"
-          buttonStyle={styles.secondaryButton}
+          buttonStyle={styles.outlineButton}
           onPress={this.onCreateAnAccountPress}
           title="Sign Up"
-          titleStyle= {styles.buttonTextSecondary}
+          titleStyle={styles.buttonTextSecondary}
         />,
       ];
     } else if (this.state.currentScreen == showingScreen.signup) {
@@ -213,8 +223,10 @@ class Login extends Component {
       }
 
       content = [
-        <Image source={logo} style={styles.logoStyle} key = "image" />,
-        <Text key ="title" style = {styles.contuity}>contuity</Text>,
+        <Image source={logo} style={styles.logoStyle} key="image" />,
+        <Text key="title" style={styles.contuity}>
+          contuity
+        </Text>,
         usernameInput,
         firstPasswordEntry,
         <Input
@@ -231,8 +243,7 @@ class Login extends Component {
           buttonStyle={styles.primaryButton}
           onPress={this.signUpForAccount}
           title="Sign Up"
-          titleStyle= {buttonText}
-
+          titleStyle={buttonText}
           disabled={!isValid}
         />,
         <Text
@@ -246,8 +257,15 @@ class Login extends Component {
     }
 
     return (
-      <LinearGradient colors={['#F9DCD8', '#A7BFD0', '#6576A8']} style={styles.container}>
-       {content}
+      <LinearGradient
+        colors={[
+          styleConstants.topGradient,
+          styleConstants.middleGradient,
+          styleConstants.lastGradient,
+        ]}
+        style={styles.container}
+      >
+        {content}
       </LinearGradient>
     );
   }
@@ -256,8 +274,8 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',    
-    alignItems: 'center', 
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#A7BFD0',
   },
 
@@ -267,57 +285,55 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
   },
 
-inputStyle: {
-  marginTop: 10,
-  marginBottom: 10,
-  flex:1,
-  backgroundColor: 'white',
-  height:40,
-  borderRadius: 24,
-  ...h3,
-  ...inputTextColor,
-  paddingLeft:20,
-},
+  inputStyle: {
+    marginTop: 10,
+    marginBottom: 10,
+    flex: 1,
+    backgroundColor: 'white',
+    height: 40,
+    borderRadius: 24,
+    ...h3,
+    color: styleConstants.lightGray,
+    paddingLeft: 20,
+  },
 
-primaryButton: {
-  ...primaryButton,
-  width: 190,
-  marginTop: 20,
-},
+  primaryButton: {
+    ...primaryButton,
+    width: 190,
+    marginTop: 20,
+  },
 
-secondaryButton: {
-  ...secondaryButton,
-  width: 190,
-  marginTop: 20,
-  marginBottom: 20,
-},
+  outlineButton: {
+    ...outlineButton,
+    width: 190,
+    marginTop: 20,
+    marginBottom: 20,
+  },
 
-buttonTextSecondary: {
-  ...link,
-  ...buttonText,
-  
-},
+  buttonTextSecondary: {
+    ...link,
+    ...buttonText,
+  },
 
-link: {
-  ...h3,
-  ...link,
-  marginTop:20,
-  marginBottom:20,
-},
+  link: {
+    ...h3,
+    ...link,
+    marginTop: 20,
+    marginBottom: 20,
+  },
 
-logoStyle: {
-  width: 72,
-  height: 84,
-},
+  logoStyle: {
+    width: 72,
+    height: 84,
+  },
 
-contuity: {
-  ...link,
-  ...h1,
-  paddingTop:10,
-  fontSize:36,
-  paddingBottom: 20,
-}
-
+  contuity: {
+    ...link,
+    ...h1,
+    paddingTop: 10,
+    fontSize: 36,
+    paddingBottom: 20,
+  },
 });
 
 export default Login;
