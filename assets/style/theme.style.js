@@ -12,6 +12,7 @@ export default {
   assistantNorm: 'Assistant',
   assistantLight: 'Assistant-Light',
   assistantSB: 'Assistant-Semibold',
+  varelaRound: 'VarelaRound-Regular',
 
   BACKGROUND_COLOR_LIGHT: '#f0f6f7',
 
