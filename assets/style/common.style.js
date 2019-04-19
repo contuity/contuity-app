@@ -4,19 +4,19 @@ export const h1 = {
     fontSize: theme.fontSizeLarge,
     fontFamily: theme.varelaRound,
     fontWeight: theme.fontWeightNorm,
-}
+};
 
 export const h2 = {
-    fontFamily: theme.assistantSB,
-    fontWeight: theme.fontWeightSB,
-    fontSize: theme.fontSizeMedium,
-}
+  fontFamily: theme.assistantSB,
+  fontWeight: theme.fontWeightSB,
+  fontSize: theme.fontSizeMedium,
+};
 
 export const h3 = {
-    fontFamily: theme.assistantNorm,
-    fontWeight: theme.fontWeightNorm,
-    fontSize: theme.fontSizeSmall,
-}
+  fontFamily: theme.assistantNorm,
+  fontWeight: theme.fontWeightNorm,
+  fontSize: theme.fontSizeSmall,
+};
 
 export const primaryButton = {
     backgroundColor: theme.secondaryColor,
@@ -35,18 +35,17 @@ export const secondaryButton = {
 }
 
 export const buttonText = {
-    fontFamily: theme.assistantSB,
-    fontWeight: theme.fontWeightSB,
-    fontSize: theme.fontSizeSmall,
-}
+  fontFamily: theme.assistantSB,
+  fontWeight: theme.fontWeightSB,
+  fontSize: theme.fontSizeSmall,
+};
 
 export const link = {
-    color: theme.primaryColor,
-    fontFamily: theme.assistantSB,
-    fontWeight: theme.fontWeightSB,
-}
+  color: theme.primaryColor,
+  fontFamily: theme.assistantSB,
+  fontWeight: theme.fontWeightSB,
+};
 
 export const inputTextColor = {
-    color: theme.lightGray,
-}
-
+  color: theme.lightGray,
+};

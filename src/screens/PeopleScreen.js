@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-native-elements';
-import {
-  Alert,
-  View,
-  ScrollView,
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
+import { ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import PersonService from '../database/services/PersonService';
 import PersonList from '../components/PersonList';
 import PersonDetailScreen from './PersonDetailScreen';
@@ -106,7 +99,6 @@ class PeopleScreen extends Component {
           <PersonList
             sections={this.getAlphabatizedSections()}
             onPersonPress={this.onPersonPress}
-            numColumns={2}
           />
         </ScrollView>
       </SafeAreaView>
@@ -119,7 +111,6 @@ export default PeopleScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   scrollContainer: {
     flex: 1,

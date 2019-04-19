@@ -7,7 +7,7 @@ export default {
 
   fontWeightNorm: '400',
   fontWeightSB: '600',
-  fontWeightLight:'300',
+  fontWeightLight: '300',
 
   assistantNorm: 'Assistant',
   assistantLight: 'Assistant-Light',
