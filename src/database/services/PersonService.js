@@ -1,5 +1,4 @@
 import realm from '../realm.js';
-import Person from '../models/Person.js';
 
 class PersonService {
   findAll() {
@@ -23,12 +22,14 @@ class PersonService {
       realm.delete(people);
     });
   }
+
+  removePersonFromJot(person, jot) {
+    let newJots = person.jots.filter(j => j.id !== jot.id);
+    this.save(person, { jots: newJots });
+  }
 }
 
 // Initialize the Singleton
 let personServiceInstance = new PersonService();
-
-// personServiceInstance.deletePeople(realm.objects('Person'));
-// personServiceInstance.save(new Person('North', 'West'));
 
 export default personServiceInstance;

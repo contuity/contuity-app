@@ -52,4 +52,3 @@ export const link = {
   fontFamily: theme.assistantSB,
   fontWeight: theme.fontWeightSB,
 };
-
