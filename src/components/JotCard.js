@@ -39,16 +39,16 @@ class JotCard extends Component {
     let dateCreated = jot.dateCreated;
     let dateFormat = dateCreated.getMonth() + 1 + '/' + dateCreated.getDate();
 
-    const selectionBtn = (
-      <CheckBox
-        containerStyle={styles.selectBtn}
-        size={20}
-        checkedIcon="dot-circle-o"
-        uncheckedIcon="circle-o"
-        onPress={() => this.onJotSelect(jot)}
-        checked={this.state.selected}
-      />
-    );
+    // const selectionBtn = (
+    //   <CheckBox
+    //     containerStyle={styles.selectBtn}
+    //     size={20}
+    //     checkedIcon="dot-circle-o"
+    //     uncheckedIcon="circle-o"
+    //     onPress={() => this.onJotSelect(jot)}
+    //     checked={this.state.selected}
+    //   />
+    // );
 
     let content = jot.content.slice(0, MAX_CONTENT_HEIGHT);
 
@@ -58,18 +58,21 @@ class JotCard extends Component {
 
     return (
       <View style={styles.jotContainer}>
-        {this.props.selectionMode && selectionBtn}
+        {/* {this.props.selectionMode && selectionBtn} */}
         <ListItem
-          style={
-            this.props.selectionMode ? styles.jotItemSelectMode : styles.jotItem
-          }
+          style={styles.jotItem}
           key={jot.id}
           title={jot.title}
           titleStyle={styles.jotTitle}
           subtitle={content}
           subtitleStyle={styles.jotBody}
-          containerStyle={styles.listItemContainer}
+          containerStyle={
+            this.state.selected
+              ? styles.selectedListItemContainer
+              : styles.listItemContainer
+          }
           onPress={() => this.onJotSelect(jot)}
+          underlayColor="transparent"
         />
       </View>
     );
@@ -83,6 +86,12 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     margin: 8,
   },
+  selectedListItemContainer: {
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: 'pink',
+    margin: 8,
+  },
   jotContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -93,11 +102,6 @@ const styles = StyleSheet.create({
   },
   jotItem: {
     width: '100%',
-  },
-  jotItemSelectMode: {
-    width: '90%',
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-    borderBottomWidth: 1,
   },
   jotTitle: {
     ...h2,
