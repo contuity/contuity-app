@@ -38,6 +38,7 @@ class SelectPersonScreen extends Component {
     if (this.state.searchTerm != '') {
       results = PersonService.findPeopleBySearchTerm(this.state.searchTerm);
     } else {
+      // gets the 4 people with the most jots
       results = PersonService.findPeopleWithMostJots(4);
     }
 
@@ -48,7 +49,7 @@ class SelectPersonScreen extends Component {
   render() {
     const leftButtonConfig = {
       title: 'Cancel',
-      handler: () => this.onCancelPress(),
+      handler: this.onCancelPress,
     };
 
     return (

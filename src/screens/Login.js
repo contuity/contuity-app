@@ -278,7 +278,6 @@ const styles = StyleSheet.create({
     ...h3,
     ...inputTextColor,
     paddingLeft: 20,
-    // trying to remove the gray lines underneath each input field with no sucess
     borderBottomWidth: 0,
     borderColor: 'transparent',
   },

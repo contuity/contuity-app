@@ -110,13 +110,11 @@ class JotDetailScreen extends Component {
   removeJotFromPeople(jot) {
     let people = this.state.peopleToRemove;
 
-    if (people.length > 0) {
-      people.forEach(person => {
-        PersonService.removePersonFromJot(person, jot);
-      });
+    people.forEach(person => {
+      PersonService.removePersonFromJot(person, jot);
+    });
 
-      this.setState({ peopleToRemove: [] });
-    }
+    this.setState({ peopleToRemove: [] });
   }
 
   onCancelPress() {
@@ -184,6 +182,7 @@ class JotDetailScreen extends Component {
     }
 
     if (this.state.isEditing) {
+      // filter out all people that are going to be removed
       allPeopleForJot = allPeopleForJot.filter(
         p1 => !this.state.peopleToRemove.some(p2 => p2.id === p1.id)
       );
