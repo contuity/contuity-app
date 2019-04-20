@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { CheckBox, ListItem } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 import { h2, h3 } from '../../assets/style/common.style';
 
 let MAX_CONTENT_HEIGHT = 150;

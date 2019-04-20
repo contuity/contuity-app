@@ -7,13 +7,17 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { Button, Input } from 'react-native-elements';
-import NavigationBar from 'react-native-navbar';
+import moment from 'moment';
+import { Button } from 'react-native-elements';
 import JotService from '../database/services/JotService';
 import PersonService from '../database/services/PersonService';
 import Jot from '../database/models/Jot';
 import PersonPill from '../components/PersonPill';
+import ContuityHeader from '../components/ContuityHeader';
 import SelectPersonScreen from './SelectPersonScreen';
+
+import { h2, h3 } from '../../assets/style/common.style';
+import themeStyles from '../../assets/style/theme.style';
 
 class JotDetailScreen extends Component {
   constructor(props) {
@@ -203,7 +207,7 @@ class JotDetailScreen extends Component {
     }
 
     const titleConfig = {
-      title: 'View Jot',
+      title: '',
     };
 
     const leftButtonConfig = {
@@ -220,7 +224,7 @@ class JotDetailScreen extends Component {
       if (this.state.jot) {
         titleConfig.title = 'Edit Jot';
       } else {
-        titleConfig.title = 'Create Jot';
+        titleConfig.title = 'Create a Jot';
       }
 
       leftButtonConfig.title = 'Cancel';
@@ -228,7 +232,7 @@ class JotDetailScreen extends Component {
     }
 
     let peopleComponent = (
-      <View key="2" style={styles.peopleContainer}>
+      <View style={styles.peopleContainer}>
         {this.getAllPeople().map((person, index) => {
           return (
             <PersonPill
@@ -244,52 +248,56 @@ class JotDetailScreen extends Component {
 
     let content;
     if (this.state.isEditing) {
-      content = [
-        <Input
-          key="0"
-          inputStyle={styles.jotTitleInput}
-          placeholder="Title"
-          onChangeText={this.onJotTitleChange}
-          value={this.state.title}
-        />,
-        <TextInput
-          key="1"
-          style={styles.jotContentInput}
-          placeholder="Jot"
-          onChangeText={this.onContentChange}
-          value={this.state.content}
-          multiline={true}
-        />,
-        peopleComponent,
-        <Button
-          key="3"
-          title="Add Person"
-          type="clear"
-          onPress={this.onAddPersonPress}
-        />,
-      ];
+      content = (
+        <View>
+          <Text style={styles.inputLabel}>Title</Text>
+          <TextInput
+            placeholder="Optional"
+            style={styles.jotTitle}
+            onChangeText={this.onJotTitleChange}
+            value={this.state.title}
+          />
+          <Text style={styles.inputLabel}>Jot</Text>
+          <TextInput
+            placeholder="What's on your mind?"
+            style={styles.jotContent}
+            onChangeText={this.onContentChange}
+            value={this.state.content}
+            multiline={true}
+          />
+          {peopleComponent}
+          <Button
+            title="Add Person"
+            type="clear"
+            onPress={this.onAddPersonPress}
+          />
+        </View>
+      );
     } else {
-      content = [
-        <Text key="0" style={styles.jotTitle}>
-          Title: {this.state.title}
-        </Text>,
-        <Text key="1" style={styles.jotContent}>
-          {this.state.content}
-        </Text>,
-        peopleComponent,
-      ];
+      content = (
+        <View>
+          <Text style={styles.jotTitle}>{this.state.title}</Text>
+          <Text style={styles.jotContent}>{this.state.content}</Text>
+          {this.state.jot.people.length > 0 && (
+            <Text style={styles.sectionsHeader}>People</Text>
+          )}
+          {peopleComponent}
+          <Text style={styles.sectionsHeader}>{`Created ${moment(
+            this.state.jot.dateCreated
+          ).calendar()}`}</Text>
+        </View>
+      );
     }
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
-          <NavigationBar
-            title={titleConfig}
-            rightButton={rightButtonConfig}
-            leftButton={leftButtonConfig}
-          />
-          {content}
-        </ScrollView>
+        <ContuityHeader
+          titleConfig={titleConfig}
+          rightButtonConfig={rightButtonConfig}
+          leftButtonConfig={leftButtonConfig}
+          leftButtonType={this.state.isEditing ? 'CANCEL' : 'BACK'}
+        />
+        <ScrollView style={styles.scrollContainer}>{content}</ScrollView>
       </SafeAreaView>
     );
   }
@@ -305,31 +313,33 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     width: '100%',
+    paddingHorizontal: 20,
   },
-  jotTitleInput: {
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 25,
-  },
-  jotContentInput: {
-    height: 400,
-    borderColor: 'gray',
-    borderWidth: 1,
+  inputLabel: {
+    ...h3,
+    marginBottom: 3,
+    color: 'black',
   },
   jotTitle: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 1,
+    ...h2,
+    marginBottom: 8,
   },
   jotContent: {
-    height: 400,
-    borderColor: 'gray',
-    borderWidth: 1,
+    ...h3,
+    fontSize: themeStyles.fontSizeMedium,
+    // height: 300,
+    marginBottom: 24,
+  },
+  sectionsHeader: {
+    ...h3,
+    fontFamily: themeStyles.assistantSB,
+    marginBottom: 8,
   },
   peopleContainer: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
+    marginBottom: 24,
   },
 });

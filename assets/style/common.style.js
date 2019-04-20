@@ -1,9 +1,15 @@
 import theme from './theme.style';
 
+export const homescreen = {
+  fontSize: theme.fontSizeLarge,
+  fontFamily: theme.varelaRound,
+  fontWeight: theme.fontWeightNorm,
+};
+
 export const h1 = {
-    fontSize: theme.fontSizeLarge,
-    fontFamily: theme.varelaRound,
-    fontWeight: theme.fontWeightNorm,
+  fontSize: theme.fontSizeLarge,
+  fontFamily: theme.assistantNorm,
+  fontWeight: theme.fontWeightNorm,
 };
 
 export const h2 = {
@@ -19,33 +25,46 @@ export const h3 = {
 };
 
 export const primaryButton = {
-    backgroundColor: theme.secondaryColor,
-    borderRadius: 23,
-    paddingTop: 10,
-    paddingBottom: 10,
-}
+  backgroundColor: theme.primaryColor,
+  borderRadius: theme.buttonBorderRadius,
+  paddingVertical: theme.buttonPaddingVertical,
+  paddingHorizontal: theme.buttonPaddingHorizontal,
+};
+
+export const outlineButton = {
+  backgroundColor: 'transparent',
+  borderRadius: theme.buttonBorderRadius + 2,
+  paddingVertical: theme.buttonPaddingVertical - 2,
+  paddingHorizontal: theme.buttonPaddingHorizontal - 2,
+  borderWidth: 2,
+  borderColor: theme.primaryColor,
+};
 
 export const secondaryButton = {
-    backgroundColor: 'transparent',
-    borderRadius: 23,
-    borderWidth: 2,
-    borderColor: theme.primaryColor,
-    paddingTop: 10,
-    paddingBottom: 10,
-}
+  backgroundColor: theme.secondaryColor,
+  borderRadius: theme.buttonBorderRadius,
+  paddingVertical: theme.buttonPaddingVertical,
+  paddingHorizontal: theme.buttonPaddingHorizontal,
+};
 
 export const buttonText = {
-  fontFamily: theme.assistantSB,
-  fontWeight: theme.fontWeightSB,
+  fontFamily: theme.assistantBold,
+  fontWeight: theme.fontWeightBold,
   fontSize: theme.fontSizeSmall,
 };
 
 export const link = {
   color: theme.primaryColor,
-  fontFamily: theme.assistantSB,
-  fontWeight: theme.fontWeightSB,
+  fontFamily: theme.assistantBold,
+  fontWeight: theme.fontWeightBold,
 };
 
-export const inputTextColor = {
-  color: theme.lightGray,
+export const inputField = {
+  marginTop: 16,
+  flex: 1,
+  backgroundColor: 'white',
+  height: 36,
+  borderRadius: 5,
+  ...h3,
+  paddingLeft: 16,
 };
