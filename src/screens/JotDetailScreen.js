@@ -278,7 +278,7 @@ class JotDetailScreen extends Component {
         <View>
           <Text style={styles.jotTitle}>{this.state.title}</Text>
           <Text style={styles.jotContent}>{this.state.content}</Text>
-          {this.state.jot.people.length > 0 && (
+          {this.state.jot.people && this.state.jot.people.length > 0 && (
             <Text style={styles.sectionsHeader}>People</Text>
           )}
           {peopleComponent}
@@ -327,7 +327,6 @@ const styles = StyleSheet.create({
   jotContent: {
     ...h3,
     fontSize: themeStyles.fontSizeMedium,
-    // height: 300,
     marginBottom: 24,
   },
   sectionsHeader: {
