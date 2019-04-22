@@ -14,9 +14,9 @@ class PersonDetailScreen extends Component {
     this.onLastNameChange = this.onLastNameChange.bind(this);
     this.onPhoneNumberChange = this.onPhoneNumberChange.bind(this);
     this.onEmailChange = this.onEmailChange.bind(this);
-    this.saveAndGetPerson = this.saveAndGetPerson.bind(this);
-    this.onCancelHit = this.onCancelHit.bind(this);
-    this.onRightButtonClick = this.onRightButtonClick.bind(this);
+    this.savePerson = this.savePerson.bind(this);
+    this.onCancelPress = this.onCancelPress.bind(this);
+    this.onRightButtonPress = this.onRightButtonPress.bind(this);
     this.onJotFinished = this.onJotFinished.bind(this);
     this.onJotPress = this.onJotPress.bind(this);
 
@@ -72,7 +72,7 @@ class PersonDetailScreen extends Component {
     });
   }
 
-  saveAndGetPerson() {
+  savePerson() {
     if (this.state.firstName == null || this.state.firstName === '') {
       return null;
     }
@@ -96,16 +96,16 @@ class PersonDetailScreen extends Component {
     return person;
   }
 
-  onCancelHit(person) {
+  onCancelPress(person) {
     this.setState({
       isEditing: false,
     });
     this.props.onPersonFinished(person);
   }
 
-  onRightButtonClick() {
+  onRightButtonPress() {
     if (this.state.isEditing) {
-      let person = this.saveAndGetPerson();
+      let person = this.savePerson();
 
       // tempoarary fix for lack of disabling nav buttons
       if (!person) {
@@ -162,12 +162,12 @@ class PersonDetailScreen extends Component {
 
     const leftButtonConfig = {
       title: 'Back',
-      handler: () => this.onCancelHit(this.state.person),
+      handler: () => this.onCancelPress(this.state.person),
     };
 
     const rightButtonConfig = {
       title: 'Delete',
-      handler: this.onRightButtonClick,
+      handler: this.onRightButtonPress,
     };
 
     if (this.state.isEditing) {
@@ -194,7 +194,7 @@ class PersonDetailScreen extends Component {
 
     let content;
     if (this.state.isEditing) {
-      content = [
+      content = (
         <View style={styles.contentContainer}>
           <View style={styles.photo} />
           <Input
@@ -225,21 +225,23 @@ class PersonDetailScreen extends Component {
             onChangeText={this.onEmailChange}
             value={this.state.email}
           />
-        </View>,
-      ];
+        </View>
+      );
     } else {
-      content = [
-        <View style={styles.contentContainer}>
-          <View style={styles.photo} />
-          <Field name="Phone" value={this.state.person.phoneNumber} />
-          <Field name="Email" value={this.state.person.email} />
-        </View>,
-        <JotTabs />,
-        <JotList
-          sections={this.getJotSections()}
-          onJotPress={this.onJotPress}
-        />,
-      ];
+      content = (
+        <View>
+          <View style={styles.contentContainer}>
+            <View style={styles.photo} />
+            <Field name="Phone" value={this.state.person.phoneNumber} />
+            <Field name="Email" value={this.state.person.email} />
+          </View>
+          <JotTabs />
+          <JotList
+            sections={this.getJotSections()}
+            onJotPress={this.onJotPress}
+          />
+        </View>
+      );
     }
 
     return (

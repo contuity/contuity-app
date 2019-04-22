@@ -7,11 +7,12 @@ export default {
 
   fontWeightNorm: '400',
   fontWeightSB: '600',
-  fontWeightLight:'300',
+  fontWeightLight: '300',
 
   assistantNorm: 'Assistant',
   assistantLight: 'Assistant-Light',
   assistantSB: 'Assistant-Semibold',
+  varelaRound: 'VarelaRound-Regular',
 
   BACKGROUND_COLOR_LIGHT: '#f0f6f7',
 

@@ -79,7 +79,7 @@ class JotCard extends Component {
 const styles = StyleSheet.create({
   listItemContainer: {
     borderRadius: 10,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: 'gray',
     margin: 8,
   },
@@ -93,11 +93,6 @@ const styles = StyleSheet.create({
   },
   jotItem: {
     width: '100%',
-    // borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-    // borderBottomWidth: 1,
-    // borderWidth: 2,
-    // borderColor: 'red',
-    // borderRadius: 10
   },
   jotItemSelectMode: {
     width: '90%',

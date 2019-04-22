@@ -1,9 +1,34 @@
 import realm from '../realm.js';
-import Person from '../models/Person.js';
 
 class PersonService {
-  findAll() {
-    return realm.objects('Person').sorted('firstName');
+  findAll(sortBy, desc) {
+    let sortPeopleBy = sortBy;
+    let descending = desc;
+
+    if (!sortPeopleBy) {
+      sortPeopleBy = 'firstName';
+      descending = false;
+    }
+
+    return realm.objects('Person').sorted(sortPeopleBy, descending);
+  }
+
+  findPeopleBySearchTerm(searchTerm) {
+    let people = this.findAll();
+    return people.filtered(
+      'firstName BEGINSWITH[c] $0 OR lastName BEGINSWITH[c] $0',
+      searchTerm
+    );
+  }
+
+  findPeopleWithMostJots(numPeople) {
+    let people = this.findAll().slice();
+
+    people.sort((a, b) => {
+      return b.jots.length - a.jots.length;
+    });
+
+    return people.slice(0, numPeople);
   }
 
   save(person, newObj) {
@@ -23,12 +48,14 @@ class PersonService {
       realm.delete(people);
     });
   }
+
+  removePersonFromJot(person, jot) {
+    let newJots = person.jots.filter(j => j.id !== jot.id);
+    this.save(person, { jots: newJots });
+  }
 }
 
 // Initialize the Singleton
 let personServiceInstance = new PersonService();
-
-// personServiceInstance.deletePeople(realm.objects('Person'));
-// personServiceInstance.save(new Person('North', 'West'));
 
 export default personServiceInstance;
