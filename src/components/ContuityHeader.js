@@ -25,7 +25,12 @@ class ContuityHeader extends Component {
           leftButtonConfig = (
             <Button
               titleStyle={styles.headerButtonText}
-              icon={{ icon: 'chevron-left', type: 'material', size: 30 }}
+              icon={{
+                name: 'chevron-left',
+                type: 'material',
+                size: 30,
+                color: styleConstants.primaryColor,
+              }}
               {...leftButtonConfig}
               title=""
               type="clear"
@@ -49,7 +54,12 @@ class ContuityHeader extends Component {
           rightButtonConfig = (
             <Button
               titleStyle={styles.headerButtonText}
-              icon={{ name: 'plus', type: 'material-community', size: 30 }}
+              icon={{
+                name: 'plus',
+                type: 'material-community',
+                size: 30,
+                color: styleConstants.primaryColor,
+              }}
               {...rightButtonConfig}
               title=""
               type="clear"
@@ -61,6 +71,8 @@ class ContuityHeader extends Component {
             <Button
               titleStyle={styles.doneBtnText}
               buttonStyle={styles.doneBtn}
+              disabledStyle={styles.doneBtnDisabled}
+              disabledTitleStyle={styles.doneBtnText}
               {...rightButtonConfig}
             />
           );
@@ -82,6 +94,7 @@ class ContuityHeader extends Component {
         leftButton={leftButtonConfig}
         rightButton={rightButtonConfig}
         tintColor={this.props.tintColor ? this.props.tintColor : 'transparent'}
+        style={styles.navbar}
       />
     );
   }
@@ -90,6 +103,9 @@ class ContuityHeader extends Component {
 export default ContuityHeader;
 
 const styles = StyleSheet.create({
+  navbar: {
+    marginBottom: 10,
+  },
   headerTitle: {
     ...h2,
     color: styleConstants.primaryColor,
@@ -100,13 +116,18 @@ const styles = StyleSheet.create({
     color: styleConstants.primaryColor,
   },
   doneBtnText: {
-    ...h2,
+    ...h3,
+    fontFamily: styleConstants.assistantSB,
     color: 'white',
   },
   doneBtn: {
     backgroundColor: styleConstants.primaryColor,
-    paddingVertical: 6,
+    paddingVertical: 5,
     paddingHorizontal: 18,
     borderRadius: 18,
+    marginRight: 10,
+  },
+  doneBtnDisabled: {
+    backgroundColor: styleConstants.primaryDisabled,
   },
 });

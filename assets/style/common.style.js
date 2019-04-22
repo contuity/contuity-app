@@ -60,7 +60,6 @@ export const link = {
 };
 
 export const inputField = {
-  marginTop: 16,
   flex: 1,
   backgroundColor: 'white',
   height: 36,

@@ -36,20 +36,6 @@ class JotCard extends Component {
 
   render() {
     let jot = this.props.jot;
-    let dateCreated = jot.dateCreated;
-    let dateFormat = dateCreated.getMonth() + 1 + '/' + dateCreated.getDate();
-
-    // const selectionBtn = (
-    //   <CheckBox
-    //     containerStyle={styles.selectBtn}
-    //     size={20}
-    //     checkedIcon="dot-circle-o"
-    //     uncheckedIcon="circle-o"
-    //     onPress={() => this.onJotSelect(jot)}
-    //     checked={this.state.selected}
-    //   />
-    // );
-
     let content = jot.content.slice(0, MAX_CONTENT_HEIGHT);
 
     if (jot.content.length > MAX_CONTENT_HEIGHT) {
@@ -58,7 +44,6 @@ class JotCard extends Component {
 
     return (
       <View style={styles.jotContainer}>
-        {/* {this.props.selectionMode && selectionBtn} */}
         <ListItem
           style={styles.jotItem}
           key={jot.id}
