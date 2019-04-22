@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { h2, h3 } from '../../assets/style/common.style';
+import styleConstants from '../../assets/style/theme.style';
 
 let MAX_CONTENT_HEIGHT = 75;
 
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   selectedListItemContainer: {
     borderRadius: 10,
     borderWidth: 3,
-    borderColor: 'pink',
+    borderColor: styleConstants.selectedColor,
     margin: 8,
   },
   jotContainer: {

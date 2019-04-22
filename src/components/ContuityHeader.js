@@ -16,7 +16,7 @@ class ContuityHeader extends Component {
     let rightButtonConfig = this.props.rightButtonConfig;
 
     if (title) {
-      title = <Text style={styles.headerTitle}>{title}</Text>;
+      title = <Text style={styles.headerTitle}>{this.props.title}</Text>;
     }
 
     if (leftButtonConfig) {

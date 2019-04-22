@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-native-elements';
-import {
-  Alert,
-  View,
-  ScrollView,
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
+import { Alert, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import JotService from '../database/services/JotService';
 import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';

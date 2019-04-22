@@ -17,6 +17,7 @@ export default {
 
   primaryColor: '#2D3353',
   secondaryColor: '#D97A7C',
+  selectedColor: '#FF8585',
 
   lightGray: '#5A5A5A',
   lightBlue: '#DEEAFF',
