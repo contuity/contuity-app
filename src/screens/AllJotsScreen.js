@@ -11,6 +11,7 @@ import JotService from '../database/services/JotService';
 import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
 import moment from 'moment';
+import ContuityHeader from '../components/ContuityHeader';
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -189,13 +190,14 @@ class AllJotsScreen extends Component {
   }
 
   render() {
-    let topRightBtn;
+    let rightButtonConfig;
     let bottomRightBtn;
 
     if (this.state.listSelectionMode) {
-      topRightBtn = (
-        <Button title="Cancel" type="clear" onPress={this.onCancelJotSelect} />
-      );
+      rightButtonConfig = {
+        title: 'Cancel',
+        onPress: this.onCancelJotSelect,
+      };
       bottomRightBtn = (
         <Button
           style={styles.deleteJotsBtn}
@@ -211,13 +213,10 @@ class AllJotsScreen extends Component {
         />
       );
     } else {
-      topRightBtn = (
-        <Button
-          title="Edit"
-          type="clear"
-          onPress={() => this.setState({ listSelectionMode: true })}
-        />
-      );
+      rightButtonConfig = {
+        title: 'Edit',
+        onPress: () => this.setState({ listSelectionMode: true }),
+      };
       bottomRightBtn = (
         <Button
           style={styles.createJotBtn}
@@ -246,7 +245,7 @@ class AllJotsScreen extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
-          <View style={styles.topBtnRow}>{topRightBtn}</View>
+          <ContuityHeader rightButtonConfig={rightButtonConfig} />
           <JotList
             listSelectionMode={this.state.listSelectionMode}
             sections={this.getSections()}
