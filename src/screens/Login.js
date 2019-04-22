@@ -8,7 +8,6 @@ import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
-
 import {
   primaryButton,
   secondaryButton,
