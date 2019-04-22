@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { Button } from 'react-native-elements';
 import NavigationBar from 'react-native-navbar';
 import { h2, h3 } from '../../assets/style/common.style';
-import themeStyles from '../../assets/style/theme.style';
+import styleConstants from '../../assets/style/theme.style';
 
 class ContuityHeader extends Component {
   constructor(props) {
@@ -10,52 +11,77 @@ class ContuityHeader extends Component {
   }
 
   render() {
-    let titleConfig, leftButtonConfig, rightButtonConfig;
+    let title = this.props.title;
+    let leftButtonConfig = this.props.leftButtonConfig;
+    let rightButtonConfig = this.props.rightButtonConfig;
 
-    if (this.props.titleConfig) {
-      titleConfig = { ...this.props.titleConfig, style: styles.headerTitle };
+    if (title) {
+      title = <Text style={styles.headerTitle}>{title}</Text>;
     }
 
-    if (this.props.leftButtonConfig) {
-      leftButtonConfig = {
-        ...this.props.leftButtonConfig,
-        textStyle: styles.headerButtonText,
-        tintColor: themeStyles.primaryColor,
-      };
+    if (leftButtonConfig) {
+      switch (this.props.leftButtonType) {
+        case 'BACK':
+          leftButtonConfig = (
+            <Button
+              titleStyle={styles.headerButtonText}
+              icon={{ icon: 'chevron-left', type: 'material', size: 30 }}
+              {...leftButtonConfig}
+              title=""
+              type="clear"
+            />
+          );
+          break;
+        default:
+          leftButtonConfig = (
+            <Button
+              titleStyle={styles.headerButtonText}
+              {...leftButtonConfig}
+              type="clear"
+            />
+          );
+      }
     }
 
-    if (this.props.rightButtonConfig) {
-      rightButtonConfig = {
-        ...this.props.rightButtonConfig,
-        textStyle: styles.headerButtonText,
-        tintColor: themeStyles.primaryColor,
-      };
-    }
-
-    if (this.props.leftButtonType == 'BACK') {
-      leftButtonConfig = {
-        ...leftButtonConfig,
-        icon: 'chevron-left',
-        iconType: 'material',
-        iconSize: 30,
-      };
-    }
-
-    if (this.props.rightButtonType == 'ADD') {
-      rightButtonConfig = {
-        ...rightButtonConfig,
-        icon: 'plus',
-        iconType: 'material-community',
-        iconSize: 30,
-      };
+    if (rightButtonConfig) {
+      switch (this.props.rightButtonType) {
+        case 'ADD':
+          rightButtonConfig = (
+            <Button
+              titleStyle={styles.headerButtonText}
+              icon={{ name: 'plus', type: 'material-community', size: 30 }}
+              {...rightButtonConfig}
+              title=""
+              type="clear"
+            />
+          );
+          break;
+        case 'DONE':
+          rightButtonConfig = (
+            <Button
+              titleStyle={styles.doneBtnText}
+              buttonStyle={styles.doneBtn}
+              {...rightButtonConfig}
+            />
+          );
+          break;
+        default:
+          rightButtonConfig = (
+            <Button
+              titleStyle={styles.headerButtonText}
+              {...rightButtonConfig}
+              type="clear"
+            />
+          );
+      }
     }
 
     return (
       <NavigationBar
-        title={titleConfig}
+        title={title}
         leftButton={leftButtonConfig}
         rightButton={rightButtonConfig}
-        tintColor="transparent"
+        tintColor={this.props.tintColor ? this.props.tintColor : 'transparent'}
       />
     );
   }
@@ -66,10 +92,21 @@ export default ContuityHeader;
 const styles = StyleSheet.create({
   headerTitle: {
     ...h2,
+    color: styleConstants.primaryColor,
   },
   headerButtonText: {
     ...h3,
-    color: themeStyles.primaryColor,
-    fontFamily: themeStyles.assistantSB,
+    fontFamily: styleConstants.assistantSB,
+    color: styleConstants.primaryColor,
+  },
+  doneBtnText: {
+    ...h2,
+    color: 'white',
+  },
+  doneBtn: {
+    backgroundColor: styleConstants.primaryColor,
+    paddingVertical: 6,
+    paddingHorizontal: 18,
+    borderRadius: 18,
   },
 });

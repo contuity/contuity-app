@@ -6,6 +6,9 @@ import Person from '../database/models/Person';
 import PersonService from '../database/services/PersonService';
 import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
+import ContuityGradient from '../components/ContuityGradient';
+import styleConstants from '../../assets/style/theme.style';
+import ContuityHeader from '../components/ContuityHeader';
 
 class PersonDetailScreen extends Component {
   constructor(props) {
@@ -156,39 +159,34 @@ class PersonDetailScreen extends Component {
       );
     }
 
-    const titleConfig = {
-      title: `${this.state.firstName} ${this.state.lastName}`,
-    };
+    let title = `${this.state.firstName} ${this.state.lastName}`;
 
     const leftButtonConfig = {
       title: 'Back',
-      handler: () => this.onCancelPress(this.state.person),
+      onPress: () => this.onCancelPress(this.state.person),
     };
 
     const rightButtonConfig = {
       title: 'Delete',
-      handler: this.onRightButtonPress,
+      onPress: this.onRightButtonPress,
     };
 
     if (this.state.isEditing) {
       // editing an existing person
       if (this.state.person) {
-        titleConfig.title = 'Edit';
+        title = 'Edit';
       } else {
-        titleConfig.title = 'Add Person';
+        title = 'Create a Person';
       }
 
       leftButtonConfig.title = 'Cancel';
       rightButtonConfig.title = 'Done';
-      rightButtonConfig.tintColor = '#FFFFFF';
-      rightButtonConfig.style = styles.doneBtn;
     }
 
     if (!this.state.firstName) {
       rightButtonConfig.disabled = true;
       rightButtonConfig.style = {
-        ...styles.doneBtn,
-        backgroundColor: '#686868',
+        backgroundColor: styleConstants.primaryDisabled,
       };
     }
 
@@ -246,16 +244,20 @@ class PersonDetailScreen extends Component {
     }
 
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
-          <NavigationBar
-            title={titleConfig}
-            leftButton={leftButtonConfig}
-            rightButton={rightButtonConfig}
-          />
-          {content}
-        </ScrollView>
-      </SafeAreaView>
+      <ContuityGradient>
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={styles.scrollContainer}>
+            <ContuityHeader
+              title={title}
+              leftButtonConfig={leftButtonConfig}
+              rightButtonConfig={rightButtonConfig}
+              rightButtonType="DONE"
+              tintColor="white"
+            />
+            {content}
+          </ScrollView>
+        </SafeAreaView>
+      </ContuityGradient>
     );
   }
 }
@@ -282,7 +284,6 @@ export default PersonDetailScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   scrollContainer: {
     flex: 1,
@@ -307,7 +308,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 24,
     // ...h3,
-    // color: styleConstants.lightGray,
+    color: styleConstants.lightGray,
     paddingLeft: 20,
   },
   photo: {
@@ -317,13 +318,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5E5E5',
   },
   doneBtn: {
-    backgroundColor: '#2267B7',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 15,
-  },
-  doneBtnDisabled: {
-    backgroundColor: '#686868',
+    backgroundColor: styleConstants.primaryColor,
+    paddingVertical: 6,
+    paddingHorizontal: 18,
+    borderRadius: 18,
   },
   field: {
     marginTop: 10,

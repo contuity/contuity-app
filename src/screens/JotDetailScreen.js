@@ -206,25 +206,23 @@ class JotDetailScreen extends Component {
       );
     }
 
-    const titleConfig = {
-      title: '',
-    };
+    let title = '';
 
     const leftButtonConfig = {
       title: 'Back',
-      handler: this.onCancelPress,
+      onPress: this.onCancelPress,
     };
 
     const rightButtonConfig = {
       title: 'Edit',
-      handler: this.onRightButtonPress,
+      onPress: this.onRightButtonPress,
     };
 
     if (this.state.isEditing) {
       if (this.state.jot) {
-        titleConfig.title = 'Edit Jot';
+        title = 'Edit Jot';
       } else {
-        titleConfig.title = 'Create a Jot';
+        title = 'Create a Jot';
       }
 
       leftButtonConfig.title = 'Cancel';
@@ -292,7 +290,7 @@ class JotDetailScreen extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ContuityHeader
-          titleConfig={titleConfig}
+          title={title}
           rightButtonConfig={rightButtonConfig}
           leftButtonConfig={leftButtonConfig}
           leftButtonType={this.state.isEditing ? 'CANCEL' : 'BACK'}

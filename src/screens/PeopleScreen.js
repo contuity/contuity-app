@@ -80,7 +80,7 @@ class PeopleScreen extends Component {
   render() {
     const rightButtonConfig = {
       title: 'Add',
-      handler: this.createNewPerson,
+      onPress: this.createNewPerson,
     };
 
     if (this.state.isShowingPersonScreen) {
