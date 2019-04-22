@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SectionList, StyleSheet, Text, View } from 'react-native';
 import JotCard from './JotCard';
 import TwoColumnList from './TwoColumnList';
 import { h1 } from '../../assets/style/common.style';
