@@ -4,6 +4,9 @@ import JotCard from './JotCard';
 import TwoColumnList from './TwoColumnList';
 import { h1 } from '../../assets/style/common.style';
 
+import styleConstants from '../../assets/style/theme.style.js';
+import LinearGradient from 'react-native-linear-gradient';
+
 class JotList extends Component {
   constructor(props) {
     super(props);
@@ -12,7 +15,7 @@ class JotList extends Component {
   render() {
     let content = this.props.sections.map((section, index) => {
       return (
-        <View key={index}>
+        <View style={styles.container} key={index}>
           <Text style={styles.sectionHeader}>{section.title}</Text>
           <TwoColumnList
             section={section}
@@ -29,14 +32,34 @@ class JotList extends Component {
       );
     });
 
-    return <View>{content}</View>;
+    return (
+      <LinearGradient
+        colors={[
+          styleConstants.topGradient,
+          styleConstants.middleGradient,
+          styleConstants.lastGradient,
+        ]}
+        style={styles.background}
+      >
+        {content}
+      </LinearGradient>
+    );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 18,
+    marginVertical: 20,
+  },
+
   sectionHeader: {
     ...h1,
-    marginLeft: 10,
+    marginBottom: 16,
+  },
+
+  background: {
+    height: '100%',
   },
 });
 

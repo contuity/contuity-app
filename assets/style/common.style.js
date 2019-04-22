@@ -1,15 +1,21 @@
 import theme from './theme.style';
 
-export const h1 = {
+export const homescreen = {
   fontSize: theme.fontSizeLarge,
   fontFamily: theme.varelaRound,
+  fontWeight: theme.fontWeightNorm,
+};
+
+export const h1 = {
+  fontSize: theme.fontSizeLarge,
+  fontFamily: theme.assistantNorm,
   fontWeight: theme.fontWeightNorm,
 };
 
 export const h2 = {
   fontFamily: theme.assistantSB,
   fontWeight: theme.fontWeightSB,
-  fontSize: theme.fontSizeMedium,
+  fontSize: theme.fontSizeSmall,
 };
 
 export const h3 = {
@@ -49,6 +55,16 @@ export const buttonText = {
 
 export const link = {
   color: theme.primaryColor,
-  fontFamily: theme.assistantSB,
-  fontWeight: theme.fontWeightSB,
+  fontFamily: theme.assistantBold,
+  fontWeight: theme.fontWeightBold,
+};
+
+export const inputField = {
+  marginTop: 16,
+  flex: 1,
+  backgroundColor: 'white',
+  height: 36,
+  borderRadius: 5,
+  ...h3,
+  paddingLeft: 16,
 };

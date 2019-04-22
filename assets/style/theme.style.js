@@ -12,7 +12,7 @@ export default {
   assistantNorm: 'Assistant',
   assistantLight: 'Assistant-Light',
   assistantSB: 'Assistant-Semibold',
-  assistandBold: 'Assistan-Bold',
+  assistantBold: 'Assistant-Bold',
   varelaRound: 'VarelaRound-Regular',
 
   primaryColor: '#2D3353',
@@ -23,6 +23,8 @@ export default {
   topGradient: '#F9DCD8',
   middleGradient: '#A7BFD0',
   lastGradient: '#6576A8',
+
+  primaryDisabled: '#2D335350',
 
   buttonBorderRadius: 23,
   buttonPaddingVertical: 12,
