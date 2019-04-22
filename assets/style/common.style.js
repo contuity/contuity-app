@@ -68,3 +68,9 @@ export const inputField = {
   ...h3,
   paddingLeft: 16,
 };
+
+export const shadow = {
+  shadowOffset: { width: 0, height: 2 },
+  shadowColor: 'black',
+  shadowOpacity: 0.25,
+};

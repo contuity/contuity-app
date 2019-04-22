@@ -5,7 +5,6 @@ import TwoColumnList from './TwoColumnList';
 import { h1 } from '../../assets/style/common.style';
 
 import styleConstants from '../../assets/style/theme.style.js';
-import LinearGradient from 'react-native-linear-gradient';
 
 class JotList extends Component {
   constructor(props) {
@@ -33,16 +32,9 @@ class JotList extends Component {
     });
 
     return (
-      <LinearGradient
-        colors={[
-          styleConstants.topGradient,
-          styleConstants.middleGradient,
-          styleConstants.lastGradient,
-        ]}
-        style={styles.background}
-      >
+      <View>
         {content}
-      </LinearGradient>
+      </View>
     );
   }
 }
