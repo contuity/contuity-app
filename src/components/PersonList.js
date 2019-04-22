@@ -34,7 +34,7 @@ class PersonList extends Component {
 const styles = StyleSheet.create({
   sectionHeader: {
     ...h1,
-    marginLeft: 10,
+    marginLeft: 18,
   },
 });
 

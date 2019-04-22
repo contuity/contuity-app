@@ -200,7 +200,8 @@ class PersonDetailScreen extends Component {
           <Input
             placeholder="First name (required)"
             containerStyle={styles.fullInputContainerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
+            // inputContainerStyle={styles.inputContainerStyle}
+            style={styles.inputStyle}
             onChangeText={this.onFirstNameChange}
             value={this.state.firstName}
           />
@@ -297,6 +298,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5E5E5',
     borderRadius: 5,
     paddingHorizontal: 5,
+  },
+  inputStyle: {
+    marginTop: 10,
+    marginBottom: 10,
+    flex: 1,
+    backgroundColor: 'white',
+    height: 40,
+    borderRadius: 24,
+    // ...h3,
+    // color: styleConstants.lightGray,
+    paddingLeft: 20,
   },
   photo: {
     width: 100,

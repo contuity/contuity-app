@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { h2, h3 } from '../../assets/style/common.style';
+import { h3 } from '../../assets/style/common.style';
+import themeStyles from '../../assets/style/theme.style';
 
 class PersonCard extends Component {
   constructor(props) {
@@ -29,8 +30,6 @@ class PersonCard extends Component {
 const styles = StyleSheet.create({
   listItemContainer: {
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
     aspectRatio: 1,
     width: '100%',
   },
@@ -40,10 +39,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   personItem: {
-    margin: 8,
+    margin: 18,
   },
   personName: {
-    ...h2,
+    ...h3,
+    fontFamily: themeStyles.assistantSB,
   },
   personSubtitle: {
     ...h3,

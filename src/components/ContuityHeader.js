@@ -10,30 +10,52 @@ class ContuityHeader extends Component {
   }
 
   render() {
-    let leftButtonConfig = {
-      ...this.props.leftButtonConfig,
-      textStyle: styles.headerButtonText,
-      tintColor: themeStyles.primaryColor,
-    };
+    let titleConfig, leftButtonConfig, rightButtonConfig;
+
+    if (this.props.titleConfig) {
+      titleConfig = { ...this.props.titleConfig, style: styles.headerTitle };
+    }
+
+    if (this.props.leftButtonConfig) {
+      leftButtonConfig = {
+        ...this.props.leftButtonConfig,
+        textStyle: styles.headerButtonText,
+        tintColor: themeStyles.primaryColor,
+      };
+    }
+
+    if (this.props.rightButtonConfig) {
+      rightButtonConfig = {
+        ...this.props.rightButtonConfig,
+        textStyle: styles.headerButtonText,
+        tintColor: themeStyles.primaryColor,
+      };
+    }
 
     if (this.props.leftButtonType == 'BACK') {
       leftButtonConfig = {
         ...leftButtonConfig,
         icon: 'chevron-left',
         iconType: 'material',
-        iconSize: 35,
+        iconSize: 30,
+      };
+    }
+
+    if (this.props.rightButtonType == 'ADD') {
+      rightButtonConfig = {
+        ...rightButtonConfig,
+        icon: 'plus',
+        iconType: 'material-community',
+        iconSize: 30,
       };
     }
 
     return (
       <NavigationBar
-        title={{ ...this.props.titleConfig, style: styles.headerTitle }}
+        title={titleConfig}
         leftButton={leftButtonConfig}
-        rightButton={{
-          ...this.props.rightButtonConfig,
-          textStyle: styles.headerButtonText,
-          tintColor: themeStyles.primaryColor,
-        }}
+        rightButton={rightButtonConfig}
+        tintColor="transparent"
       />
     );
   }
@@ -42,10 +64,6 @@ class ContuityHeader extends Component {
 export default ContuityHeader;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
   headerTitle: {
     ...h2,
   },

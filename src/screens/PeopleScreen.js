@@ -3,7 +3,11 @@ import { ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import PersonService from '../database/services/PersonService';
 import PersonList from '../components/PersonList';
 import PersonDetailScreen from './PersonDetailScreen';
-import NavigationBar from 'react-native-navbar';
+import LinearGradient from 'react-native-linear-gradient';
+import ContuityHeader from '../components/ContuityHeader';
+
+import themeStyles from '../../assets/style/theme.style';
+import ContuityGradient from '../components/ContuityGradient';
 
 class PeopleScreen extends Component {
   constructor(props) {
@@ -90,18 +94,20 @@ class PeopleScreen extends Component {
     }
 
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
-          <NavigationBar
-            title={{ title: 'People' }}
-            rightButton={rightButtonConfig}
-          />
-          <PersonList
-            sections={this.getAlphabatizedSections()}
-            onPersonPress={this.onPersonPress}
-          />
-        </ScrollView>
-      </SafeAreaView>
+      <ContuityGradient>
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={styles.scrollContainer}>
+            <ContuityHeader
+              rightButtonConfig={rightButtonConfig}
+              rightButtonType="ADD"
+            />
+            <PersonList
+              sections={this.getAlphabatizedSections()}
+              onPersonPress={this.onPersonPress}
+            />
+          </ScrollView>
+        </SafeAreaView>
+      </ContuityGradient>
     );
   }
 }

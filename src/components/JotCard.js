@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { h2, h3 } from '../../assets/style/common.style';
 
-let MAX_CONTENT_HEIGHT = 150;
+let MAX_CONTENT_HEIGHT = 75;
 
 class JotCard extends Component {
   constructor(props) {

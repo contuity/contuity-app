@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   outerStyle: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     color: 'blue',
     width: '100%',
   },
