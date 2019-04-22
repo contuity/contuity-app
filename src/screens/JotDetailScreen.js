@@ -294,6 +294,7 @@ class JotDetailScreen extends Component {
           rightButtonConfig={rightButtonConfig}
           leftButtonConfig={leftButtonConfig}
           leftButtonType={this.state.isEditing ? 'CANCEL' : 'BACK'}
+          rightButtonType={this.state.isEditing ? 'DONE' : 'EDIT'}
         />
         <ScrollView style={styles.scrollContainer}>{content}</ScrollView>
       </SafeAreaView>
