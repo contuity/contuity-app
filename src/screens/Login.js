@@ -157,10 +157,11 @@ class Login extends Component {
 
     let content;
     if (this.state.currentScreen == showingScreen.choose) {
-
       content = [
-        <Image source={logo} style={styles.logoStyle} key = "image" />,
-        <Text key ="title" style = {styles.contuity}>contuity</Text>,
+        <Image source={logo} style={styles.logoStyle} key="image" />,
+        <Text key="title" style={styles.contuity}>
+          contuity
+        </Text>,
         <Button
           key="0"
           buttonStyle={styles.primaryButton}
@@ -178,8 +179,10 @@ class Login extends Component {
       ];
     } else if (this.state.currentScreen == showingScreen.login) {
       content = [
-        <Image source={logo} style={styles.logoStyle} key = "image" />,
-        <Text key ="title" style = {styles.contuity}>contuity</Text>,
+        <Image source={logo} style={styles.logoStyle} key="image" />,
+        <Text key="title" style={styles.contuity}>
+          contuity
+        </Text>,
         usernameInput,
         firstPasswordEntry,
         <Button
@@ -219,8 +222,10 @@ class Login extends Component {
       }
 
       content = [
-        <Image source={logo} style={styles.logoStyle} key = "image" />,
-        <Text key ="title" style = {styles.contuity}>contuity</Text>,
+        <Image source={logo} style={styles.logoStyle} key="image" />,
+        <Text key="title" style={styles.contuity}>
+          contuity
+        </Text>,
         usernameInput,
         firstPasswordEntry,
         <Input
@@ -251,8 +256,11 @@ class Login extends Component {
     }
 
     return (
-      <LinearGradient colors={['#F9DCD8', '#A7BFD0', '#6576A8']} style={styles.container}>
-       {content}
+      <LinearGradient
+        colors={['#F9DCD8', '#A7BFD0', '#6576A8']}
+        style={styles.container}
+      >
+        {content}
       </LinearGradient>
     );
   }
@@ -300,14 +308,13 @@ const styles = StyleSheet.create({
   buttonTextSecondary: {
     ...link,
     ...buttonText,
-
   },
 
   link: {
     ...h3,
     ...link,
-    marginTop:20,
-    marginBottom:20,
+    marginTop: 20,
+    marginBottom: 20,
   },
 
   logoStyle: {
@@ -318,8 +325,8 @@ const styles = StyleSheet.create({
   contuity: {
     ...link,
     ...h1,
-    paddingTop:10,
-    fontSize:36,
+    paddingTop: 10,
+    fontSize: 36,
     paddingBottom: 20,
   },
 });
