@@ -8,7 +8,6 @@ import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
-
 import {
   primaryButton,
   outlineButton,
@@ -267,7 +266,6 @@ class Login extends Component {
           styleConstants.middleGradient,
           styleConstants.lastGradient,
         ]}
-        style={styles.container}
       >
         {content}
       </LinearGradient>
