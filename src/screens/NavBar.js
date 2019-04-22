@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import AllJotsScreen from './AllJotsScreen';
 import PeopleScreen from './PeopleScreen';
+import { h3 } from '../../assets/style/common.style';
 
 import jotUnselectedIcon from '../resources/jots.png';
 import spacesUnselectedIcon from '../resources/spaces.png';
@@ -69,8 +70,8 @@ class NavBar extends Component {
     };
 
     let iconSubtitleText = {
+      ...h3,
       color: 'white',
-      fontFamily: 'Assistant',
       fontSize: 14,
       lineHeight: 21,
       justifyContent: 'center',
