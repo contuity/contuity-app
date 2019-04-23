@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import JotService from '../database/services/JotService';
+import NavigationBar from 'react-native-navbar';
+import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
 import {

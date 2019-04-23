@@ -3,10 +3,7 @@ import { ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import PersonService from '../database/services/PersonService';
 import PersonList from '../components/PersonList';
 import PersonDetailScreen from './PersonDetailScreen';
-import LinearGradient from 'react-native-linear-gradient';
 import ContuityHeader from '../components/ContuityHeader';
-
-import themeStyles from '../../assets/style/theme.style';
 import ContuityGradient from '../components/ContuityGradient';
 
 class PeopleScreen extends Component {

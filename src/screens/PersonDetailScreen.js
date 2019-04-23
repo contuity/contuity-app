@@ -10,7 +10,7 @@ import ContuityHeader from '../components/ContuityHeader';
 import ContuityInput from '../components/ContuityInput';
 import { callNumber, email } from '../Util.js';
 
-import { h1, h3 } from '../../assets/style/common.style';
+import { h1, shadow, h3 } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
 
 class PersonDetailScreen extends Component {
@@ -232,10 +232,10 @@ class PersonDetailScreen extends Component {
                 containerStyle={styles.photoContainer}
                 size="xlarge"
               />
-              <Text style={{ ...h1 }}>{`${this.state.firstName} ${
+              <Text style={styles.name}>{`${this.state.firstName} ${
                 this.state.lastName
               }`}</Text>
-              <Text style={{ ...h3 }}>{`${numJots} jots`}</Text>
+              <Text style={styles.numJots}>{`${numJots} jots`}</Text>
             </View>
             <ActionButtons person={this.state.person} />
           </View>
@@ -350,10 +350,16 @@ const styles = StyleSheet.create({
     fontFamily: styleConstants.assistantNorm,
   },
   photoContainer: {
+    ...shadow,
     marginBottom: 13,
-    shadowOffset: { width: 1, height: 3 },
-    shadowColor: 'black',
-    shadowOpacity: 0.25,
+  },
+  name: {
+    ...h1,
+    fontFamily: styleConstants.assistantSB,
+  },
+  numJots: {
+    ...h3,
+    fontSize: styleConstants.fontSizeMedium,
   },
   actionBtnRow: {
     flex: 1,

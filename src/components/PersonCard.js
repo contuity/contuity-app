@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Avatar, ListItem } from 'react-native-elements';
-import { h3 } from '../../assets/style/common.style';
+import { h3, shadow } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
 
 class PersonCard extends Component {
@@ -71,15 +71,13 @@ const styles = StyleSheet.create({
     fontFamily: styleConstants.assistantNorm,
   },
   personItem: {
+    ...shadow,
     margin: 18,
-    shadowOffset: { width: 0, height: 2 },
-    shadowColor: 'black',
-    shadowOpacity: 0.25,
   },
   personName: {
     ...h3,
-    color: 'white',
     fontFamily: styleConstants.assistantSB,
+    color: 'white',
   },
   personSubtitle: {
     ...h3,

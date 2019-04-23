@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import NavigationBar from 'react-native-navbar';
-import { h2, h3, buttonText, h1 } from '../../assets/style/common.style';
+import { h2, buttonText } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
 
 class ContuityHeader extends Component {
