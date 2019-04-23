@@ -53,6 +53,21 @@ export const buttonText = {
   fontSize: theme.fontSizeSmall,
 };
 
+export const smallButtonText = {
+  fontFamily: theme.assistantBold,
+  fontWeight: theme.fontWeightBold,
+  fontSize: theme.fontSizeXSmall,
+  color: 'white',
+  lineHeight: theme.fontSizeXSmall,
+};
+
+export const smallButton = {
+  backgroundColor: theme.primaryColor,
+  borderRadius: theme.buttonBorderRadius,
+  paddingVertical: 4,
+  paddingHorizontal: 4,
+};
+
 export const link = {
   color: theme.primaryColor,
   fontFamily: theme.assistantBold,
