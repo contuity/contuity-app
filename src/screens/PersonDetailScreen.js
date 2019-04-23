@@ -271,8 +271,10 @@ class PersonDetailScreen extends Component {
 }
 
 const ActionButtons = props => {
-  return (
-    <View style={styles.actionBtnRow}>
+  let phoneBtn, messageBtn, emailBtn;
+
+  if (props.person.phoneNumber) {
+    phoneBtn = (
       <Button
         buttonStyle={styles.actionBtn}
         icon={{
@@ -285,6 +287,9 @@ const ActionButtons = props => {
         disabledStyle={styles.actionBtnDisabled}
         onPress={() => callNumber(props.person.phoneNumber)}
       />
+    );
+
+    messageBtn = (
       <Button
         buttonStyle={styles.actionBtn}
         icon={{
@@ -296,6 +301,11 @@ const ActionButtons = props => {
         disabled={!props.person.phoneNumber}
         disabledStyle={styles.actionBtnDisabled}
       />
+    );
+  }
+
+  if (props.person.email) {
+    emailBtn = (
       <Button
         buttonStyle={styles.actionBtn}
         icon={{
@@ -308,6 +318,14 @@ const ActionButtons = props => {
         disabledStyle={styles.actionBtnDisabled}
         onPress={() => email(props.person.email)}
       />
+    );
+  }
+
+  return (
+    <View style={styles.actionBtnRow}>
+      {phoneBtn}
+      {messageBtn}
+      {emailBtn}
     </View>
   );
 };
