@@ -16,8 +16,8 @@ import PersonPill from '../components/PersonPill';
 import ContuityHeader from '../components/ContuityHeader';
 import SelectPersonScreen from './SelectPersonScreen';
 
-import { h2, h3 } from '../../assets/style/common.style';
-import themeStyles from '../../assets/style/theme.style';
+import { h2, h3, jotText } from '../../assets/style/common.style';
+import styleConstants from '../../assets/style/theme.style';
 
 class JotDetailScreen extends Component {
   constructor(props) {
@@ -225,6 +225,7 @@ class JotDetailScreen extends Component {
 
       leftButtonConfig.title = 'Cancel';
       rightButtonConfig.title = 'Done';
+      rightButtonConfig.disabled = !this.state.content;
     }
 
     let peopleComponent = (
@@ -318,17 +319,16 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   jotTitle: {
-    ...h2,
+    ...jotText,
+    fontFamily: styleConstants.assistantSB,
     marginBottom: 8,
   },
   jotContent: {
-    ...h3,
-    fontSize: themeStyles.fontSizeMedium,
+    ...jotText,
     marginBottom: 24,
   },
   sectionsHeader: {
     ...h3,
-    fontFamily: themeStyles.assistantSB,
     marginBottom: 8,
   },
   peopleContainer: {

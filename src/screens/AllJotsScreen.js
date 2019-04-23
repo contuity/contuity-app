@@ -6,6 +6,7 @@ import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
 import moment from 'moment';
 import ContuityHeader from '../components/ContuityHeader';
+import ContuityGradient from '../components/ContuityGradient';
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -237,18 +238,20 @@ class AllJotsScreen extends Component {
     }
 
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
-          <ContuityHeader rightButtonConfig={rightButtonConfig} />
-          <JotList
-            listSelectionMode={this.state.listSelectionMode}
-            sections={this.getSections()}
-            onJotPress={this.onJotPress}
-            onJotSelect={this.onJotSelect}
-          />
-        </ScrollView>
-        {bottomRightBtn}
-      </SafeAreaView>
+      <ContuityGradient>
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={styles.scrollContainer}>
+            <ContuityHeader rightButtonConfig={rightButtonConfig} />
+            <JotList
+              listSelectionMode={this.state.listSelectionMode}
+              sections={this.getSections()}
+              onJotPress={this.onJotPress}
+              onJotSelect={this.onJotSelect}
+            />
+          </ScrollView>
+          {bottomRightBtn}
+        </SafeAreaView>
+      </ContuityGradient>
     );
   }
 }

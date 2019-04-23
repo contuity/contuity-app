@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import NavigationBar from 'react-native-navbar';
-import { h2, h3 } from '../../assets/style/common.style';
+import { h2, h3, buttonText, h1 } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
 
 class ContuityHeader extends Component {
@@ -108,24 +108,22 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     ...h2,
-    color: styleConstants.primaryColor,
+    fontSize: styleConstants.fontSizeMedium,
   },
   headerButtonText: {
-    ...h3,
-    fontFamily: styleConstants.assistantSB,
+    ...buttonText,
     color: styleConstants.primaryColor,
   },
   doneBtnText: {
-    ...h3,
-    fontFamily: styleConstants.assistantSB,
+    ...buttonText,
     color: 'white',
   },
   doneBtn: {
     backgroundColor: styleConstants.primaryColor,
-    paddingVertical: 5,
-    paddingHorizontal: 18,
     borderRadius: 18,
     marginRight: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 18,
   },
   doneBtnDisabled: {
     backgroundColor: styleConstants.primaryDisabled,

@@ -24,6 +24,12 @@ export const h3 = {
   fontSize: theme.fontSizeSmall,
 };
 
+export const jotText = {
+  fontFamily: theme.assistantLight,
+  fontWeight: theme.fontWeightLight,
+  fontSize: theme.fontSizeMedium,
+};
+
 export const primaryButton = {
   backgroundColor: theme.primaryColor,
   borderRadius: theme.buttonBorderRadius,

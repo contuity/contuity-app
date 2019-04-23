@@ -184,10 +184,7 @@ class PersonDetailScreen extends Component {
 
       leftButtonConfig.title = 'Cancel';
       rightButtonConfig.title = 'Done';
-    }
-
-    if (!this.state.firstName) {
-      rightButtonConfig.disabled = true;
+      rightButtonConfig.disabled = !this.state.firstName;
     }
 
     let content;
