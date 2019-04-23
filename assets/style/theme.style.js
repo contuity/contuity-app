@@ -1,5 +1,4 @@
 export default {
-  PRIMARY_COLOR: '#2aabb8',
   fontSizeLarge: 24,
   fontSizeMedium: 18,
   fontSizeSmall: 16,
@@ -7,17 +6,27 @@ export default {
 
   fontWeightNorm: '400',
   fontWeightSB: '600',
+  fontWeightBold: '700',
   fontWeightLight: '300',
 
   assistantNorm: 'Assistant',
   assistantLight: 'Assistant-Light',
   assistantSB: 'Assistant-Semibold',
+  assistantBold: 'Assistant-Bold',
   varelaRound: 'VarelaRound-Regular',
 
-  BACKGROUND_COLOR_LIGHT: '#f0f6f7',
-
-  primaryColor: '#434C7A',
-  secondaryColor: '#CE797B',
+  primaryColor: '#2D3353',
+  secondaryColor: '#D97A7C',
 
   lightGray: '#5A5A5A',
+
+  topGradient: '#F9DCD8',
+  middleGradient: '#A7BFD0',
+  lastGradient: '#6576A8',
+
+  primaryDisabled: '#2D335350',
+
+  buttonBorderRadius: 23,
+  buttonPaddingVertical: 12,
+  buttonPaddingHorizontal: 20,
 };

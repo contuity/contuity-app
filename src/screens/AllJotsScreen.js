@@ -10,6 +10,7 @@ import {
 import JotService from '../database/services/JotService';
 import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
+import LinearGradient from 'react-native-linear-gradient';
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -198,7 +199,7 @@ class AllJotsScreen extends Component {
             name: 'pencil',
             type: 'material-community',
             size: 36,
-            color: '#2089dc',
+            color: 'white',
           }}
           type="clear"
           onPress={this.createNewJot}
@@ -217,18 +218,23 @@ class AllJotsScreen extends Component {
     }
 
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
-          <View style={styles.topBtnRow}>{topRightBtn}</View>
-          <JotList
-            listSelectionMode={this.state.listSelectionMode}
-            sections={this.getSections()}
-            onJotPress={this.onJotPress}
-            onJotSelect={this.onJotSelect}
-          />
-        </ScrollView>
-        {bottomRightBtn}
-      </SafeAreaView>
+      <LinearGradient
+        colors={['#F9DCD8', '#A7BFD0', '#6576A8']}
+        style={styles.container}
+      >
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={styles.scrollContainer}>
+            <View style={styles.topBtnRow}>{topRightBtn}</View>
+            <JotList
+              listSelectionMode={this.state.listSelectionMode}
+              sections={this.getSections()}
+              onJotPress={this.onJotPress}
+              onJotSelect={this.onJotSelect}
+            />
+          </ScrollView>
+          {bottomRightBtn}
+        </SafeAreaView>
+      </LinearGradient>
     );
   }
 }
@@ -238,7 +244,6 @@ export default AllJotsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   scrollContainer: {
     flex: 1,
@@ -252,15 +257,16 @@ const styles = StyleSheet.create({
   createJotBtn: {
     width: 70,
     height: 70,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#D97A7C',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
     bottom: 10,
     right: 20,
-    borderWidth: 1.5,
-    borderColor: '#2089dc',
     borderRadius: 70,
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: 'black',
+    shadowOpacity: 0.25,
   },
   deleteJotsBtn: {
     width: 150,
