@@ -12,7 +12,6 @@ import {
   primaryButton,
   outlineButton,
   buttonText,
-  h1,
   h3,
   link,
   inputField,
@@ -266,6 +265,8 @@ class Login extends Component {
           styleConstants.middleGradient,
           styleConstants.lastGradient,
         ]}
+        style={styles.container}
+
       >
         {content}
       </LinearGradient>
