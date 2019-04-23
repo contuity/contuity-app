@@ -15,7 +15,7 @@ export const h1 = {
 export const h2 = {
   fontFamily: theme.assistantSB,
   fontWeight: theme.fontWeightSB,
-  fontSize: theme.fontSizeMedium,
+  fontSize: theme.fontSizeSmall,
 };
 
 export const h3 = {
@@ -60,10 +60,17 @@ export const link = {
 };
 
 export const inputField = {
+  marginTop: 16,
   flex: 1,
   backgroundColor: 'white',
   height: 36,
   borderRadius: 5,
   ...h3,
   paddingLeft: 16,
+};
+
+export const shadow = {
+  shadowOffset: { width: 0, height: 2 },
+  shadowColor: 'black',
+  shadowOpacity: 0.25,
 };

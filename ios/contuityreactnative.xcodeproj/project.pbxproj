@@ -65,6 +65,9 @@
 		EEE6239ABD04446A87495564 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3DBE4781D27446AA26D6B3B /* Zocial.ttf */; };
 		FAA3F640794643CAB3F24E31 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F78D241F6DBD477AB8ED9A57 /* libz.tbd */; };
 		FF282C798A484FDDB45E268A /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5527A60153A74BE493D67AE5 /* FontAwesome5_Brands.ttf */; };
+		36BE8458858641ABBCBFE2B0 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 192E34CF5A2F43F29BA795A3 /* libBVLinearGradient.a */; };
+		1DAB1C6CD005409DBA64B580 /* VarelaRound-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1CD846350C34BD6A3206789 /* VarelaRound-Regular.ttf */; };
+		9DFA2D9B49E34FA8B2B0BB4E /* Assistant-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64040DFE02A040139E4CADE6 /* Assistant-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -450,6 +453,10 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F78D241F6DBD477AB8ED9A57 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		FC278F4F655E4E1BB3F28043 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		C8FCBC5F524E46C1A62B9BEC /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; name = "BVLinearGradient.xcodeproj"; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		192E34CF5A2F43F29BA795A3 /* libBVLinearGradient.a */ = {isa = PBXFileReference; name = "libBVLinearGradient.a"; path = "libBVLinearGradient.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		C1CD846350C34BD6A3206789 /* VarelaRound-Regular.ttf */ = {isa = PBXFileReference; name = "VarelaRound-Regular.ttf"; path = "../assets/fonts/VarelaRound-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		64040DFE02A040139E4CADE6 /* Assistant-Bold.ttf */ = {isa = PBXFileReference; name = "Assistant-Bold.ttf"; path = "../assets/fonts/Assistant-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -795,6 +802,7 @@
 				FC278F4F655E4E1BB3F28043 /* SimpleLineIcons.ttf */,
 				D3DBE4781D27446AA26D6B3B /* Zocial.ttf */,
 				C1CD846350C34BD6A3206789 /* VarelaRound-Regular.ttf */,
+				64040DFE02A040139E4CADE6 /* Assistant-Bold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1326,6 +1334,7 @@
 				06B0DAC1A0CA4426A1088153 /* SimpleLineIcons.ttf in Resources */,
 				EEE6239ABD04446A87495564 /* Zocial.ttf in Resources */,
 				1DAB1C6CD005409DBA64B580 /* VarelaRound-Regular.ttf in Resources */,
+				9DFA2D9B49E34FA8B2B0BB4E /* Assistant-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
