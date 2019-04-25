@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import NavBar from './src/screens/NavBar';
+import AllJotsScreen from './src/screens/AllJotsScreen';
+import PeopleScreen from './src/screens/PeopleScreen';
 import Login from './src/screens/Login';
+import NavBar from './src/screens/NavBar';
 
 class App extends Component {
   constructor(props) {
@@ -20,10 +22,10 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.user == null) {
-      return <Login onLogin={this.onLogin} />;
-    } 
-    return <NavBar />;
+    // if (this.state.user == null) {
+    //   return <Login onLogin={this.onLogin} />;
+    // }
+    return <NavBar/>;
   }
 }
 

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { SectionList, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import JotCard from './JotCard';
 import TwoColumnList from './TwoColumnList';
 import { h1 } from '../../assets/style/common.style';
-
-import styleConstants from '../../assets/style/theme.style.js';
 
 class JotList extends Component {
   constructor(props) {
@@ -31,11 +29,7 @@ class JotList extends Component {
       );
     });
 
-    return (
-      <View>
-        {content}
-      </View>
-    );
+    return <View>{content}</View>;
   }
 }
 

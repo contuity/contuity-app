@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Button } from 'react-native-elements';
 import { Alert, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import moment from 'moment';
 import JotService from '../database/services/JotService';
 import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
-import moment from 'moment';
 import ContuityHeader from '../components/ContuityHeader';
 import ContuityGradient from '../components/ContuityGradient';
 
@@ -61,6 +61,16 @@ class AllJotsScreen extends Component {
     return true;
   }
 
+  updateJotSectionsInState() {
+    this.setState({
+      allJots: JotService.findAll(),
+      todaysJots: JotService.findAllCreatedToday(),
+      yesterdaysJots: JotService.findAllCreatedYesterday(),
+      thisWeeksJots: JotService.findAllCreatedThisWeek(),
+      allOtherJots: JotService.findAllOtherJots(),
+    });
+  }
+
   createNewJot() {
     this.setState({
       isShowingNewJotPage: true,
@@ -100,12 +110,8 @@ class AllJotsScreen extends Component {
       JotService.deleteJots(this.state.selectedJots);
     }
 
+    this.updateJotSectionsInState();
     this.setState({
-      allJots: JotService.findAll(),
-      todaysJots: JotService.findAllCreatedToday(),
-      yesterdaysJots: JotService.findAllCreatedYesterday(),
-      thisWeeksJots: JotService.findAllCreatedThisWeek(),
-      allOtherJots: JotService.findAllOtherJots(),
       selectedJots: [],
       listSelectionMode: false,
     });
@@ -120,12 +126,8 @@ class AllJotsScreen extends Component {
       return;
     }
 
+    this.updateJotSectionsInState();
     this.setState({
-      allJots: JotService.findAll(),
-      todaysJots: JotService.findAllCreatedToday(),
-      yesterdaysJots: JotService.findAllCreatedYesterday(),
-      thisWeeksJots: JotService.findAllCreatedThisWeek(),
-      allOtherJots: JotService.findAllOtherJots(),
       isShowingNewJotPage: false,
     });
   }
@@ -156,11 +158,17 @@ class AllJotsScreen extends Component {
   }
 
   getSections() {
-    return [
-      { title: 'Today', data: this.state.todaysJots },
-      { title: 'Yesterday', data: this.state.yesterdaysJots },
-      { title: 'This week', data: this.state.thisWeeksJots },
-    ].concat(this.getAllOtherJotsByMonth());
+    let sections = [];
+    if (this.state.todaysJots.length > 0) {
+      sections.push({ title: 'Today', data: this.state.todaysJots });
+    }
+    if (this.state.yesterdaysJots.length > 0) {
+      sections.push({ title: 'Yesterday', data: this.state.yesterdaysJots });
+    }
+    if (this.state.thisWeeksJots.length > 0) {
+      sections.push({ title: 'This week', data: this.state.thisWeeksJots });
+    }
+    return sections.concat(this.getAllOtherJotsByMonth());
   }
 
   getAllOtherJotsByMonth() {

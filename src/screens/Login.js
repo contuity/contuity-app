@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import JotService from '../database/services/JotService';
-import NavigationBar from 'react-native-navbar';
-import { AppRegistry, TextInput } from 'react-native';
+import { Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
-import { Input } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import ContuityGradient from '../components/ContuityGradient';
 import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
 import {
   primaryButton,
   outlineButton,
   buttonText,
-  h1,
   h3,
   link,
   inputField,
@@ -20,7 +15,7 @@ import {
 } from '../../assets/style/common.style';
 
 import styleConstants from '../../assets/style/theme.style.js';
-import LinearGradient from 'react-native-linear-gradient';
+import ContuityInput from '../components/ContuityInput';
 
 // Enum of different pages to show
 const showingScreen = {
@@ -135,25 +130,21 @@ class Login extends Component {
 
   render() {
     let usernameInput = (
-      <Input
+      <ContuityInput
         key="username"
         placeholder="Email"
-        inputStyle={inputField}
         onChangeText={this.onChangeEmail}
         value={this.state.email}
-        inputContainerStyle={styles.inputContainerStyle}
       />
     );
 
     let firstPasswordEntry = (
-      <Input
+      <ContuityInput
         key="password1"
-        inputStyle={inputField}
         placeholder="Password"
         onChangeText={this.onChangePassword}
         value={this.state.password}
         secureTextEntry={true}
-        inputContainerStyle={styles.inputContainerStyle}
       />
     );
 
@@ -231,14 +222,12 @@ class Login extends Component {
         </Text>,
         usernameInput,
         firstPasswordEntry,
-        <Input
+        <ContuityInput
           key="0"
-          inputStyle={inputField}
           placeholder="Password again"
           onChangeText={this.onChangePasswordVerification}
           secureTextEntry={true}
           value={this.state.passwordVerification}
-          inputContainerStyle={styles.inputContainerStyle}
         />,
         <Button
           key="1"
@@ -259,17 +248,7 @@ class Login extends Component {
       ];
     }
 
-    return (
-      <LinearGradient
-        colors={[
-          styleConstants.topGradient,
-          styleConstants.middleGradient,
-          styleConstants.lastGradient,
-        ]}
-      >
-        {content}
-      </LinearGradient>
-    );
+    return <ContuityGradient>{content}</ContuityGradient>;
   }
 }
 
