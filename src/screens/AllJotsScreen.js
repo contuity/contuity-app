@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-native-elements';
 import { Alert, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import moment from 'moment';
 import JotService from '../database/services/JotService';
@@ -7,6 +6,7 @@ import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
 import ContuityHeader from '../components/ContuityHeader';
 import ContuityGradient from '../components/ContuityGradient';
+import CreateJotButton from '../components/CreateJotButton';
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -194,7 +194,6 @@ class AllJotsScreen extends Component {
 
   render() {
     let leftButtonConfig, rightButtonConfig, header;
-    let bottomRightBtn;
 
     if (this.state.listSelectionMode) {
       leftButtonConfig = {
@@ -208,22 +207,8 @@ class AllJotsScreen extends Component {
       };
     } else {
       rightButtonConfig = {
-        title: 'Edit',
         onPress: () => this.setState({ listSelectionMode: true }),
       };
-      bottomRightBtn = (
-        <Button
-          style={styles.createJotBtn}
-          icon={{
-            name: 'pencil',
-            type: 'material-community',
-            size: 36,
-            color: 'white',
-          }}
-          type="clear"
-          onPress={this.createNewJot}
-        />
-      );
     }
 
     if (this.state.listSelectionMode) {
@@ -269,7 +254,7 @@ class AllJotsScreen extends Component {
               onJotSelect={this.onJotSelect}
             />
           </ScrollView>
-          {bottomRightBtn}
+          <CreateJotButton onPress={this.createNewJot}/>
         </SafeAreaView>
       </ContuityGradient>
     );
@@ -290,20 +275,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-  },
-  createJotBtn: {
-    width: 70,
-    height: 70,
-    backgroundColor: '#D97A7C',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 10,
-    right: 20,
-    borderRadius: 70,
-    shadowOffset: { width: 0, height: 2 },
-    shadowColor: 'black',
-    shadowOpacity: 0.25,
   },
   deleteJotsBtn: {
     width: 150,
