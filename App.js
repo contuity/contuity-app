@@ -25,7 +25,7 @@ class App extends Component {
     // if (this.state.user == null) {
     //   return <Login onLogin={this.onLogin} />;
     // }
-    return <NavBar/>;
+    return <NavBar />;
   }
 }
 

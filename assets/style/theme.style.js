@@ -27,6 +27,7 @@ export default {
   lastGradient: '#6576A8',
 
   primaryDisabled: '#2D335350',
+  secondaryDisabled: '#ECBCBD',
 
   buttonBorderRadius: 23,
   buttonPaddingVertical: 12,

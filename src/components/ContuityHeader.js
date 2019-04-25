@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import NavigationBar from 'react-native-navbar';
-import { h2, buttonText } from '../../assets/style/common.style';
+import { h2, buttonText, menuButton } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
 
 class ContuityHeader extends Component {
@@ -69,11 +69,42 @@ class ContuityHeader extends Component {
         case 'DONE':
           rightButtonConfig = (
             <Button
-              titleStyle={styles.doneBtnText}
-              buttonStyle={styles.doneBtn}
-              disabledStyle={styles.doneBtnDisabled}
-              disabledTitleStyle={styles.doneBtnText}
+              titleStyle={styles.whiteBtnText}
+              buttonStyle={menuButton}
+              disabledStyle={{
+                backgroundColor: styleConstants.primaryDisabled,
+              }}
+              disabledTitleStyle={styles.whiteBtnText}
               {...rightButtonConfig}
+            />
+          );
+          break;
+        case 'DELETE':
+          rightButtonConfig = (
+            <Button
+              titleStyle={styles.whiteBtnText}
+              buttonStyle={styles.deleteBtn}
+              disabledStyle={{
+                backgroundColor: styleConstants.secondaryDisabled,
+              }}
+              disabledTitleStyle={styles.whiteBtnText}
+              {...rightButtonConfig}
+            />
+          );
+          break;
+        case 'TRASH':
+          rightButtonConfig = (
+            <Button
+              titleStyle={styles.headerButtonText}
+              icon={{
+                name: 'delete',
+                type: 'material',
+                size: 30,
+                color: styleConstants.primaryColor,
+              }}
+              {...rightButtonConfig}
+              title=""
+              type="clear"
             />
           );
           break;
@@ -114,16 +145,13 @@ const styles = StyleSheet.create({
     ...buttonText,
     color: styleConstants.primaryColor,
   },
-  doneBtnText: {
+  whiteBtnText: {
     ...buttonText,
     color: 'white',
   },
-  doneBtn: {
-    backgroundColor: styleConstants.primaryColor,
-    borderRadius: 18,
-    marginRight: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 18,
+  deleteBtn: {
+    ...menuButton,
+    backgroundColor: styleConstants.secondaryColor,
   },
   doneBtnDisabled: {
     backgroundColor: styleConstants.primaryDisabled,

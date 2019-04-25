@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 3,
     borderColor: styleConstants.selectedColor,
-    margin: 8,
   },
   jotContainer: {
     flex: 1,

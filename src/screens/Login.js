@@ -10,7 +10,6 @@ import {
   buttonText,
   h3,
   link,
-  inputField,
   homescreen,
 } from '../../assets/style/common.style';
 
@@ -258,12 +257,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#A7BFD0',
-  },
-
-  inputContainerStyle: {
-    borderBottomWidth: 0,
-    width: '80%',
-    marginLeft: '10%',
   },
 
   primaryButton: {

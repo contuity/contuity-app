@@ -53,6 +53,14 @@ export const secondaryButton = {
   paddingHorizontal: theme.buttonPaddingHorizontal,
 };
 
+export const menuButton = {
+  backgroundColor: theme.primaryColor,
+  borderRadius: 18,
+  marginRight: 10,
+  paddingVertical: 5,
+  paddingHorizontal: 18,
+}
+
 export const buttonText = {
   fontFamily: theme.assistantBold,
   fontWeight: theme.fontWeightBold,

@@ -193,28 +193,19 @@ class AllJotsScreen extends Component {
   }
 
   render() {
-    let rightButtonConfig;
+    let leftButtonConfig, rightButtonConfig, header;
     let bottomRightBtn;
 
     if (this.state.listSelectionMode) {
-      rightButtonConfig = {
+      leftButtonConfig = {
         title: 'Cancel',
         onPress: this.onCancelJotSelect,
       };
-      bottomRightBtn = (
-        <Button
-          style={styles.deleteJotsBtn}
-          title={this.state.selectedJots.length === 0 ? 'Delete All' : 'Delete'}
-          icon={{
-            name: 'delete',
-            type: 'material-community',
-            size: 18,
-            color: '#2089dc',
-          }}
-          type="clear"
-          onPress={this.triggerDeleteJotsAlert}
-        />
-      );
+      rightButtonConfig = {
+        title: 'Delete',
+        onPress: this.triggerDeleteJotsAlert,
+        disabled: this.state.selectedJots.length === 0,
+      };
     } else {
       rightButtonConfig = {
         title: 'Edit',
@@ -235,6 +226,26 @@ class AllJotsScreen extends Component {
       );
     }
 
+    if (this.state.listSelectionMode) {
+      header = (
+        <ContuityHeader
+          title="Tap jots to delete"
+          leftButtonConfig={leftButtonConfig}
+          rightButtonConfig={rightButtonConfig}
+          rightButtonType="DELETE"
+          tintColor="white"
+        />
+      );
+    } else {
+      header = (
+        <ContuityHeader
+          leftButtonConfig={leftButtonConfig}
+          rightButtonConfig={rightButtonConfig}
+          rightButtonType="TRASH"
+        />
+      );
+    }
+
     if (this.state.isShowingNewJotPage) {
       return (
         <JotDetailScreen
@@ -248,8 +259,8 @@ class AllJotsScreen extends Component {
     return (
       <ContuityGradient>
         <SafeAreaView style={styles.container}>
+          {header}
           <ScrollView style={styles.scrollContainer}>
-            <ContuityHeader rightButtonConfig={rightButtonConfig} />
             <JotList
               listSelectionMode={this.state.listSelectionMode}
               sections={this.getSections()}
