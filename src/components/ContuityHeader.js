@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import NavigationBar from 'react-native-navbar';
-import { h2, buttonText, menuButton } from '../../assets/style/common.style';
+import {
+  h2,
+  h3,
+  buttonText,
+  menuButton,
+} from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
 
 class ContuityHeader extends Component {
@@ -16,7 +21,15 @@ class ContuityHeader extends Component {
     let rightButtonConfig = this.props.rightButtonConfig;
 
     if (title) {
-      title = <Text style={styles.headerTitle}>{this.props.title}</Text>;
+      switch (this.props.titleType) {
+        case 'INSTRUCTION':
+          title = (
+            <Text style={styles.headerInstruction}>{this.props.title}</Text>
+          );
+          break;
+        default:
+          title = <Text style={styles.headerTitle}>{this.props.title}</Text>;
+      }
     }
 
     if (leftButtonConfig) {
@@ -140,6 +153,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     ...h2,
     fontSize: styleConstants.fontSizeMedium,
+    bottom: 7,
+  },
+  headerInstruction: {
+    ...h3,
+    bottom: 7,
   },
   headerButtonText: {
     ...buttonText,

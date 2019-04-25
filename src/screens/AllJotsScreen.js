@@ -230,6 +230,7 @@ class AllJotsScreen extends Component {
       header = (
         <ContuityHeader
           title="Tap jots to delete"
+          titleType="INSTRUCTION"
           leftButtonConfig={leftButtonConfig}
           rightButtonConfig={rightButtonConfig}
           rightButtonType="DELETE"

@@ -257,7 +257,7 @@ class PersonDetailScreen extends Component {
               rightButtonConfig={rightButtonConfig}
               leftButtonType={this.state.isEditing ? 'CANCEL' : 'BACK'}
               rightButtonType={this.state.isEditing ? 'DONE' : 'EDIT'}
-              // tintColor="white"
+              tintColor={this.state.isEditing ? 'white' : 'transparent'}
             />
             {content}
           </ScrollView>
