@@ -25,6 +25,7 @@ class NavBar extends Component {
 
     this.state = {
       showingPage: showingPage.JOTS,
+      isShowingNavBar: true,
     };
 
     this.jotSelected = this.jotSelected.bind(this);
@@ -107,6 +108,10 @@ class NavBar extends Component {
       backdropFilter: 'blur(4px)',
       zIndex: 2,
     };
+
+    if (!this.state.isShowingNavBar) {
+      navBarStyle.display = 'none'
+    }
 
     let contentView = {
       zIndex: 1,
