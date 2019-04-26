@@ -241,7 +241,7 @@ class JotDetailScreen extends Component {
     let actionButtons = (
       <View style={styles.actionBtnRow}>
         <Button
-          title="Add Person"
+          title="Add People"
           titleStyle={styles.actionBtnText}
           icon={{
             name: 'account-outline',

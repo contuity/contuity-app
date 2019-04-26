@@ -83,6 +83,7 @@ class SelectPersonScreen extends Component {
     const rightButtonConfig = {
       title: 'Done',
       onPress: this.onDonePress,
+      disabled: this.state.peopleToAdd.length <= 0,
     };
 
     let results = (
@@ -124,7 +125,7 @@ class SelectPersonScreen extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ContuityHeader
-          title="Add a Person"
+          title="Add People"
           leftButtonConfig={leftButtonConfig}
           rightButtonConfig={rightButtonConfig}
           rightButtonType="DONE"
