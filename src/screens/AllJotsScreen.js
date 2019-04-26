@@ -254,7 +254,7 @@ class AllJotsScreen extends Component {
               onJotSelect={this.onJotSelect}
             />
           </ScrollView>
-          <CreateJotButton onPress={this.createNewJot}/>
+          <CreateJotButton onPress={this.createNewJot} />
         </SafeAreaView>
       </ContuityGradient>
     );

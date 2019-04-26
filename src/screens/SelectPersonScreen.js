@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { ScrollView, SafeAreaView, StyleSheet } from 'react-native';
-import { Input } from 'react-native-elements';
+import {
+  FlatList,
+  ScrollView,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { ListItem } from 'react-native-elements';
 import PersonService from '../database/services/PersonService';
-import PersonList from '../components/PersonList';
-import NavigationBar from 'react-native-navbar';
+import ContuityHeader from '../components/ContuityHeader';
+import { h3, jotText, h2 } from '../../assets/style/common.style';
 
 class SelectPersonScreen extends Component {
   constructor(props) {
@@ -32,7 +40,6 @@ class SelectPersonScreen extends Component {
   }
 
   getSearchResults() {
-    let sections = [];
     let results;
 
     if (this.state.searchTerm != '') {
@@ -42,34 +49,52 @@ class SelectPersonScreen extends Component {
       results = PersonService.findPeopleWithMostJots(4);
     }
 
-    sections.push({ title: 'Results', data: results });
-    return sections;
+    return results;
   }
 
   render() {
     const leftButtonConfig = {
       title: 'Cancel',
-      handler: this.onCancelPress,
+      onPress: this.onCancelPress,
     };
+
+    let results = (
+      <View>
+        <FlatList
+          data={this.getSearchResults()}
+          keyExtractor={(item, index) => `person-${index}`}
+          renderItem={item => {
+            let person = item.item;
+            return (
+              <ListItem
+                title={person.firstName + ' ' + person.lastName}
+                titleProps={{ numberOfLines: 1 }}
+                titleStyle={styles.personName}
+                onPress={() => this.onPersonPress(person)}
+                underlayColor="transparent"
+              />
+            );
+          }}
+        />
+      </View>
+    );
 
     return (
       <SafeAreaView style={styles.container}>
+        <ContuityHeader
+          title="Add a Person"
+          leftButtonConfig={leftButtonConfig}
+        />
         <ScrollView style={styles.scrollContainer}>
-          <NavigationBar
-            title={{ title: 'Select a Person' }}
-            leftButton={leftButtonConfig}
-          />
-          <Input
-            placeholder="Search People"
-            containerStyle={styles.fullInputContainerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
+          <Text style={styles.inputLabel}>People</Text>
+          <TextInput
+            placeholder="Add a name..."
+            style={styles.input}
+            containerSt
             onChangeText={this.onSearchTermChange}
             value={this.state.searchTerm}
           />
-          <PersonList
-            sections={this.getSearchResults()}
-            onPersonPress={this.onPersonPress}
-          />
+          {results}
         </ScrollView>
       </SafeAreaView>
     );
@@ -85,13 +110,20 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     width: '100%',
+    paddingHorizontal: 20,
   },
-  fullInputContainerStyle: {
-    marginTop: 15,
+  inputLabel: {
+    ...h3,
+    marginBottom: 3,
+    color: 'black',
   },
-  inputContainerStyle: {
-    backgroundColor: '#E5E5E5',
-    borderRadius: 5,
-    paddingHorizontal: 5,
+  input: {
+    ...jotText,
+    marginBottom: 8,
+    borderBottomColor: '#C4C4C4',
+    borderBottomWidth: 1,
+  },
+  personName: {
+    ...h2,
   },
 });

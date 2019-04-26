@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Avatar, ListItem } from 'react-native-elements';
 import { h3, shadow } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';

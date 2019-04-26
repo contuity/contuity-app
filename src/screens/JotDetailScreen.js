@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   Text,
@@ -243,6 +244,23 @@ class JotDetailScreen extends Component {
       </View>
     );
 
+    let actionButtons = (
+      <View style={styles.actionBtnRow}>
+        <Button
+          title="Add Person"
+          titleStyle={styles.actionBtnText}
+          icon={{
+            name: 'account-outline',
+            type: 'material-community',
+            size: 36,
+            color: 'white',
+          }}
+          type="clear"
+          onPress={this.onAddPersonPress}
+        />
+      </View>
+    );
+
     let content;
     if (this.state.isEditing) {
       content = (
@@ -263,11 +281,6 @@ class JotDetailScreen extends Component {
             multiline={true}
           />
           {peopleComponent}
-          <Button
-            title="Add Person"
-            type="clear"
-            onPress={this.onAddPersonPress}
-          />
         </View>
       );
     } else {
@@ -288,14 +301,17 @@ class JotDetailScreen extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <ContuityHeader
-          title={headerTitle}
-          leftButtonConfig={leftButtonConfig}
-          rightButtonConfig={rightButtonConfig}
-          leftButtonType={this.state.isEditing ? '' : 'BACK'}
-          rightButtonType={this.state.isEditing ? 'DONE' : ''}
-        />
-        <ScrollView style={styles.scrollContainer}>{content}</ScrollView>
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+          <ContuityHeader
+            title={headerTitle}
+            leftButtonConfig={leftButtonConfig}
+            rightButtonConfig={rightButtonConfig}
+            leftButtonType={this.state.isEditing ? '' : 'BACK'}
+            rightButtonType={this.state.isEditing ? 'DONE' : ''}
+          />
+          <ScrollView style={styles.scrollContainer}>{content}</ScrollView>
+          {this.state.isEditing && actionButtons}
+        </KeyboardAvoidingView>
       </SafeAreaView>
     );
   }
@@ -337,5 +353,15 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     marginBottom: 24,
+  },
+  actionBtnRow: {
+    // flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#1E1E1E',
+  },
+  actionBtnText: {
+    ...h2,
+    color: 'white',
   },
 });

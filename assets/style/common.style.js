@@ -59,7 +59,7 @@ export const menuButton = {
   marginRight: 10,
   paddingVertical: 5,
   paddingHorizontal: 18,
-}
+};
 
 export const buttonText = {
   fontFamily: theme.assistantBold,

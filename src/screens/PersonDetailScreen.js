@@ -237,7 +237,7 @@ class PersonDetailScreen extends Component {
               }`}</Text>
               <Text style={styles.numJots}>{`${numJots} jots`}</Text>
             </View>
-            <ActionButtons person={this.state.person} />
+            <ContactButtons person={this.state.person} />
           </View>
           <JotList
             sections={this.getJotSections()}
@@ -267,7 +267,7 @@ class PersonDetailScreen extends Component {
   }
 }
 
-const ActionButtons = props => {
+const ContactButtons = props => {
   let phoneBtn, messageBtn, emailBtn;
 
   if (props.person.phoneNumber) {
@@ -319,7 +319,7 @@ const ActionButtons = props => {
   }
 
   return (
-    <View style={styles.actionBtnRow}>
+    <View style={styles.contactBtnRow}>
       {phoneBtn}
       {messageBtn}
       {emailBtn}
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     ...h3,
     fontSize: styleConstants.fontSizeMedium,
   },
-  actionBtnRow: {
+  contactBtnRow: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
