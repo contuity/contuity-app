@@ -30,7 +30,6 @@ class JotDetailScreen extends Component {
     this.onAddPersonPress = this.onAddPersonPress.bind(this);
     this.addJotToPeople = this.addJotToPeople.bind(this);
     this.removeJotFromPeople = this.removeJotFromPeople.bind(this);
-    this.updatePeopleToAdd = this.updatePeopleToAdd.bind(this);
     this.updatePeopleToRemove = this.updatePeopleToRemove.bind(this);
     this.onSelectPersonFinished = this.onSelectPersonFinished.bind(this);
 
@@ -150,16 +149,6 @@ class JotDetailScreen extends Component {
     this.setState({ isShowingSelectPeopleScreen: true });
   }
 
-  updatePeopleToAdd(person) {
-    // avoid duplicates
-    let results = this.getAllPeople().filter(item => item.id === person.id);
-    if (results.length === 0) {
-      this.setState({
-        peopleToAdd: [...this.state.peopleToAdd, person],
-      });
-    }
-  }
-
   updatePeopleToRemove(person) {
     let peopleToAdd = this.state.peopleToAdd;
     peopleToAdd = peopleToAdd.filter(p => p.id !== person.id);
@@ -170,12 +159,16 @@ class JotDetailScreen extends Component {
     });
   }
 
-  onSelectPersonFinished(person) {
-    if (person) {
-      this.updatePeopleToAdd(person);
+  onSelectPersonFinished(people) {
+    if (people) {
+      this.setState({
+        peopleToAdd: this.state.peopleToAdd.concat(people),
+      });
     }
 
-    this.setState({ isShowingSelectPeopleScreen: false });
+    this.setState({
+      isShowingSelectPeopleScreen: false,
+    });
   }
 
   getAllPeople() {
@@ -202,6 +195,7 @@ class JotDetailScreen extends Component {
     if (this.state.isShowingSelectPeopleScreen) {
       return (
         <SelectPersonScreen
+          existingPeople={this.getAllPeople()}
           onSelectPersonFinished={this.onSelectPersonFinished}
         />
       );

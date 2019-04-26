@@ -11,6 +11,7 @@ import {
 import { ListItem } from 'react-native-elements';
 import PersonService from '../database/services/PersonService';
 import ContuityHeader from '../components/ContuityHeader';
+import PersonPill from '../components/PersonPill';
 import { h3, jotText, h2 } from '../../assets/style/common.style';
 
 class SelectPersonScreen extends Component {
@@ -18,10 +19,12 @@ class SelectPersonScreen extends Component {
     super(props);
     this.onSearchTermChange = this.onSearchTermChange.bind(this);
     this.onCancelPress = this.onCancelPress.bind(this);
+    this.onDonePress = this.onDonePress.bind(this);
     this.onPersonPress = this.onPersonPress.bind(this);
 
     this.state = {
       searchTerm: '',
+      peopleToAdd: [],
     };
   }
 
@@ -35,8 +38,27 @@ class SelectPersonScreen extends Component {
     this.props.onSelectPersonFinished(null);
   }
 
+  onDonePress() {
+    this.props.onSelectPersonFinished(this.state.peopleToAdd);
+  }
+
   onPersonPress(person) {
-    this.props.onSelectPersonFinished(person);
+    let allPeople = this.props.existingPeople.concat(this.state.peopleToAdd);
+    let results = allPeople.filter(item => item.id === person.id);
+    if (results.length === 0) {
+      this.setState({
+        peopleToAdd: [...this.state.peopleToAdd, person],
+      });
+    }
+  }
+
+  updatePeopleToRemove(person) {
+    let peopleToAdd = this.state.peopleToAdd;
+    peopleToAdd = peopleToAdd.filter(p => p.id !== person.id);
+
+    this.setState({
+      peopleToAdd,
+    });
   }
 
   getSearchResults() {
@@ -56,6 +78,11 @@ class SelectPersonScreen extends Component {
     const leftButtonConfig = {
       title: 'Cancel',
       onPress: this.onCancelPress,
+    };
+
+    const rightButtonConfig = {
+      title: 'Done',
+      onPress: this.onDonePress,
     };
 
     let results = (
@@ -79,11 +106,28 @@ class SelectPersonScreen extends Component {
       </View>
     );
 
+    let peopleComponent = (
+      <View style={styles.selectedPeopleContainer}>
+        {this.state.peopleToAdd.map((person, index) => {
+          return (
+            <PersonPill
+              key={index}
+              person={person}
+              onRemovePress={() => this.updatePeopleToRemove(person)}
+              isEditing={true}
+            />
+          );
+        })}
+      </View>
+    );
+
     return (
       <SafeAreaView style={styles.container}>
         <ContuityHeader
           title="Add a Person"
           leftButtonConfig={leftButtonConfig}
+          rightButtonConfig={rightButtonConfig}
+          rightButtonType="DONE"
         />
         <ScrollView style={styles.scrollContainer}>
           <Text style={styles.inputLabel}>People</Text>
@@ -95,6 +139,7 @@ class SelectPersonScreen extends Component {
             value={this.state.searchTerm}
           />
           {results}
+          {peopleComponent}
         </ScrollView>
       </SafeAreaView>
     );
@@ -125,5 +170,11 @@ const styles = StyleSheet.create({
   },
   personName: {
     ...h2,
+  },
+  selectedPeopleContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
   },
 });
