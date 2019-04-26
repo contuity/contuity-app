@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 10,
+    bottom: 52,
     right: 20,
     borderWidth: 1.5,
     borderColor: '#2089dc',
