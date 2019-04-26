@@ -77,6 +77,8 @@ class AllJotsScreen extends Component {
       startWithJot: null,
       startInEditMode: true,
     });
+
+    this.props.setNavBarDisplay(false);
   }
 
   triggerDeleteJotsAlert() {
@@ -117,10 +119,13 @@ class AllJotsScreen extends Component {
       selectedJots: [],
       listSelectionMode: false,
     });
+    this.props.setNavBarDisplay(true);
   }
 
   onJotFinished(jot) {
     // New jot creation was cancelled
+    this.props.setNavBarDisplay(true);
+
     if (jot == null) {
       this.setState({
         isShowingNewJotPage: false,
@@ -142,6 +147,7 @@ class AllJotsScreen extends Component {
       startWithJot: jot,
       startInEditMode: false,
     });
+    this.props.setNavBarDisplay(false);
   }
 
   onJotSelect(jot) {
@@ -159,6 +165,7 @@ class AllJotsScreen extends Component {
 
   onCancelJotSelect() {
     this.setState({ selectedJots: [], listSelectionMode: false });
+    this.props.setNavBarDisplay(true);
   }
 
   getSections() {
@@ -203,7 +210,10 @@ class AllJotsScreen extends Component {
             color: styleConstants.primaryColor,
           }}
           type="clear"
-          onPress={() => this.setState({ listSelectionMode: true })}
+          onPress={() => {
+            this.setState({ listSelectionMode: true });
+            this.props.setNavBarDisplay(false);
+          }}
         />
       );
       bottomRightBtn = (

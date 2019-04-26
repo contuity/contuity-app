@@ -31,6 +31,14 @@ class NavBar extends Component {
     this.jotSelected = this.jotSelected.bind(this);
     this.spacesSelected = this.spacesSelected.bind(this);
     this.peopleSelected = this.peopleSelected.bind(this);
+    this.setNavBarDisplay = this.setNavBarDisplay.bind(this);
+  }
+
+  setNavBarDisplay(show) {
+    // Convert input to boolean
+    this.setState({
+      isShowingNavBar: !!show,
+    });
   }
 
   jotSelected() {
@@ -110,7 +118,7 @@ class NavBar extends Component {
     };
 
     if (!this.state.isShowingNavBar) {
-      navBarStyle.display = 'none'
+      navBarStyle.display = 'none';
     }
 
     let contentView = {
@@ -128,7 +136,12 @@ class NavBar extends Component {
     let jotIcon;
     if (this.state.showingPage == showingPage.JOTS) {
       jotIcon = jotSelectedIcon;
-      currentPage = <AllJotsScreen user={this.state.user} />;
+      currentPage = (
+        <AllJotsScreen
+          user={this.state.user}
+          setNavBarDisplay={this.setNavBarDisplay}
+        />
+      );
     } else {
       jotIcon = jotUnselectedIcon;
     }
@@ -143,7 +156,7 @@ class NavBar extends Component {
     let peopleIcon;
     if (this.state.showingPage == showingPage.PEOPLE) {
       peopleIcon = peopleSelectedIcon;
-      currentPage = <PeopleScreen />;
+      currentPage = <PeopleScreen setNavBarDisplay={this.setNavBarDisplay} />;
     } else {
       peopleIcon = peopleUnselectedIcon;
     }
