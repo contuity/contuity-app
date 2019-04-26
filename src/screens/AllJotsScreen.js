@@ -12,6 +12,14 @@ import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
 import LinearGradient from 'react-native-linear-gradient';
 
+import styleConstants from '../../assets/style/theme.style.js';
+import {
+  shadow,
+  link,
+  smallButton,
+  smallButtonText,
+} from '../../assets/style/common.style';
+
 class AllJotsScreen extends Component {
   constructor(props) {
     super(props);
@@ -164,30 +172,36 @@ class AllJotsScreen extends Component {
 
   render() {
     let topRightBtn;
+    let topLeftBtn;
     let bottomRightBtn;
 
     if (this.state.listSelectionMode) {
-      topRightBtn = (
-        <Button title="Cancel" type="clear" onPress={this.onCancelJotSelect} />
-      );
-      bottomRightBtn = (
+      topLeftBtn = (
         <Button
-          style={styles.deleteJotsBtn}
+          title="Cancel"
+          type="clear"
+          onPress={this.onCancelJotSelect}
+          titleStyle={styles.link}
+        />
+      );
+      topRightBtn = (
+        //TODO: Add in language about how to delete jots
+        <Button
           title={this.state.selectedJots.length === 0 ? 'Delete All' : 'Delete'}
-          icon={{
-            name: 'delete',
-            type: 'material-community',
-            size: 18,
-            color: '#2089dc',
-          }}
+          titleStyle={smallButtonText}
           type="clear"
           onPress={this.triggerDeleteJotsAlert}
+          style={smallButton}
         />
       );
     } else {
       topRightBtn = (
         <Button
-          title="Edit"
+          icon={{
+            name: 'delete',
+            size: 24,
+            color: styleConstants.primaryColor,
+          }}
           type="clear"
           onPress={() => this.setState({ listSelectionMode: true })}
         />
@@ -219,12 +233,19 @@ class AllJotsScreen extends Component {
 
     return (
       <LinearGradient
-        colors={['#F9DCD8', '#A7BFD0', '#6576A8']}
+        colors={[
+          styleConstants.topGradient,
+          styleConstants.middleGradient,
+          styleConstants.lastGradient,
+        ]}
         style={styles.container}
       >
         <SafeAreaView style={styles.container}>
+          <View style={styles.topBtnRow}>
+            {topRightBtn}
+            {topLeftBtn}
+          </View>
           <ScrollView style={styles.scrollContainer}>
-            <View style={styles.topBtnRow}>{topRightBtn}</View>
             <JotList
               listSelectionMode={this.state.listSelectionMode}
               sections={this.getSections()}
@@ -242,6 +263,7 @@ class AllJotsScreen extends Component {
 export default AllJotsScreen;
 
 const styles = StyleSheet.create({
+  //TODO: Remove extra space for title
   container: {
     flex: 1,
   },
@@ -250,23 +272,24 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   topBtnRow: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+    backgroundColor: 'transparent',
   },
   createJotBtn: {
+    ...shadow,
+    shadowOffset: { width: 6, height: 2 },
     width: 70,
     height: 70,
-    backgroundColor: '#D97A7C',
+    backgroundColor: styleConstants.secondaryColor,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 10,
+    bottom: 20,
     right: 20,
     borderRadius: 70,
-    shadowOffset: { width: 0, height: 2 },
-    shadowColor: 'black',
-    shadowOpacity: 0.25,
   },
   deleteJotsBtn: {
     width: 150,
@@ -280,5 +303,9 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: '#2089dc',
     borderRadius: 10,
+  },
+  link: {
+    ...link,
+    fontSize: styleConstants.fontSizeXSmall,
   },
 });

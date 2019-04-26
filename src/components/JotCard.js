@@ -93,21 +93,24 @@ const styles = StyleSheet.create({
   },
   jotItem: {
     width: '94%',
-    paddingBottom: '7%',
+    marginBottom: '7%',
   },
   jotItemSelectMode: {
     width: '100%',
     borderBottomColor: 'rgba(0, 0, 0, 0.2)',
     borderBottomWidth: 1,
+    marginBottom: '7%',
   },
   jotTitle: {
     ...h2,
     color: 'black',
     paddingBottom: 4,
+    height: 'auto',
   },
   jotBody: {
     ...h3,
     color: 'black',
+    height: 'auto',
   },
 });
 
