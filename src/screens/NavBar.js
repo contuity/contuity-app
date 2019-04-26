@@ -90,25 +90,31 @@ class NavBar extends Component {
 
   render() {
     let viewStyle = {
-      flex: 1,
       flexDirection: 'column',
       height: '100%',
       width: '100%',
+      position: 'relative',
     };
 
     let navBarStyle = {
       height: 72,
       flexDirection: 'row',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
       width: '100%',
       backgroundColor: 'rgba(54, 50, 60, 0.82)',
       backdropFilter: 'blur(4px)',
-      zIndex: -1,
+      zIndex: 2,
     };
 
     let contentView = {
-      height: '90%',
-      position: 'relative',
-      flex: 1,
+      zIndex: 1,
+      height: '100%',
+      width: '100%',
+      position: 'absolute',
+      top: 0,
+      left: 0,
     };
 
     let currentPage = null;
