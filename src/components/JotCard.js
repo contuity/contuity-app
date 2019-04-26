@@ -79,33 +79,38 @@ class JotCard extends Component {
 const styles = StyleSheet.create({
   listItemContainer: {
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    margin: 8,
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: 'black',
+    shadowOpacity: 0.25,
   },
   jotContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between', //cant get proper spacing between cards
   },
   selectBtn: {
     width: 10,
   },
   jotItem: {
-    width: '100%',
+    width: '94%',
+    marginBottom: '7%',
   },
   jotItemSelectMode: {
-    width: '90%',
+    width: '100%',
     borderBottomColor: 'rgba(0, 0, 0, 0.2)',
     borderBottomWidth: 1,
+    marginBottom: '7%',
   },
   jotTitle: {
     ...h2,
     color: 'black',
+    paddingBottom: 4,
+    height: 'auto',
   },
   jotBody: {
     ...h3,
     color: 'black',
+    height: 'auto',
   },
 });
 
