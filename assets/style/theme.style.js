@@ -19,6 +19,7 @@ export default {
   secondaryColor: '#D97A7C',
 
   lightGray: '#5A5A5A',
+  lightBlue: '#DEEAFF',
 
   topGradient: '#F9DCD8',
   middleGradient: '#A7BFD0',

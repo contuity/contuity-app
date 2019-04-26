@@ -266,7 +266,6 @@ class Login extends Component {
           styleConstants.lastGradient,
         ]}
         style={styles.container}
-
       >
         {content}
       </LinearGradient>
