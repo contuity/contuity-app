@@ -159,11 +159,22 @@ class AllJotsScreen extends Component {
 
   getSections() {
     let sections = [];
+    const todayDate = moment().format('dddd, M/D');
+    const yesterdayDate = moment()
+      .subtract(1, 'days')
+      .format('dddd, M/D');
+
     if (this.state.todaysJots.length > 0) {
-      sections.push({ title: 'Today', data: this.state.todaysJots });
+      sections.push({
+        title: `Today: ${todayDate}`,
+        data: this.state.todaysJots,
+      });
     }
     if (this.state.yesterdaysJots.length > 0) {
-      sections.push({ title: 'Yesterday', data: this.state.yesterdaysJots });
+      sections.push({
+        title: `Yesterday: ${yesterdayDate}`,
+        data: this.state.yesterdaysJots,
+      });
     }
     if (this.state.thisWeeksJots.length > 0) {
       sections.push({ title: 'This week', data: this.state.thisWeeksJots });

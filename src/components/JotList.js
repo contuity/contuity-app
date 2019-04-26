@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import JotCard from './JotCard';
 import TwoColumnList from './TwoColumnList';
 import { h1 } from '../../assets/style/common.style';
+import styleConstants from '../../assets/style/theme.style';
 
 class JotList extends Component {
   constructor(props) {
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
 
   sectionHeader: {
     ...h1,
+    fontFamily: styleConstants.assistantSB,
     marginBottom: 16,
   },
 
