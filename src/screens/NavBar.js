@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import AllJotsScreen from './AllJotsScreen';
 import PeopleScreen from './PeopleScreen';
 import { h3 } from '../../assets/style/common.style';
 
-import jotUnselectedIcon from '../resources/jots.png';
-import spacesUnselectedIcon from '../resources/spaces.png';
-import peopleUnselectedIcon from '../resources/people.png';
+import jotUnselectedIcon from '../../assets/img/jots_filled.png';
+import spacesUnselectedIcon from '../../assets/img/spaces_outline.png';
+import peopleUnselectedIcon from '../../assets/img/people_outline.png';
 
 // TODO: update these with the correct images
-import jotSelectedIcon from '../resources/jots.png';
-import spacesSelectedIcon from '../resources/spaces.png';
-import peopleSelectedIcon from '../resources/people.png';
+import jotSelectedIcon from '../../assets/img/jots_filled.png';
+import spacesSelectedIcon from '../../assets/img/spaces_filled.png';
+import peopleSelectedIcon from '../../assets/img/people_filled.png';
 
 let showingPage = {
   JOTS: 'jots',
@@ -61,7 +61,9 @@ class NavBar extends Component {
     };
 
     let imageStyle = {
-      margin: 'auto',
+      width: 32,
+      height: 32,
+      marginBottom: -4,
     };
 
     let middleContainer = {
@@ -73,7 +75,6 @@ class NavBar extends Component {
       ...h3,
       color: 'white',
       fontSize: 14,
-      lineHeight: 21,
       justifyContent: 'center',
       alignItems: 'center',
     };

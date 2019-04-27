@@ -3,7 +3,7 @@ import { Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import ContuityGradient from '../components/ContuityGradient';
 import LoginService from '../database/services/LoginService';
-import logo from '../resources/logo.png';
+import logo from '../../assets/img/logo.png';
 import {
   primaryButton,
   outlineButton,
