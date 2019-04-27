@@ -262,7 +262,11 @@ class JotDetailScreen extends Component {
           <Text style={styles.inputLabel}>Title</Text>
           <TextInput
             placeholder="Optional"
-            style={styles.jotTitle}
+            style={
+              this.state.title.length <= 0
+                ? styles.jotTitlePlaceholder
+                : styles.jotTitle
+            }
             onChangeText={this.onJotTitleChange}
             value={this.state.title}
           />
@@ -331,6 +335,10 @@ const styles = StyleSheet.create({
   jotTitle: {
     ...jotText,
     fontFamily: styleConstants.assistantSB,
+    marginBottom: 8,
+  },
+  jotTitlePlaceholder: {
+    ...jotText,
     marginBottom: 8,
   },
   jotContent: {

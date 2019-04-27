@@ -27,7 +27,7 @@ class PersonPill extends Component {
           }
         }
         containerStyle={styles.pillContainer}
-        contentContainerStyle={styles.pillContentContainer}
+        contentContainerStyle={{ flex: 0,}}
         pad={10}
       />
     );
@@ -36,22 +36,16 @@ class PersonPill extends Component {
 
 const styles = StyleSheet.create({
   pillContainer: {
-    width: 130,
     borderColor: themeStyles.secondaryColor,
     borderWidth: 2,
     borderRadius: 25,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  pillContentContainer: {
-    flex: 1,
-    flexDirection: 'row',
+    paddingVertical: 10,
   },
   personItemTitle: {
-    flex: 1,
     fontFamily: themeStyles.assistantSB,
     fontSize: themeStyles.fontSizeSmall,
     color: themeStyles.secondaryColor,
+    textAlign: 'center',
   },
   personItem: {
     padding: 5,

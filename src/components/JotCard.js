@@ -82,9 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between', //cant get proper spacing between cards
   },
-  selectBtn: {
-    width: 10,
-  },
   jotItem: {
     width: '94%',
     paddingBottom: '7%',

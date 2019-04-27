@@ -11,53 +11,49 @@ import {
 import styleConstants from '../../assets/style/theme.style';
 
 class ContuityHeader extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let title = this.props.title;
     let leftButtonConfig = this.props.leftButtonConfig;
     let rightButtonConfig = this.props.rightButtonConfig;
 
     if (title) {
-      switch (this.props.titleType) {
-        case 'INSTRUCTION':
-          title = (
-            <Text style={styles.headerInstruction}>{this.props.title}</Text>
-          );
-          break;
-        default:
-          title = <Text style={styles.headerTitle}>{this.props.title}</Text>;
-      }
+      title = (
+        <Text
+          style={
+            this.props.titleType === 'INSTRUCTION'
+              ? styles.headerInstruction
+              : styles.headerTitle
+          }
+        >
+          {this.props.title}
+        </Text>
+      );
     }
 
     if (leftButtonConfig) {
-      switch (this.props.leftButtonType) {
-        case 'BACK':
-          leftButtonConfig = (
-            <Button
-              titleStyle={styles.headerButtonText}
-              icon={{
-                name: 'chevron-left',
-                type: 'material',
-                size: 30,
-                color: styleConstants.primaryColor,
-              }}
-              {...leftButtonConfig}
-              title=""
-              type="clear"
-            />
-          );
-          break;
-        default:
-          leftButtonConfig = (
-            <Button
-              titleStyle={styles.headerButtonText}
-              {...leftButtonConfig}
-              type="clear"
-            />
-          );
+      if (this.props.leftButtonType === 'BACK') {
+        leftButtonConfig = (
+          <Button
+            titleStyle={styles.headerButtonText}
+            icon={{
+              name: 'chevron-left',
+              type: 'material',
+              size: 30,
+              color: styleConstants.primaryColor,
+            }}
+            {...leftButtonConfig}
+            title=""
+            type="clear"
+          />
+        );
+      } else {
+        leftButtonConfig = (
+          <Button
+            titleStyle={styles.headerButtonText}
+            {...leftButtonConfig}
+            type="clear"
+          />
+        );
       }
     }
 

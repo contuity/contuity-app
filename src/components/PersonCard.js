@@ -5,10 +5,6 @@ import { h3, shadow } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
 
 class PersonCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let firstName = this.props.person.firstName;
     let lastName = this.props.person.lastName;
