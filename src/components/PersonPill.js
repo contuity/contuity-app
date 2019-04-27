@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { buttonText } from '../../assets/style/common.style';
-import themeStyles from '../../assets/style/theme.style';
+import styleConstants from '../../assets/style/theme.style';
 
 class PersonPill extends Component {
   constructor(props) {
@@ -21,13 +20,13 @@ class PersonPill extends Component {
           this.props.isEditing && {
             name: 'close',
             close: 'material-community',
-            size: themeStyles.fontSizeSmall,
-            color: themeStyles.secondaryColor,
+            size: styleConstants.fontSizeSmall,
+            color: styleConstants.secondaryColor,
             onPress: this.props.onRemovePress,
           }
         }
         containerStyle={styles.pillContainer}
-        contentContainerStyle={{ flex: 0,}}
+        contentContainerStyle={{ flex: 0 }}
         pad={10}
       />
     );
@@ -36,15 +35,15 @@ class PersonPill extends Component {
 
 const styles = StyleSheet.create({
   pillContainer: {
-    borderColor: themeStyles.secondaryColor,
+    borderColor: styleConstants.secondaryColor,
     borderWidth: 2,
     borderRadius: 25,
     paddingVertical: 10,
   },
   personItemTitle: {
-    fontFamily: themeStyles.assistantSB,
-    fontSize: themeStyles.fontSizeSmall,
-    color: themeStyles.secondaryColor,
+    fontFamily: styleConstants.assistantSB,
+    fontSize: styleConstants.fontSizeSmall,
+    color: styleConstants.secondaryColor,
     textAlign: 'center',
   },
   personItem: {

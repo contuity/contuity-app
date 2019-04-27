@@ -160,8 +160,6 @@ class PersonDetailScreen extends Component {
       title: 'Delete',
       onPress: this.onRightButtonPress,
     };
-    const firstInitial = this.state.firstName.charAt(0);
-    const lastInitial = this.state.lastName.charAt(0);
     const numJots = this.props.person ? this.props.person.jots.length : 0;
 
     if (this.state.isShowingJotDetail) {
@@ -226,7 +224,10 @@ class PersonDetailScreen extends Component {
             <View style={styles.personHeader}>
               <Avatar
                 rounded
-                title={firstInitial + lastInitial}
+                title={PersonService.getInitials(
+                  this.state.firstName,
+                  this.state.lastName
+                )}
                 titleStyle={styles.photoTitle}
                 avatarStyle={styles.photo}
                 containerStyle={styles.photoContainer}

@@ -24,7 +24,7 @@ export default {
 
   topGradient: '#F9DCD8',
   middleGradient: '#A7BFD0',
-  lastGradient: '#6576A8',
+  bottomGradient: '#6576A8',
 
   primaryDisabled: '#2D335350',
   secondaryDisabled: '#ECBCBD',

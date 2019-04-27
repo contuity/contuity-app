@@ -53,6 +53,17 @@ class PersonService {
     let newJots = person.jots.filter(j => j.id !== jot.id);
     this.save(person, { jots: newJots });
   }
+
+  getInitials(firstName, lastName) {
+    let initials = '';
+    if (firstName) {
+      initials += firstName[0];
+    }
+    if (lastName) {
+      initials += lastName[0];
+    }
+    return initials;
+  }
 }
 
 // Initialize the Singleton

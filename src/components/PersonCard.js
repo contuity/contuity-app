@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Avatar, ListItem } from 'react-native-elements';
+import PersonService from '../database/services/PersonService';
 import { h3, shadow } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
 
@@ -8,9 +9,6 @@ class PersonCard extends Component {
   render() {
     let firstName = this.props.person.firstName;
     let lastName = this.props.person.lastName;
-
-    let firstInitial = firstName.charAt(0);
-    let lastInitial = lastName.charAt(0);
 
     return (
       <ListItem
@@ -24,7 +22,7 @@ class PersonCard extends Component {
         leftAvatar={
           <Avatar
             rounded
-            title={firstInitial + lastInitial}
+            title={PersonService.getInitials(firstName, lastName)}
             titleStyle={styles.photoTitle}
             avatarStyle={styles.photo}
             containerStyle={styles.photoContainer}

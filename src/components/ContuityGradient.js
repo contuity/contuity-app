@@ -8,7 +8,7 @@ const ContuityGradient = props => {
       colors={[
         styleConstants.topGradient,
         styleConstants.middleGradient,
-        styleConstants.lastGradient,
+        styleConstants.bottomGradient,
       ]}
       style={{ ...props.style, flex: 1 }}
     >
