@@ -103,12 +103,3 @@ export const shadow = {
   shadowColor: 'black',
   shadowOpacity: 0.25,
 };
-
-export const photo = {
-  backgroundColor: theme.lightBlue,
-};
-
-export const photoTitle = {
-  color: theme.primaryColor,
-  fontFamily: theme.assistantNorm,
-};

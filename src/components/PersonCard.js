@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Avatar, ListItem } from 'react-native-elements';
-import PersonService from '../database/services/PersonService';
+import InitialsAvatar from '../components/InitialsAvatar';
 import { h3, shadow } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
 
@@ -20,12 +20,9 @@ class PersonCard extends Component {
         subtitle={`${this.props.person.jots.length} jots`}
         subtitleStyle={styles.personSubtitle}
         leftAvatar={
-          <Avatar
-            rounded
-            title={PersonService.getInitials(firstName, lastName)}
-            titleStyle={styles.photoTitle}
-            avatarStyle={styles.photo}
-            containerStyle={styles.photoContainer}
+          <InitialsAvatar
+            firstName={firstName}
+            lastName={lastName}
             size={100}
           />
         }
@@ -55,13 +52,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(45, 51, 83, 0.75)',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-  },
-  photo: {
-    backgroundColor: styleConstants.lightBlue,
-  },
-  photoTitle: {
-    color: styleConstants.primaryColor,
-    fontFamily: styleConstants.assistantNorm,
   },
   personItem: {
     ...shadow,

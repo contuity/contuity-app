@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Avatar, Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import Person from '../database/models/Person';
 import PersonService from '../database/services/PersonService';
 import JotList from '../components/JotList';
@@ -8,6 +8,7 @@ import JotDetailScreen from './JotDetailScreen';
 import ContuityGradient from '../components/ContuityGradient';
 import ContuityHeader from '../components/ContuityHeader';
 import ContuityInput from '../components/ContuityInput';
+import InitialsAvatar from '../components/InitialsAvatar';
 import { callNumber, email } from '../Util.js';
 
 import { h1, shadow, h3 } from '../../assets/style/common.style';
@@ -215,14 +216,9 @@ class PersonDetailScreen extends Component {
         <View>
           <View style={styles.contentContainer}>
             <View style={styles.personHeader}>
-              <Avatar
-                rounded
-                title={PersonService.getInitials(
-                  this.state.firstName,
-                  this.state.lastName
-                )}
-                titleStyle={styles.photoTitle}
-                avatarStyle={styles.photo}
+              <InitialsAvatar
+                firstName={this.state.firstName}
+                lastName={this.state.lastName}
                 containerStyle={styles.photoContainer}
                 size="xlarge"
               />
@@ -335,13 +331,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginBottom: 32,
-  },
-  photo: {
-    backgroundColor: styleConstants.lightBlue,
-  },
-  photoTitle: {
-    color: styleConstants.primaryColor,
-    fontFamily: styleConstants.assistantNorm,
   },
   photoContainer: {
     ...shadow,

@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
-import PersonService from '../database/services/PersonService';
-import {
-  h2,
-  h3,
-  shadow,
-  photo,
-  photoTitle,
-} from '../../assets/style/common.style';
+import InitialsAvatar from '../components/InitialsAvatar';
+import { h2, h3, shadow } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style.js';
 
 let MAX_CONTENT_LENGTH = 120;
@@ -60,15 +54,10 @@ class JotCard extends Component {
       <View style={styles.peopleContainer}>
         {this.getAllPeople().map((person, index) => {
           return (
-            <Avatar
+            <InitialsAvatar
               key={index}
-              rounded
-              title={PersonService.getInitials(
-                person.firstName,
-                person.lastName
-              )}
-              titleStyle={photoTitle}
-              avatarStyle={photo}
+              firstName={person.firstName}
+              lastName={person.lastName}
               containerStyle={styles.photoContainer}
               size="small"
             />
