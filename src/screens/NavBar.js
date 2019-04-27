@@ -25,11 +25,20 @@ class NavBar extends Component {
 
     this.state = {
       showingPage: showingPage.JOTS,
+      isShowingNavBar: true,
     };
 
     this.jotSelected = this.jotSelected.bind(this);
     this.spacesSelected = this.spacesSelected.bind(this);
     this.peopleSelected = this.peopleSelected.bind(this);
+    this.setNavBarDisplay = this.setNavBarDisplay.bind(this);
+  }
+
+  setNavBarDisplay(show) {
+    // Convert input to boolean
+    this.setState({
+      isShowingNavBar: !!show,
+    });
   }
 
   jotSelected() {
@@ -90,25 +99,35 @@ class NavBar extends Component {
 
   render() {
     let viewStyle = {
-      flex: 1,
       flexDirection: 'column',
       height: '100%',
       width: '100%',
+      position: 'relative',
     };
 
     let navBarStyle = {
       height: 72,
       flexDirection: 'row',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
       width: '100%',
       backgroundColor: 'rgba(54, 50, 60, 0.82)',
       backdropFilter: 'blur(4px)',
-      zIndex: -1,
+      zIndex: 2,
     };
 
+    if (!this.state.isShowingNavBar) {
+      navBarStyle.display = 'none';
+    }
+
     let contentView = {
-      height: '90%',
-      position: 'relative',
-      flex: 1,
+      zIndex: 1,
+      height: '100%',
+      width: '100%',
+      position: 'absolute',
+      top: 0,
+      left: 0,
     };
 
     let currentPage = null;
@@ -117,7 +136,12 @@ class NavBar extends Component {
     let jotIcon;
     if (this.state.showingPage == showingPage.JOTS) {
       jotIcon = jotSelectedIcon;
-      currentPage = <AllJotsScreen user={this.state.user} />;
+      currentPage = (
+        <AllJotsScreen
+          user={this.state.user}
+          setNavBarDisplay={this.setNavBarDisplay}
+        />
+      );
     } else {
       jotIcon = jotUnselectedIcon;
     }
@@ -132,7 +156,7 @@ class NavBar extends Component {
     let peopleIcon;
     if (this.state.showingPage == showingPage.PEOPLE) {
       peopleIcon = peopleSelectedIcon;
-      currentPage = <PeopleScreen />;
+      currentPage = <PeopleScreen setNavBarDisplay={this.setNavBarDisplay} />;
     } else {
       peopleIcon = peopleUnselectedIcon;
     }

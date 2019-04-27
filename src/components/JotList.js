@@ -12,7 +12,7 @@ class JotList extends Component {
   render() {
     let content = this.props.sections.map((section, index) => {
       return (
-        <View key={index}>
+        <View style={styles.container} key={index}>
           <Text style={styles.sectionHeader}>{section.title}</Text>
           <TwoColumnList
             section={section}
@@ -34,9 +34,14 @@ class JotList extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 18,
+    marginBottom: 18,
+  },
+
   sectionHeader: {
     ...h1,
-    marginLeft: 10,
+    marginBottom: 16,
   },
 });
 

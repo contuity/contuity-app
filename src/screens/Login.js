@@ -10,15 +10,16 @@ import LoginService from '../database/services/LoginService';
 import logo from '../resources/logo.png';
 import {
   primaryButton,
-  secondaryButton,
+  outlineButton,
   buttonText,
-  h1,
   h3,
   link,
-  inputTextColor,
+  inputField,
+  homescreen,
 } from '../../assets/style/common.style';
+
+import styleConstants from '../../assets/style/theme.style.js';
 import LinearGradient from 'react-native-linear-gradient';
-import themeStyle from '../../assets/style/theme.style';
 
 // Enum of different pages to show
 const showingScreen = {
@@ -152,7 +153,7 @@ class Login extends Component {
       <Input
         key="username"
         placeholder="Email"
-        inputStyle={styles.inputStyle}
+        inputStyle={inputField}
         onChangeText={this.onChangeEmail}
         value={this.state.email}
         inputContainerStyle={styles.inputContainerStyle}
@@ -162,7 +163,7 @@ class Login extends Component {
     let firstPasswordEntry = (
       <Input
         key="password1"
-        inputStyle={styles.inputStyle}
+        inputStyle={inputField}
         placeholder="Password"
         onChangeText={this.onChangePassword}
         value={this.state.password}
@@ -189,10 +190,10 @@ class Login extends Component {
         />,
         <Button
           key="1"
-          buttonStyle={styles.secondaryButton}
+          buttonStyle={styles.outlineButton}
           onPress={this.onCreateAnAccountPress}
           title="Sign Up"
-          titleStyle={buttonText}
+          titleStyle={styles.buttonTextSecondary}
         />,
       ];
     } else if (this.state.currentScreen == showingScreen.login) {
@@ -222,6 +223,7 @@ class Login extends Component {
           disabled={
             this.state.email.length == 0 || this.state.password.length == 0
           }
+          disabledStyle={styles.disabledPrimaryButton}
         />,
         //Forgot password needs to be set-up
         <Text
@@ -233,7 +235,7 @@ class Login extends Component {
         </Text>,
         <Button
           key="1"
-          buttonStyle={styles.secondaryButton}
+          buttonStyle={styles.outlineButton}
           onPress={this.onCreateAnAccountPress}
           title="Sign Up"
           titleStyle={styles.buttonTextSecondary}
@@ -266,7 +268,7 @@ class Login extends Component {
         firstPasswordEntry,
         <Input
           key="0"
-          inputStyle={styles.inputStyle}
+          inputStyle={inputField}
           placeholder="Password again"
           onChangeText={this.onChangePasswordVerification}
           secureTextEntry={true}
@@ -281,6 +283,7 @@ class Login extends Component {
           title="Sign Up"
           titleStyle={buttonText}
           disabled={!isValid}
+          disabledStyle={styles.disabledPrimaryButton}
         />,
         <Text
           key="alreadyhaveanaccountext"
@@ -294,7 +297,11 @@ class Login extends Component {
 
     return (
       <LinearGradient
-        colors={['#F9DCD8', '#A7BFD0', '#6576A8']}
+        colors={[
+          styleConstants.topGradient,
+          styleConstants.middleGradient,
+          styleConstants.lastGradient,
+        ]}
         style={styles.container}
       >
         {content}
@@ -317,26 +324,14 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
   },
 
-  inputStyle: {
-    marginTop: 10,
-    marginBottom: 10,
-    flex: 1,
-    backgroundColor: 'white',
-    height: 40,
-    borderRadius: 24,
-    ...h3,
-    ...inputTextColor,
-    paddingLeft: 20,
-  },
-
   primaryButton: {
     ...primaryButton,
     width: 190,
     marginTop: 20,
   },
 
-  secondaryButton: {
-    ...secondaryButton,
+  outlineButton: {
+    ...outlineButton,
     width: 190,
     marginTop: 20,
     marginBottom: 20,
@@ -361,10 +356,15 @@ const styles = StyleSheet.create({
 
   contuity: {
     ...link,
-    ...h1,
+    ...homescreen,
     paddingTop: 10,
     fontSize: 36,
     paddingBottom: 20,
+  },
+
+  disabledPrimaryButton: {
+    ...primaryButton,
+    backgroundColor: styleConstants.primaryDisabled,
   },
 });
 
