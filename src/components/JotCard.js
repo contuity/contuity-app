@@ -8,7 +8,6 @@ import {
   photo,
   photoTitle,
 } from '../../assets/style/common.style';
-import PersonPill from '../components/PersonPill';
 
 import styleConstants from '../../assets/style/theme.style.js';
 
