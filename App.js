@@ -22,10 +22,11 @@ class App extends Component {
   }
 
   render() {
-    // if (this.state.user == null) {
-    //   return <Login onLogin={this.onLogin} />;
-    // }
-    return <NavBar />;
+    if (this.state.user == null) {
+      return <Login onLogin={this.onLogin} />;
+    } else {
+      return <NavBar user={this.state.user} />;
+    }
   }
 }
 
