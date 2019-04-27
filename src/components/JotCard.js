@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
+import PersonService from '../database/services/PersonService';
 import {
   h2,
   h3,
@@ -10,7 +11,7 @@ import {
 } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style.js';
 
-let MAX_CONTENT_HEIGHT = 120;
+let MAX_CONTENT_LENGTH = 120;
 
 class JotCard extends Component {
   constructor(props) {
@@ -58,12 +59,14 @@ class JotCard extends Component {
     let peopleComponent = (
       <View style={styles.peopleContainer}>
         {this.getAllPeople().map((person, index) => {
-          const firstInitial = person.firstName.charAt(0);
-          const lastInitial = person.lastName.charAt(0);
           return (
             <Avatar
+              key={index}
               rounded
-              title={firstInitial + lastInitial}
+              title={PersonService.getInitials(
+                person.firstName,
+                person.lastName
+              )}
               titleStyle={photoTitle}
               avatarStyle={photo}
               containerStyle={styles.photoContainer}
@@ -74,33 +77,30 @@ class JotCard extends Component {
       </View>
     );
 
-    let content = jot.content.slice(0, MAX_CONTENT_HEIGHT);
-
-    if (jot.content.length > MAX_CONTENT_HEIGHT) {
+    let content = jot.content.slice(0, MAX_CONTENT_LENGTH);
+    if (jot.content.length > MAX_CONTENT_LENGTH) {
       content += '...';
     }
 
     return (
-      <View style={styles.jotContainer}>
-        <ListItem
-          style={styles.jotItem}
-          key={jot.id}
-          title={jot.title}
-          titleStyle={jot.title == '' ? styles.jotTitleEmpty : styles.jotTitle}
-          subtitle={content}
-          subtitleStyle={styles.jotBody}
-          // TODO
-          /* currently a jot can properly handle displaying two people, if there are more than two people, another circle would be added displaying a plus sign (+) and how many more people there are */
-          leftElement={peopleComponent}
-          containerStyle={
-            this.state.selected
-              ? styles.selectedListItemContainer
-              : styles.listItemContainer
-          }
-          onPress={() => this.onJotSelect(jot)}
-          underlayColor="transparent"
-        />
-      </View>
+      <ListItem
+        style={styles.jotItem}
+        key={jot.id}
+        title={jot.title}
+        titleStyle={jot.title == '' ? styles.jotTitleEmpty : styles.jotTitle}
+        subtitle={content}
+        subtitleStyle={styles.jotBody}
+        // TODO
+        /* currently a jot can properly handle displaying two people, if there are more than two people, another circle would be added displaying a plus sign (+) and how many more people there are */
+        leftElement={peopleComponent}
+        containerStyle={
+          this.state.selected
+            ? styles.selectedListItemContainer
+            : styles.listItemContainer
+        }
+        onPress={() => this.onJotSelect(jot)}
+        underlayColor="transparent"
+      />
     );
   }
 }
@@ -113,18 +113,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   selectedListItemContainer: {
+    ...shadow,
     borderRadius: 10,
     borderWidth: 3,
     borderColor: styleConstants.selectedColor,
-  },
-  jotContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between', //cant get proper spacing between cards
+    flexDirection: 'column-reverse',
+    alignItems: 'flex-start',
   },
   jotItem: {
-    width: '94%',
-    marginBottom: '7%',
+    width: '100%',
+    paddingHorizontal: 9,
+    marginBottom: 14,
   },
   jotTitle: {
     ...h2,
@@ -148,7 +147,6 @@ const styles = StyleSheet.create({
   },
   photoContainer: {
     marginTop: 12,
-    marginBottom: 4,
     marginRight: 8,
   },
 });

@@ -36,13 +36,14 @@ class JotList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 18,
+    marginHorizontal: 9,
     marginBottom: 18,
   },
 
   sectionHeader: {
     ...h1,
     fontFamily: styleConstants.assistantSB,
+    marginLeft: 9,
     marginBottom: 16,
   },
 });

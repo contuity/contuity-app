@@ -42,12 +42,11 @@ class TwoColumnList extends Component {
 
 const styles = StyleSheet.create({
   outerStyle: {
+    width: '100%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
-    color: 'blue',
-    width: '100%',
   },
   firstColumnStyle: {
     flex: 1,

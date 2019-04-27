@@ -21,7 +21,7 @@ export default ContuityInput;
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    marginLeft: '5%',
+    marginHorizontal: '5%',
     marginTop: 12,
   },
   inputContainer: {

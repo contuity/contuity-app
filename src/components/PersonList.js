@@ -5,10 +5,6 @@ import TwoColumnList from './TwoColumnList';
 import { h1 } from '../../assets/style/common.style';
 
 class PersonList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let content = this.props.sections.map((section, index) => {
       return (

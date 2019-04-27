@@ -29,11 +29,11 @@ class AllJotsScreen extends Component {
       thisWeeksJots: JotService.findAllCreatedThisWeek(),
       allOtherJots: JotService.findAllOtherJots(),
       selectedJots: [],
+      listSelectionMode: false,
       // These variables keep track of how and when to show a Jot detail page.
       isShowingNewJotPage: false,
       startWithJot: null,
       startInEditMode: false,
-      listSelectionMode: false,
     };
   }
 

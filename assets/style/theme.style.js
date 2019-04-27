@@ -21,6 +21,7 @@ export default {
 
   lightGray: '#5A5A5A',
   lightBlue: '#DEEAFF',
+  errorRed: '#CB1E1E',
 
   topGradient: '#F9DCD8',
   middleGradient: '#A7BFD0',

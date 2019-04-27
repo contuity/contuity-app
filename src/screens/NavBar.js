@@ -8,7 +8,6 @@ import jotUnselectedIcon from '../../assets/img/jots_filled.png';
 import spacesUnselectedIcon from '../../assets/img/spaces_outline.png';
 import peopleUnselectedIcon from '../../assets/img/people_outline.png';
 
-// TODO: update these with the correct images
 import jotSelectedIcon from '../../assets/img/jots_filled.png';
 import spacesSelectedIcon from '../../assets/img/spaces_filled.png';
 import peopleSelectedIcon from '../../assets/img/people_filled.png';

@@ -13,9 +13,9 @@ import { Button } from 'react-native-elements';
 import JotService from '../database/services/JotService';
 import PersonService from '../database/services/PersonService';
 import Jot from '../database/models/Jot';
+import SelectPersonScreen from './SelectPersonScreen';
 import PersonPill from '../components/PersonPill';
 import ContuityHeader from '../components/ContuityHeader';
-import SelectPersonScreen from './SelectPersonScreen';
 
 import { h2, h3, jotText } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style';
@@ -357,7 +357,6 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   actionBtnRow: {
-    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     backgroundColor: '#1E1E1E',

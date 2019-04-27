@@ -64,14 +64,12 @@ class PersonDetailScreen extends Component {
     });
   }
 
-  // TODO: make sure phone number is valid
   onPhoneNumberChange(event) {
     this.setState({
       phoneNumber: event,
     });
   }
 
-  // TODO: make sure email is valid
   onEmailChange(event) {
     this.setState({
       email: event,
@@ -111,11 +109,6 @@ class PersonDetailScreen extends Component {
   onRightButtonPress() {
     if (this.state.isEditing) {
       let person = this.savePerson();
-
-      // tempoarary fix for lack of disabling nav buttons
-      if (!person) {
-        this.props.onPersonFinished(null);
-      }
 
       this.setState({
         person: person,

@@ -119,8 +119,6 @@ class Login extends Component {
     }
   }
 
-  // Naviation methods
-
   // Buttons from the choose screen
   onLoginPress() {
     this.setState({
@@ -244,7 +242,7 @@ class Login extends Component {
 
       if (this.state.error) {
         let errorStyle = {
-          color: 'red',
+          color: styleConstants.errorRed,
           fontSize: 15,
         };
         errorMsg = (
@@ -289,7 +287,9 @@ class Login extends Component {
       ];
     }
 
-    return <ContuityGradient>{content}</ContuityGradient>;
+    return (
+      <ContuityGradient style={styles.container}>{content}</ContuityGradient>
+    );
   }
 }
 
@@ -298,39 +298,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#A7BFD0',
   },
-
   primaryButton: {
     ...primaryButton,
     width: 190,
     marginTop: 20,
   },
-
   outlineButton: {
     ...outlineButton,
     width: 190,
-    marginTop: 20,
-    marginBottom: 20,
+    marginVertical: 20,
   },
-
   buttonTextSecondary: {
     ...link,
     ...buttonText,
   },
-
   link: {
     ...h3,
     ...link,
-    marginTop: 20,
-    marginBottom: 20,
+    marginVertical: 20,
   },
-
   logoStyle: {
     width: 72,
     height: 84,
   },
-
   contuity: {
     ...link,
     ...homescreen,
@@ -338,7 +329,6 @@ const styles = StyleSheet.create({
     fontSize: 36,
     paddingBottom: 20,
   },
-
   disabledPrimaryButton: {
     ...primaryButton,
     backgroundColor: styleConstants.primaryDisabled,

@@ -12,7 +12,7 @@ const CreateJotButton = props => {
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 10,
+    bottom: 56,
     right: 20,
     borderRadius: 70,
   };

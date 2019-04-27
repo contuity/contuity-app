@@ -1,4 +1,5 @@
 import realm from '../realm.js';
+import moment from 'moment';
 
 class JotService {
   findAll() {
@@ -10,10 +11,13 @@ class JotService {
   }
 
   findAllCreatedToday() {
-    let dayStart = new Date();
-    dayStart.setHours(0, 0, 0);
-    let dayEnd = new Date();
-    dayEnd.setHours(23, 59, 59);
+    let dayStart = moment()
+      .startOf('day')
+      .toDate();
+
+    let dayEnd = moment()
+      .endOf('day')
+      .toDate();
 
     let allJots = realm.objects('Jot');
     return allJots
@@ -22,12 +26,9 @@ class JotService {
   }
 
   findAllCreatedYesterday() {
-    let dayStart = new Date();
-    dayStart.setHours(0, 0, 0);
-    dayStart.setDate(dayStart.getDate() - 1);
-    let dayEnd = new Date();
-    dayEnd.setHours(23, 59, 59);
-    dayEnd.setDate(dayEnd.getDate() - 1);
+    let yesterday = moment().subtract(1, 'days');
+    let dayStart = yesterday.startOf('day').toDate();
+    let dayEnd = yesterday.endOf('day').toDate();
 
     let allJots = realm.objects('Jot');
     return allJots
@@ -36,12 +37,14 @@ class JotService {
   }
 
   findAllCreatedThisWeek() {
-    let dayStart = new Date();
-    dayStart.setHours(0, 0, 0);
-    dayStart.setDate(dayStart.getDate() - 7);
-    let dayEnd = new Date();
-    dayEnd.setHours(23, 59, 59);
-    dayEnd.setDate(dayEnd.getDate() - 2);
+    let dayStart = moment()
+      .subtract(7, 'days')
+      .startOf('day')
+      .toDate();
+    let dayEnd = moment()
+      .subtract(2, 'days') // day before yesterday
+      .endOf('day')
+      .toDate();
 
     let allJots = realm.objects('Jot');
     return allJots
@@ -50,9 +53,10 @@ class JotService {
   }
 
   findAllOtherJots() {
-    let dayStart = new Date();
-    dayStart.setHours(0, 0, 0);
-    dayStart.setDate(dayStart.getDate() - 7);
+    let dayStart = moment()
+      .subtract(7, 'days')
+      .startOf('day')
+      .toDate();
 
     let allJots = realm.objects('Jot');
     return allJots
@@ -60,7 +64,7 @@ class JotService {
       .sorted('dateCreated', true);
   }
 
-  // If a jot with this Jot's ID already exists, this will override the existing data in the DB
+  // if a jot with this Jot's ID already exists, this will override the existing data in the DB
   // if a jot does not exist, this will create the jot from scratch
   // if newObj is given its properties will be copied to jot.
   save(jot, newObj) {

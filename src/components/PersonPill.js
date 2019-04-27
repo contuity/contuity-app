@@ -7,7 +7,8 @@ let MAX_NAME_LENGTH = 15;
 
 class PersonPill extends Component {
   render() {
-    let fullName = this.props.person.firstName + ' ' + this.props.person.lastName;
+    let fullName =
+      this.props.person.firstName + ' ' + this.props.person.lastName;
     let displayName = fullName.slice(0, MAX_NAME_LENGTH);
 
     if (fullName.length > MAX_NAME_LENGTH) {
