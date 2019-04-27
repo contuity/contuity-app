@@ -59,7 +59,7 @@ class JotCard extends Component {
     let dateFormat = dateCreated.getMonth() + 1 + '/' + dateCreated.getDate();
 
     let peopleComponent = (
-      <View key="2" style={styles.peopleContainer}>
+      <View style={styles.peopleContainer}>
         {this.getAllPeople().map((person, index) => {
           const firstInitial = person.firstName.charAt(0);
           const lastInitial = person.lastName.charAt(0);
