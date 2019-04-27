@@ -1,6 +1,5 @@
 import React from 'react';
 import { Avatar } from 'react-native-elements';
-import PersonService from '../database/services/PersonService';
 import styleConstants from '../../assets/style/theme.style';
 
 const InitialsAvatar = props => {
@@ -13,10 +12,18 @@ const InitialsAvatar = props => {
     fontFamily: styleConstants.assistantNorm,
   };
 
+  let initials = '';
+  if (props.firstName) {
+    initials += props.firstName[0];
+  }
+  if (props.lastName) {
+    initials += props.lastName[0];
+  }
+
   return (
     <Avatar
       rounded
-      title={PersonService.getInitials(props.firstName, props.lastName)}
+      title={initials}
       titleStyle={photoTitle}
       avatarStyle={photo}
       containerStyle={props.containerStyle}
