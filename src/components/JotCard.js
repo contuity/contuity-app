@@ -119,10 +119,8 @@ class JotCard extends Component {
 
 const styles = StyleSheet.create({
   listItemContainer: {
+    ...shadow,
     borderRadius: 10,
-    shadowOffset: { width: 0, height: 2 },
-    shadowColor: 'black',
-    shadowOpacity: 0.25,
     flexDirection: 'column-reverse',
     alignItems: 'flex-start',
   },
