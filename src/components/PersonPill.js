@@ -3,17 +3,22 @@ import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import styleConstants from '../../assets/style/theme.style';
 
-class PersonPill extends Component {
-  constructor(props) {
-    super(props);
-  }
+let MAX_NAME_LENGTH = 15;
 
+class PersonPill extends Component {
   render() {
+    let fullName = this.props.person.firstName + ' ' + this.props.person.lastName;
+    let displayName = fullName.slice(0, MAX_NAME_LENGTH);
+
+    if (fullName.length > MAX_NAME_LENGTH) {
+      displayName += '...';
+    }
+
     return (
       <ListItem
         style={styles.personItem}
         key={this.props.person.id}
-        title={this.props.person.firstName + ' ' + this.props.person.lastName}
+        title={displayName}
         titleStyle={styles.personItemTitle}
         titleProps={{ numberOfLines: 1 }}
         leftIcon={
