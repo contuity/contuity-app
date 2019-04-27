@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import ContuityGradient from '../components/ContuityGradient';
+import ContuityInput from '../components/ContuityInput';
 import LoginService from '../database/services/LoginService';
+
 import logo from '../../assets/img/logo.png';
 import {
   primaryButton,
@@ -12,9 +14,7 @@ import {
   link,
   homescreen,
 } from '../../assets/style/common.style';
-
 import styleConstants from '../../assets/style/theme.style.js';
-import ContuityInput from '../components/ContuityInput';
 
 // Enum of different pages to show
 const showingScreen = {
@@ -44,6 +44,11 @@ class Login extends Component {
       password: '',
       passwordVerification: '',
       currentScreen: showingScreen.choose,
+
+      // Keep track of whether there is currently an error being shown on the page.
+      // If creating an account, this means that the account already exists.
+      // If logging in, this being true would mean that your login isn't valid.
+      error: false,
     };
   }
 
@@ -79,7 +84,9 @@ class Login extends Component {
 
       this.props.onLogin(user);
     } catch (err) {
-      console.error(err);
+      this.setState({
+        error: true,
+      });
     }
   }
 
@@ -96,12 +103,17 @@ class Login extends Component {
 
     // Attempt to sign in
     try {
-      let user = await LoginService.login(
-        this.state.email,
-        this.state.password,
-        false
-      );
-      this.props.onLogin(user);
+      let email = this.state.email;
+      let password = this.state.password;
+
+      try {
+        let user = await LoginService.login(email, password, false);
+        this.props.onLogin(user);
+      } catch (e) {
+        this.setState({
+          error: true,
+        });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -147,6 +159,8 @@ class Login extends Component {
       />
     );
 
+    let errorMsg = null;
+
     let content;
     if (this.state.currentScreen == showingScreen.choose) {
       content = [
@@ -170,6 +184,19 @@ class Login extends Component {
         />,
       ];
     } else if (this.state.currentScreen == showingScreen.login) {
+      if (this.state.error) {
+        let errorStyle = {
+          color: 'red',
+          fontSize: 15,
+        };
+        errorMsg = (
+          <Text key="error" style={errorStyle}>
+            {' '}
+            Invalid login{' '}
+          </Text>
+        );
+      }
+
       content = [
         <Image source={logo} style={styles.logoStyle} key="image" />,
         <Text key="title" style={styles.contuity}>
@@ -177,6 +204,7 @@ class Login extends Component {
         </Text>,
         usernameInput,
         firstPasswordEntry,
+        errorMsg,
         <Button
           key="0"
           buttonStyle={styles.primaryButton}
@@ -214,6 +242,19 @@ class Login extends Component {
         isValid = false;
       }
 
+      if (this.state.error) {
+        let errorStyle = {
+          color: 'red',
+          fontSize: 15,
+        };
+        errorMsg = (
+          <Text key="error" style={errorStyle}>
+            {' '}
+            Email address is taken. Try another one.{' '}
+          </Text>
+        );
+      }
+
       content = [
         <Image source={logo} style={styles.logoStyle} key="image" />,
         <Text key="title" style={styles.contuity}>
@@ -228,6 +269,7 @@ class Login extends Component {
           secureTextEntry={true}
           value={this.state.passwordVerification}
         />,
+        errorMsg,
         <Button
           key="1"
           buttonStyle={styles.primaryButton}

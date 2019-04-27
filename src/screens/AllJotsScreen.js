@@ -8,6 +8,9 @@ import ContuityHeader from '../components/ContuityHeader';
 import ContuityGradient from '../components/ContuityGradient';
 import CreateJotButton from '../components/CreateJotButton';
 
+import { link } from '../../assets/style/common.style';
+import styleConstants from '../../assets/style/theme.style.js';
+
 class AllJotsScreen extends Component {
   constructor(props) {
     super(props);
@@ -77,6 +80,8 @@ class AllJotsScreen extends Component {
       startWithJot: null,
       startInEditMode: true,
     });
+
+    this.props.setNavBarDisplay(false);
   }
 
   triggerDeleteJotsAlert() {
@@ -115,10 +120,13 @@ class AllJotsScreen extends Component {
       selectedJots: [],
       listSelectionMode: false,
     });
+    this.props.setNavBarDisplay(true);
   }
 
   onJotFinished(jot) {
     // New jot creation was cancelled
+    this.props.setNavBarDisplay(true);
+
     if (jot == null) {
       this.setState({
         isShowingNewJotPage: false,
@@ -138,6 +146,7 @@ class AllJotsScreen extends Component {
       startWithJot: jot,
       startInEditMode: false,
     });
+    this.props.setNavBarDisplay(false);
   }
 
   onJotSelect(jot) {
@@ -155,6 +164,7 @@ class AllJotsScreen extends Component {
 
   onCancelJotSelect() {
     this.setState({ selectedJots: [], listSelectionMode: false });
+    this.props.setNavBarDisplay(true);
   }
 
   getSections() {
@@ -275,6 +285,7 @@ class AllJotsScreen extends Component {
 export default AllJotsScreen;
 
 const styles = StyleSheet.create({
+  //TODO: Remove extra space for title
   container: {
     flex: 1,
   },
@@ -282,22 +293,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  topBtnRow: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  deleteJotsBtn: {
-    width: 150,
-    height: 50,
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 10,
-    right: 20,
-    borderWidth: 1.5,
-    borderColor: '#2089dc',
-    borderRadius: 10,
+  link: {
+    ...link,
+    fontSize: styleConstants.fontSizeXSmall,
   },
 });

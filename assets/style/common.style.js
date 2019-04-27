@@ -67,6 +67,21 @@ export const buttonText = {
   fontSize: theme.fontSizeSmall,
 };
 
+export const smallButtonText = {
+  fontFamily: theme.assistantBold,
+  fontWeight: theme.fontWeightBold,
+  fontSize: theme.fontSizeXSmall,
+  color: 'white',
+  lineHeight: theme.fontSizeXSmall,
+};
+
+export const smallButton = {
+  backgroundColor: theme.primaryColor,
+  borderRadius: theme.buttonBorderRadius,
+  paddingVertical: 4,
+  paddingHorizontal: 4,
+};
+
 export const link = {
   color: theme.primaryColor,
   fontFamily: theme.assistantBold,
@@ -87,4 +102,13 @@ export const shadow = {
   shadowOffset: { width: 0, height: 2 },
   shadowColor: 'black',
   shadowOpacity: 0.25,
+};
+
+export const photo = {
+  backgroundColor: theme.lightBlue,
+};
+
+export const photoTitle = {
+  color: theme.primaryColor,
+  fontFamily: theme.assistantNorm,
 };

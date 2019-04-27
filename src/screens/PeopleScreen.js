@@ -27,10 +27,12 @@ class PeopleScreen extends Component {
       startWithPerson: null,
       startInEditMode: true,
     });
+    this.props.setNavBarDisplay(false);
   }
 
   onPersonFinished(person) {
     // New person creation was cancelled
+    this.props.setNavBarDisplay(true);
     if (person == null) {
       this.setState({
         isShowingPersonScreen: false,
@@ -45,6 +47,7 @@ class PeopleScreen extends Component {
   }
 
   onPersonPress(person) {
+    this.props.setNavBarDisplay(false);
     this.setState({
       isShowingPersonScreen: true,
       startWithPerson: person,
