@@ -14,7 +14,6 @@ export default class Jot {
         objectType: 'Person',
         property: 'jots',
       },
-      // persons
     },
   };
 

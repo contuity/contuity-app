@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   Text,
@@ -7,13 +8,17 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { Button, Input } from 'react-native-elements';
-import NavigationBar from 'react-native-navbar';
+import moment from 'moment';
+import { Button } from 'react-native-elements';
 import JotService from '../database/services/JotService';
 import PersonService from '../database/services/PersonService';
 import Jot from '../database/models/Jot';
-import PersonPill from '../components/PersonPill';
 import SelectPersonScreen from './SelectPersonScreen';
+import PersonPill from '../components/PersonPill';
+import ContuityHeader from '../components/ContuityHeader';
+
+import { h2, h3, jotText } from '../../assets/style/common.style';
+import styleConstants from '../../assets/style/theme.style';
 
 class JotDetailScreen extends Component {
   constructor(props) {
@@ -25,7 +30,6 @@ class JotDetailScreen extends Component {
     this.onAddPersonPress = this.onAddPersonPress.bind(this);
     this.addJotToPeople = this.addJotToPeople.bind(this);
     this.removeJotFromPeople = this.removeJotFromPeople.bind(this);
-    this.updatePeopleToAdd = this.updatePeopleToAdd.bind(this);
     this.updatePeopleToRemove = this.updatePeopleToRemove.bind(this);
     this.onSelectPersonFinished = this.onSelectPersonFinished.bind(this);
 
@@ -145,16 +149,6 @@ class JotDetailScreen extends Component {
     this.setState({ isShowingSelectPeopleScreen: true });
   }
 
-  updatePeopleToAdd(person) {
-    // avoid duplicates
-    let results = this.getAllPeople().filter(item => item.id === person.id);
-    if (results.length === 0) {
-      this.setState({
-        peopleToAdd: [...this.state.peopleToAdd, person],
-      });
-    }
-  }
-
   updatePeopleToRemove(person) {
     let peopleToAdd = this.state.peopleToAdd;
     peopleToAdd = peopleToAdd.filter(p => p.id !== person.id);
@@ -165,12 +159,16 @@ class JotDetailScreen extends Component {
     });
   }
 
-  onSelectPersonFinished(person) {
-    if (person) {
-      this.updatePeopleToAdd(person);
+  onSelectPersonFinished(people) {
+    if (people) {
+      this.setState({
+        peopleToAdd: this.state.peopleToAdd.concat(people),
+      });
     }
 
-    this.setState({ isShowingSelectPeopleScreen: false });
+    this.setState({
+      isShowingSelectPeopleScreen: false,
+    });
   }
 
   getAllPeople() {
@@ -197,38 +195,36 @@ class JotDetailScreen extends Component {
     if (this.state.isShowingSelectPeopleScreen) {
       return (
         <SelectPersonScreen
+          existingPeople={this.getAllPeople()}
           onSelectPersonFinished={this.onSelectPersonFinished}
         />
       );
     }
 
-    const titleConfig = {
-      title: 'View Jot',
-    };
-
+    let headerTitle;
     const leftButtonConfig = {
       title: 'Back',
-      handler: this.onCancelPress,
+      onPress: this.onCancelPress,
     };
-
     const rightButtonConfig = {
       title: 'Edit',
-      handler: this.onRightButtonPress,
+      onPress: this.onRightButtonPress,
     };
 
     if (this.state.isEditing) {
       if (this.state.jot) {
-        titleConfig.title = 'Edit Jot';
+        headerTitle = 'Edit Jot';
       } else {
-        titleConfig.title = 'Create Jot';
+        headerTitle = 'Create a Jot';
       }
 
       leftButtonConfig.title = 'Cancel';
       rightButtonConfig.title = 'Done';
+      rightButtonConfig.disabled = !this.state.content;
     }
 
     let peopleComponent = (
-      <View key="2" style={styles.peopleContainer}>
+      <View style={styles.peopleContainer}>
         {this.getAllPeople().map((person, index) => {
           return (
             <PersonPill
@@ -242,54 +238,78 @@ class JotDetailScreen extends Component {
       </View>
     );
 
-    let content;
-    if (this.state.isEditing) {
-      content = [
-        <Input
-          key="0"
-          inputStyle={styles.jotTitleInput}
-          placeholder="Title"
-          onChangeText={this.onJotTitleChange}
-          value={this.state.title}
-        />,
-        <TextInput
-          key="1"
-          style={styles.jotContentInput}
-          placeholder="Jot"
-          onChangeText={this.onContentChange}
-          value={this.state.content}
-          multiline={true}
-        />,
-        peopleComponent,
+    let actionButtons = (
+      <View style={styles.actionBtnRow}>
         <Button
-          key="3"
-          title="Add Person"
+          title="Add People"
+          titleStyle={styles.actionBtnText}
+          icon={{
+            name: 'account-outline',
+            type: 'material-community',
+            size: 36,
+            color: 'white',
+          }}
           type="clear"
           onPress={this.onAddPersonPress}
-        />,
-      ];
+        />
+      </View>
+    );
+
+    let content;
+    if (this.state.isEditing) {
+      content = (
+        <View>
+          <Text style={styles.inputLabel}>Title</Text>
+          <TextInput
+            placeholder="Optional"
+            style={
+              this.state.title.length <= 0
+                ? styles.jotTitlePlaceholder
+                : styles.jotTitle
+            }
+            onChangeText={this.onJotTitleChange}
+            value={this.state.title}
+          />
+          <Text style={styles.inputLabel}>Jot</Text>
+          <TextInput
+            placeholder="What's on your mind?"
+            style={styles.jotContent}
+            onChangeText={this.onContentChange}
+            value={this.state.content}
+            multiline={true}
+          />
+          {peopleComponent}
+        </View>
+      );
     } else {
-      content = [
-        <Text key="0" style={styles.jotTitle}>
-          Title: {this.state.title}
-        </Text>,
-        <Text key="1" style={styles.jotContent}>
-          {this.state.content}
-        </Text>,
-        peopleComponent,
-      ];
+      content = (
+        <View>
+          <Text style={styles.jotTitle}>{this.state.title}</Text>
+          <Text style={styles.jotContent}>{this.state.content}</Text>
+          {this.state.jot.people && this.state.jot.people.length > 0 && (
+            <Text style={styles.sectionsHeader}>People</Text>
+          )}
+          {peopleComponent}
+          <Text style={styles.sectionsHeader}>{`Created ${moment(
+            this.state.jot.dateCreated
+          ).calendar()}`}</Text>
+        </View>
+      );
     }
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
-          <NavigationBar
-            title={titleConfig}
-            rightButton={rightButtonConfig}
-            leftButton={leftButtonConfig}
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+          <ContuityHeader
+            title={headerTitle}
+            leftButtonConfig={leftButtonConfig}
+            rightButtonConfig={rightButtonConfig}
+            leftButtonType={this.state.isEditing ? '' : 'BACK'}
+            rightButtonType={this.state.isEditing ? 'DONE' : ''}
           />
-          {content}
-        </ScrollView>
+          <ScrollView style={styles.scrollContainer}>{content}</ScrollView>
+          {this.state.isEditing && actionButtons}
+        </KeyboardAvoidingView>
       </SafeAreaView>
     );
   }
@@ -305,31 +325,44 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     width: '100%',
+    paddingHorizontal: 20,
   },
-  jotTitleInput: {
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 25,
-  },
-  jotContentInput: {
-    height: 100,
-    borderColor: 'gray',
-    borderWidth: 1,
+  inputLabel: {
+    ...h3,
+    marginBottom: 3,
+    color: 'black',
   },
   jotTitle: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 1,
+    ...jotText,
+    fontFamily: styleConstants.assistantSB,
+    marginBottom: 8,
+  },
+  jotTitlePlaceholder: {
+    ...jotText,
+    marginBottom: 8,
   },
   jotContent: {
-    height: 100,
-    borderColor: 'gray',
-    borderWidth: 1,
+    ...jotText,
+    marginBottom: 24,
+  },
+  sectionsHeader: {
+    ...h3,
+    marginBottom: 8,
   },
   peopleContainer: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
+    marginBottom: 24,
+  },
+  actionBtnRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#1E1E1E',
+  },
+  actionBtnText: {
+    ...h2,
+    color: 'white',
   },
 });

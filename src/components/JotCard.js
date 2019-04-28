@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { CheckBox, ListItem, Avatar } from 'react-native-elements';
-import {
-  h2,
-  h3,
-  shadow,
-  photo,
-  photoTitle,
-} from '../../assets/style/common.style';
-
+import { ListItem, Avatar } from 'react-native-elements';
+import InitialsAvatar from '../components/InitialsAvatar';
+import { h2, h3, shadow } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style.js';
 
-let MAX_CONTENT_HEIGHT = 120;
+let MAX_CONTENT_LENGTH = 120;
 
 class JotCard extends Component {
   constructor(props) {
@@ -55,20 +49,15 @@ class JotCard extends Component {
 
   render() {
     let jot = this.props.jot;
-    let dateCreated = jot.dateCreated;
-    let dateFormat = dateCreated.getMonth() + 1 + '/' + dateCreated.getDate();
 
     let peopleComponent = (
       <View style={styles.peopleContainer}>
         {this.getAllPeople().map((person, index) => {
-          const firstInitial = person.firstName.charAt(0);
-          const lastInitial = person.lastName.charAt(0);
           return (
-            <Avatar
-              rounded
-              title={firstInitial + lastInitial}
-              titleStyle={photoTitle}
-              avatarStyle={photo}
+            <InitialsAvatar
+              key={index}
+              firstName={person.firstName}
+              lastName={person.lastName}
               containerStyle={styles.photoContainer}
               size="small"
             />
@@ -77,42 +66,30 @@ class JotCard extends Component {
       </View>
     );
 
-    const selectionBtn = (
-      <CheckBox
-        containerStyle={styles.selectBtn}
-        size={20}
-        checkedIcon="dot-circle-o"
-        uncheckedIcon="circle-o"
-        onPress={() => this.onJotSelect(jot)}
-        checked={this.state.selected}
-      />
-    );
-
-    let content = jot.content.slice(0, MAX_CONTENT_HEIGHT);
-
-    if (jot.content.length > MAX_CONTENT_HEIGHT) {
+    let content = jot.content.slice(0, MAX_CONTENT_LENGTH);
+    if (jot.content.length > MAX_CONTENT_LENGTH) {
       content += '...';
     }
 
     return (
-      <View style={styles.jotContainer}>
-        {this.props.selectionMode && selectionBtn}
-        <ListItem
-          style={
-            this.props.selectionMode ? styles.jotItemSelectMode : styles.jotItem
-          }
-          key={jot.id}
-          title={jot.title}
-          titleStyle={jot.title == '' ? styles.jotTitleEmpty : styles.jotTitle}
-          subtitle={content}
-          subtitleStyle={styles.jotBody}
-          // TODO
-          /* currently a jot can properly handle displaying two people, if there are more than two people, another circle would be added displaying a plus sign (+) and how many more people there are */
-          leftElement={peopleComponent}
-          containerStyle={styles.listItemContainer}
-          onPress={() => this.onJotSelect(jot)}
-        />
-      </View>
+      <ListItem
+        style={styles.jotItem}
+        key={jot.id}
+        title={jot.title}
+        titleStyle={jot.title == '' ? styles.jotTitleEmpty : styles.jotTitle}
+        subtitle={content}
+        subtitleStyle={styles.jotBody}
+        // TODO
+        /* currently a jot can properly handle displaying two people, if there are more than two people, another circle would be added displaying a plus sign (+) and how many more people there are */
+        leftElement={peopleComponent}
+        containerStyle={
+          this.state.selected
+            ? styles.selectedListItemContainer
+            : styles.listItemContainer
+        }
+        onPress={() => this.onJotSelect(jot)}
+        underlayColor="transparent"
+      />
     );
   }
 }
@@ -124,23 +101,18 @@ const styles = StyleSheet.create({
     flexDirection: 'column-reverse',
     alignItems: 'flex-start',
   },
-  jotContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between', //cant get proper spacing between cards
-  },
-  selectBtn: {
-    width: 10,
+  selectedListItemContainer: {
+    ...shadow,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: styleConstants.selectedColor,
+    flexDirection: 'column-reverse',
+    alignItems: 'flex-start',
   },
   jotItem: {
-    width: '94%',
-    marginBottom: '7%',
-  },
-  jotItemSelectMode: {
     width: '100%',
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-    borderBottomWidth: 1,
-    marginBottom: '7%',
+    paddingHorizontal: 9,
+    marginBottom: 14,
   },
   jotTitle: {
     ...h2,
@@ -164,7 +136,6 @@ const styles = StyleSheet.create({
   },
   photoContainer: {
     marginTop: 12,
-    marginBottom: 4,
     marginRight: 8,
   },
 });

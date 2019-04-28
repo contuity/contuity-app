@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Input } from 'react-native-elements';
-import NavigationBar from 'react-native-navbar';
+import { Button } from 'react-native-elements';
 import Person from '../database/models/Person';
 import PersonService from '../database/services/PersonService';
 import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
+import ContuityGradient from '../components/ContuityGradient';
+import ContuityHeader from '../components/ContuityHeader';
+import ContuityInput from '../components/ContuityInput';
+import InitialsAvatar from '../components/InitialsAvatar';
+import { callNumber, email } from '../Util.js';
+
+import { h1, shadow, h3 } from '../../assets/style/common.style';
+import styleConstants from '../../assets/style/theme.style';
 
 class PersonDetailScreen extends Component {
   constructor(props) {
@@ -58,14 +65,12 @@ class PersonDetailScreen extends Component {
     });
   }
 
-  // TODO: make sure phone number is valid
   onPhoneNumberChange(event) {
     this.setState({
       phoneNumber: event,
     });
   }
 
-  // TODO: make sure email is valid
   onEmailChange(event) {
     this.setState({
       email: event,
@@ -92,7 +97,6 @@ class PersonDetailScreen extends Component {
     }
 
     PersonService.save(person, newAttrs);
-
     return person;
   }
 
@@ -106,11 +110,6 @@ class PersonDetailScreen extends Component {
   onRightButtonPress() {
     if (this.state.isEditing) {
       let person = this.savePerson();
-
-      // tempoarary fix for lack of disabling nav buttons
-      if (!person) {
-        this.props.onPersonFinished(null);
-      }
 
       this.setState({
         person: person,
@@ -146,6 +145,17 @@ class PersonDetailScreen extends Component {
   }
 
   render() {
+    let title;
+    const leftButtonConfig = {
+      title: 'Back',
+      onPress: () => this.onCancelPress(this.state.person),
+    };
+    const rightButtonConfig = {
+      title: 'Delete',
+      onPress: this.onRightButtonPress,
+    };
+    const numJots = this.props.person ? this.props.person.jots.length : 0;
+
     if (this.state.isShowingJotDetail) {
       return (
         <JotDetailScreen
@@ -156,74 +166,48 @@ class PersonDetailScreen extends Component {
       );
     }
 
-    const titleConfig = {
-      title: `${this.state.firstName} ${this.state.lastName}`,
-    };
-
-    const leftButtonConfig = {
-      title: 'Back',
-      handler: () => this.onCancelPress(this.state.person),
-    };
-
-    const rightButtonConfig = {
-      title: 'Delete',
-      handler: this.onRightButtonPress,
-    };
-
     if (this.state.isEditing) {
       // editing an existing person
       if (this.state.person) {
-        titleConfig.title = 'Edit';
+        title = 'Edit';
       } else {
-        titleConfig.title = 'Add Person';
+        title = 'Create a Person';
       }
 
       leftButtonConfig.title = 'Cancel';
       rightButtonConfig.title = 'Done';
-      rightButtonConfig.tintColor = '#FFFFFF';
-      rightButtonConfig.style = styles.doneBtn;
-    }
-
-    if (!this.state.firstName) {
-      rightButtonConfig.disabled = true;
-      rightButtonConfig.style = {
-        ...styles.doneBtn,
-        backgroundColor: '#686868',
-      };
+      rightButtonConfig.disabled = !this.state.firstName;
     }
 
     let content;
     if (this.state.isEditing) {
       content = (
         <View style={styles.contentContainer}>
-          <View style={styles.photo} />
-          <Input
-            placeholder="First name (required)"
-            containerStyle={styles.fullInputContainerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
+          <ContuityInput
+            label="First Name (required)"
             onChangeText={this.onFirstNameChange}
             value={this.state.firstName}
+            textContentType="name"
           />
-          <Input
-            placeholder="Last name"
-            containerStyle={styles.fullInputContainerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
+          <ContuityInput
+            label="Last Name"
             onChangeText={this.onLastNameChange}
             value={this.state.lastName}
+            textContentType="name"
           />
-          <Input
-            placeholder="Phone number"
-            containerStyle={styles.fullInputContainerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
-            onChangeText={this.onPhoneNumberChange}
-            value={this.state.phoneNumber}
-          />
-          <Input
-            placeholder="Email"
-            containerStyle={styles.fullInputContainerStyle}
-            inputContainerStyle={styles.inputContainerStyle}
+          <ContuityInput
+            label="Email"
             onChangeText={this.onEmailChange}
             value={this.state.email}
+            keyboardType="email-address"
+            textContentType="emailAddress"
+          />
+          <ContuityInput
+            label="Phone"
+            onChangeText={this.onPhoneNumberChange}
+            value={this.state.phoneNumber}
+            keyboardType="phone-pad"
+            textContentType="telephoneNumber"
           />
         </View>
       );
@@ -231,11 +215,20 @@ class PersonDetailScreen extends Component {
       content = (
         <View>
           <View style={styles.contentContainer}>
-            <View style={styles.photo} />
-            <Field name="Phone" value={this.state.person.phoneNumber} />
-            <Field name="Email" value={this.state.person.email} />
+            <View style={styles.personHeader}>
+              <InitialsAvatar
+                firstName={this.state.firstName}
+                lastName={this.state.lastName}
+                containerStyle={styles.photoContainer}
+                size="xlarge"
+              />
+              <Text style={styles.name}>{`${this.state.firstName} ${
+                this.state.lastName
+              }`}</Text>
+              <Text style={styles.numJots}>{`${numJots} jots`}</Text>
+            </View>
+            <ContactButtons person={this.state.person} />
           </View>
-          <JotTabs />
           <JotList
             sections={this.getJotSections()}
             onJotPress={this.onJotPress}
@@ -245,33 +238,81 @@ class PersonDetailScreen extends Component {
     }
 
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
-          <NavigationBar
-            title={titleConfig}
-            leftButton={leftButtonConfig}
-            rightButton={rightButtonConfig}
-          />
-          {content}
-        </ScrollView>
-      </SafeAreaView>
+      <ContuityGradient>
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={styles.scrollContainer}>
+            <ContuityHeader
+              title={title}
+              leftButtonConfig={leftButtonConfig}
+              rightButtonConfig={rightButtonConfig}
+              leftButtonType={this.state.isEditing ? 'CANCEL' : 'BACK'}
+              rightButtonType={this.state.isEditing ? 'DONE' : 'EDIT'}
+              tintColor={this.state.isEditing ? 'white' : 'transparent'}
+            />
+            {content}
+          </ScrollView>
+        </SafeAreaView>
+      </ContuityGradient>
     );
   }
 }
 
-const Field = props => {
-  return (
-    <View style={styles.field}>
-      <Text style={styles.fieldName}>{props.name}</Text>
-      <Text style={styles.fieldValue}>{props.value}</Text>
-    </View>
-  );
-};
+const ContactButtons = props => {
+  let phoneBtn, messageBtn, emailBtn;
 
-const JotTabs = props => {
+  if (props.person.phoneNumber) {
+    phoneBtn = (
+      <Button
+        buttonStyle={styles.actionBtn}
+        icon={{
+          name: 'phone',
+          type: 'material',
+          size: 30,
+          color: 'white',
+        }}
+        disabled={!props.person.phoneNumber}
+        disabledStyle={styles.actionBtnDisabled}
+        onPress={() => callNumber(props.person.phoneNumber)}
+      />
+    );
+
+    messageBtn = (
+      <Button
+        buttonStyle={styles.actionBtn}
+        icon={{
+          name: 'message',
+          type: 'material',
+          size: 30,
+          color: 'white',
+        }}
+        disabled={!props.person.phoneNumber}
+        disabledStyle={styles.actionBtnDisabled}
+      />
+    );
+  }
+
+  if (props.person.email) {
+    emailBtn = (
+      <Button
+        buttonStyle={styles.actionBtn}
+        icon={{
+          name: 'email',
+          type: 'material',
+          size: 30,
+          color: 'white',
+        }}
+        disabled={!props.person.email}
+        disabledStyle={styles.actionBtnDisabled}
+        onPress={() => email(props.person.email)}
+      />
+    );
+  }
+
   return (
-    <View style={styles.tabRow}>
-      <Text style={styles.tabName}>All Jots</Text>
+    <View style={styles.contactBtnRow}>
+      {phoneBtn}
+      {messageBtn}
+      {emailBtn}
     </View>
   );
 };
@@ -281,57 +322,40 @@ export default PersonDetailScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   scrollContainer: {
     flex: 1,
     width: '100%',
   },
-  contentContainer: {
-    paddingHorizontal: 10,
-  },
-  fullInputContainerStyle: {
-    marginTop: 15,
-  },
-  inputContainerStyle: {
-    backgroundColor: '#E5E5E5',
-    borderRadius: 5,
-    paddingHorizontal: 5,
-  },
-  photo: {
-    width: 100,
-    height: 100,
-    borderRadius: 100 / 2,
-    backgroundColor: '#E5E5E5',
-  },
-  doneBtn: {
-    backgroundColor: '#2267B7',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 15,
-  },
-  doneBtnDisabled: {
-    backgroundColor: '#686868',
-  },
-  field: {
-    marginTop: 10,
-  },
-  fieldName: {
-    textTransform: 'lowercase',
-    color: 'grey',
-  },
-  fieldValue: {
-    color: 'blue',
-  },
-  tabRow: {
+  personHeader: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E5E5E5',
-    padding: 10,
-    marginTop: 20,
+    marginBottom: 32,
   },
-  tabName: {
-    fontWeight: '700',
+  photoContainer: {
+    ...shadow,
+    marginBottom: 13,
+  },
+  name: {
+    ...h1,
+    fontFamily: styleConstants.assistantSB,
+  },
+  numJots: {
+    ...h3,
+    fontSize: styleConstants.fontSizeMedium,
+  },
+  contactBtnRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  actionBtn: {
+    width: 56,
+    aspectRatio: 1,
+    backgroundColor: styleConstants.primaryColor,
+    borderRadius: 56 / 2,
+  },
+  actionBtnDisabled: {
+    backgroundColor: styleConstants.primaryDisabled,
   },
 });

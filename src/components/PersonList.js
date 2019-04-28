@@ -5,10 +5,6 @@ import TwoColumnList from './TwoColumnList';
 import { h1 } from '../../assets/style/common.style';
 
 class PersonList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let content = this.props.sections.map((section, index) => {
       return (
@@ -34,7 +30,7 @@ class PersonList extends Component {
 const styles = StyleSheet.create({
   sectionHeader: {
     ...h1,
-    marginLeft: 10,
+    marginLeft: 18,
   },
 });
 

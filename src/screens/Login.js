@@ -1,25 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import JotService from '../database/services/JotService';
-import NavigationBar from 'react-native-navbar';
-import { AppRegistry, TextInput } from 'react-native';
+import { Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
-import { Input } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import ContuityGradient from '../components/ContuityGradient';
+import ContuityInput from '../components/ContuityInput';
 import LoginService from '../database/services/LoginService';
-import logo from '../resources/logo.png';
+
+import logo from '../../assets/img/logo.png';
 import {
   primaryButton,
   outlineButton,
   buttonText,
   h3,
   link,
-  inputField,
   homescreen,
 } from '../../assets/style/common.style';
-
 import styleConstants from '../../assets/style/theme.style.js';
-import LinearGradient from 'react-native-linear-gradient';
 
 // Enum of different pages to show
 const showingScreen = {
@@ -50,9 +45,9 @@ class Login extends Component {
       passwordVerification: '',
       currentScreen: showingScreen.choose,
 
-      // Keep track of whether there is currently an error being shown on the page. 
-      // If creating an account, this means that the account already exists. 
-      // If logging in, this being true would mean that your login isn't valid. 
+      // Keep track of whether there is currently an error being shown on the page.
+      // If creating an account, this means that the account already exists.
+      // If logging in, this being true would mean that your login isn't valid.
       error: false,
     };
   }
@@ -90,8 +85,8 @@ class Login extends Component {
       this.props.onLogin(user);
     } catch (err) {
       this.setState({
-        error: true
-      })
+        error: true,
+      });
     }
   }
 
@@ -108,27 +103,21 @@ class Login extends Component {
 
     // Attempt to sign in
     try {
-
       let email = this.state.email;
       let password = this.state.password;
 
-      
       try {
         let user = await LoginService.login(email, password, false);
-        this.props.onLogin(user);  
-      }
-      catch (e) {
+        this.props.onLogin(user);
+      } catch (e) {
         this.setState({
-          error: true
-        })
+          error: true,
+        });
       }
-      
     } catch (err) {
       console.error(err);
     }
   }
-
-  // Naviation methods
 
   // Buttons from the choose screen
   onLoginPress() {
@@ -150,25 +139,21 @@ class Login extends Component {
 
   render() {
     let usernameInput = (
-      <Input
+      <ContuityInput
         key="username"
         placeholder="Email"
-        inputStyle={inputField}
         onChangeText={this.onChangeEmail}
         value={this.state.email}
-        inputContainerStyle={styles.inputContainerStyle}
       />
     );
 
     let firstPasswordEntry = (
-      <Input
+      <ContuityInput
         key="password1"
-        inputStyle={inputField}
         placeholder="Password"
         onChangeText={this.onChangePassword}
         value={this.state.password}
         secureTextEntry={true}
-        inputContainerStyle={styles.inputContainerStyle}
       />
     );
 
@@ -197,13 +182,17 @@ class Login extends Component {
         />,
       ];
     } else if (this.state.currentScreen == showingScreen.login) {
-
       if (this.state.error) {
         let errorStyle = {
           color: 'red',
-          fontSize: 15
-        }
-        errorMsg = (<Text key="error" style={errorStyle}> Invalid login </Text>)
+          fontSize: 15,
+        };
+        errorMsg = (
+          <Text key="error" style={errorStyle}>
+            {' '}
+            Invalid login{' '}
+          </Text>
+        );
       }
 
       content = [
@@ -253,10 +242,15 @@ class Login extends Component {
 
       if (this.state.error) {
         let errorStyle = {
-          color: 'red',
-          fontSize: 15
-        }
-        errorMsg = (<Text key="error" style={errorStyle}> Email address is taken. Try another one. </Text>)
+          color: styleConstants.errorRed,
+          fontSize: 15,
+        };
+        errorMsg = (
+          <Text key="error" style={errorStyle}>
+            {' '}
+            Email address is taken. Try another one.{' '}
+          </Text>
+        );
       }
 
       content = [
@@ -266,14 +260,12 @@ class Login extends Component {
         </Text>,
         usernameInput,
         firstPasswordEntry,
-        <Input
+        <ContuityInput
           key="0"
-          inputStyle={inputField}
           placeholder="Password again"
           onChangeText={this.onChangePasswordVerification}
           secureTextEntry={true}
           value={this.state.passwordVerification}
-          inputContainerStyle={styles.inputContainerStyle}
         />,
         errorMsg,
         <Button
@@ -296,16 +288,7 @@ class Login extends Component {
     }
 
     return (
-      <LinearGradient
-        colors={[
-          styleConstants.topGradient,
-          styleConstants.middleGradient,
-          styleConstants.lastGradient,
-        ]}
-        style={styles.container}
-      >
-        {content}
-      </LinearGradient>
+      <ContuityGradient style={styles.container}>{content}</ContuityGradient>
     );
   }
 }
@@ -315,45 +298,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#A7BFD0',
   },
-
-  inputContainerStyle: {
-    borderBottomWidth: 0,
-    width: '80%',
-    marginLeft: '10%',
-  },
-
   primaryButton: {
     ...primaryButton,
     width: 190,
     marginTop: 20,
   },
-
   outlineButton: {
     ...outlineButton,
     width: 190,
-    marginTop: 20,
-    marginBottom: 20,
+    marginVertical: 20,
   },
-
   buttonTextSecondary: {
     ...link,
     ...buttonText,
   },
-
   link: {
     ...h3,
     ...link,
-    marginTop: 20,
-    marginBottom: 20,
+    marginVertical: 20,
   },
-
   logoStyle: {
     width: 72,
     height: 84,
   },
-
   contuity: {
     ...link,
     ...homescreen,
@@ -361,7 +329,6 @@ const styles = StyleSheet.create({
     fontSize: 36,
     paddingBottom: 20,
   },
-
   disabledPrimaryButton: {
     ...primaryButton,
     backgroundColor: styleConstants.primaryDisabled,

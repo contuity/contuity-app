@@ -1,52 +1,70 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { ListItem } from 'react-native-elements';
-import { h2, h3 } from '../../assets/style/common.style';
+import { StyleSheet } from 'react-native';
+import { Avatar, ListItem } from 'react-native-elements';
+import InitialsAvatar from '../components/InitialsAvatar';
+import { h3, shadow } from '../../assets/style/common.style';
+import styleConstants from '../../assets/style/theme.style';
 
 class PersonCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
+    let firstName = this.props.person.firstName;
+    let lastName = this.props.person.lastName;
+
     return (
-      <View style={styles.personContainer}>
-        <ListItem
-          style={styles.personItem}
-          key={this.props.person.id}
-          title={this.props.person.firstName + ' ' + this.props.person.lastName}
-          titleStyle={styles.personName}
-          subtitle={`${this.props.person.jots.length} jots`}
-          subtitleStyle={styles.personSubtitle}
-          onPress={() => this.props.onPress(this.props.person)}
-          containerStyle={styles.listItemContainer}
-        />
-      </View>
+      <ListItem
+        style={styles.personItem}
+        key={this.props.person.id}
+        title={firstName + ' ' + lastName}
+        titleStyle={styles.personName}
+        titleProps={{ numberOfLines: 1 }}
+        subtitle={`${this.props.person.jots.length} jots`}
+        subtitleStyle={styles.personSubtitle}
+        leftAvatar={
+          <InitialsAvatar
+            firstName={firstName}
+            lastName={lastName}
+            size={100}
+          />
+        }
+        onPress={() => this.props.onPress(this.props.person)}
+        contentContainerStyle={styles.contentContainer}
+        containerStyle={styles.listItemContainer}
+        underlayColor="transparent"
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
   listItemContainer: {
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    aspectRatio: 1,
-    width: '100%',
-  },
-  personContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    aspectRatio: 1,
+    borderRadius: 10,
+    backgroundColor: styleConstants.lightBlue,
+    padding: 0,
+  },
+  contentContainer: {
+    width: '100%',
+    paddingHorizontal: 11,
+    backgroundColor: 'rgba(45, 51, 83, 0.75)',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   personItem: {
-    margin: 8,
+    ...shadow,
+    margin: 18,
   },
   personName: {
-    ...h2,
+    ...h3,
+    fontFamily: styleConstants.assistantSB,
+    color: 'white',
   },
   personSubtitle: {
     ...h3,
+    color: 'white',
   },
 });
 

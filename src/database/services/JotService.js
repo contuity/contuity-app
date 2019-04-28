@@ -1,4 +1,5 @@
 import realm from '../realm.js';
+import moment from 'moment';
 
 class JotService {
   findAll() {
@@ -10,30 +11,60 @@ class JotService {
   }
 
   findAllCreatedToday() {
-    let dayStart = new Date();
-    dayStart.setHours(0, 0, 0);
-    let dayEnd = new Date();
-    dayEnd.setHours(23, 59, 59);
+    let dayStart = moment()
+      .startOf('day')
+      .toDate();
+
+    let dayEnd = moment()
+      .endOf('day')
+      .toDate();
 
     let allJots = realm.objects('Jot');
     return allJots
-      .filtered('dateCreated >= $0 && dateCreated < $1', dayStart, dayEnd)
+      .filtered('dateCreated >= $0 && dateCreated <= $1', dayStart, dayEnd)
+      .sorted('dateCreated', true);
+  }
+
+  findAllCreatedYesterday() {
+    let yesterday = moment().subtract(1, 'days');
+    let dayStart = yesterday.startOf('day').toDate();
+    let dayEnd = yesterday.endOf('day').toDate();
+
+    let allJots = realm.objects('Jot');
+    return allJots
+      .filtered('dateCreated >= $0 && dateCreated <= $1', dayStart, dayEnd)
       .sorted('dateCreated', true);
   }
 
   findAllCreatedThisWeek() {
-    let dayStart = new Date();
-    dayStart.setDate(dayStart.getDate() - 7);
-    let dayEnd = new Date();
-    dayEnd.setHours(-1, 59, 59);
+    let dayStart = moment()
+      .subtract(7, 'days')
+      .startOf('day')
+      .toDate();
+    let dayEnd = moment()
+      .subtract(2, 'days') // day before yesterday
+      .endOf('day')
+      .toDate();
 
     let allJots = realm.objects('Jot');
     return allJots
-      .filtered('dateCreated >= $0 && dateCreated < $1', dayStart, dayEnd)
+      .filtered('dateCreated >= $0 && dateCreated <= $1', dayStart, dayEnd)
       .sorted('dateCreated', true);
   }
 
-  // If a jot with this Jot's ID already exists, this will override the existing data in the DB
+  findAllOtherJots() {
+    let dayStart = moment()
+      .subtract(7, 'days')
+      .startOf('day')
+      .toDate();
+
+    let allJots = realm.objects('Jot');
+    return allJots
+      .filtered('dateCreated < $0', dayStart)
+      .sorted('dateCreated', true);
+  }
+
+  // if a jot with this Jot's ID already exists, this will override the existing data in the DB
   // if a jot does not exist, this will create the jot from scratch
   // if newObj is given its properties will be copied to jot.
   save(jot, newObj) {

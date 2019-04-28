@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
-import { Button } from 'react-native-elements';
-import {
-  Alert,
-  View,
-  ScrollView,
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
+import { Alert, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import moment from 'moment';
 import JotService from '../database/services/JotService';
 import JotList from '../components/JotList';
 import JotDetailScreen from './JotDetailScreen';
-import LinearGradient from 'react-native-linear-gradient';
+import ContuityHeader from '../components/ContuityHeader';
+import ContuityGradient from '../components/ContuityGradient';
+import CreateJotButton from '../components/CreateJotButton';
 
+import { link } from '../../assets/style/common.style';
 import styleConstants from '../../assets/style/theme.style.js';
-import {
-  shadow,
-  link,
-  smallButton,
-  smallButtonText,
-} from '../../assets/style/common.style';
 
 class AllJotsScreen extends Component {
   constructor(props) {
@@ -34,13 +25,15 @@ class AllJotsScreen extends Component {
     this.state = {
       allJots: JotService.findAll(),
       todaysJots: JotService.findAllCreatedToday(),
+      yesterdaysJots: JotService.findAllCreatedYesterday(),
       thisWeeksJots: JotService.findAllCreatedThisWeek(),
+      allOtherJots: JotService.findAllOtherJots(),
       selectedJots: [],
+      listSelectionMode: false,
       // These variables keep track of how and when to show a Jot detail page.
       isShowingNewJotPage: false,
       startWithJot: null,
       startInEditMode: false,
-      listSelectionMode: false,
     };
   }
 
@@ -69,6 +62,16 @@ class AllJotsScreen extends Component {
     }
 
     return true;
+  }
+
+  updateJotSectionsInState() {
+    this.setState({
+      allJots: JotService.findAll(),
+      todaysJots: JotService.findAllCreatedToday(),
+      yesterdaysJots: JotService.findAllCreatedYesterday(),
+      thisWeeksJots: JotService.findAllCreatedThisWeek(),
+      allOtherJots: JotService.findAllOtherJots(),
+    });
   }
 
   createNewJot() {
@@ -112,10 +115,8 @@ class AllJotsScreen extends Component {
       JotService.deleteJots(this.state.selectedJots);
     }
 
+    this.updateJotSectionsInState();
     this.setState({
-      allJots: JotService.findAll(),
-      todaysJots: JotService.findAllCreatedToday(),
-      thisWeeksJots: JotService.findAllCreatedThisWeek(),
       selectedJots: [],
       listSelectionMode: false,
     });
@@ -133,10 +134,8 @@ class AllJotsScreen extends Component {
       return;
     }
 
+    this.updateJotSectionsInState();
     this.setState({
-      allJots: JotService.findAll(),
-      todaysJots: JotService.findAllCreatedToday(),
-      thisWeeksJots: JotService.findAllCreatedThisWeek(),
       isShowingNewJotPage: false,
     });
   }
@@ -169,64 +168,87 @@ class AllJotsScreen extends Component {
   }
 
   getSections() {
-    return [
-      { title: 'Today', data: this.state.todaysJots },
-      { title: 'This week', data: this.state.thisWeeksJots },
-      // TODO: Group all other jots by month
-      // { title: 'This month', data: this.state.allJots },
-    ];
+    let sections = [];
+    const todayDate = moment().format('dddd, M/D');
+    const yesterdayDate = moment()
+      .subtract(1, 'days')
+      .format('dddd, M/D');
+
+    if (this.state.todaysJots.length > 0) {
+      sections.push({
+        title: `Today: ${todayDate}`,
+        data: this.state.todaysJots,
+      });
+    }
+    if (this.state.yesterdaysJots.length > 0) {
+      sections.push({
+        title: `Yesterday: ${yesterdayDate}`,
+        data: this.state.yesterdaysJots,
+      });
+    }
+    if (this.state.thisWeeksJots.length > 0) {
+      sections.push({ title: 'This week', data: this.state.thisWeeksJots });
+    }
+    return sections.concat(this.getAllOtherJotsByMonth());
+  }
+
+  getAllOtherJotsByMonth() {
+    let monthToJots = {};
+
+    this.state.allOtherJots.forEach(jot => {
+      let key = moment(jot.findAllCreatedThisWeek).format('MMMM YYYY');
+
+      if (!monthToJots[key]) {
+        monthToJots[key] = [jot];
+      } else {
+        monthToJots[key] = [...monthToJots[key], jot];
+      }
+    });
+
+    let sections = [];
+    Object.keys(monthToJots).forEach(key => {
+      sections.push({ title: key, data: monthToJots[key] });
+    });
+
+    return sections;
   }
 
   render() {
-    let topRightBtn;
-    let topLeftBtn;
-    let bottomRightBtn;
+    let leftButtonConfig, rightButtonConfig, header;
 
     if (this.state.listSelectionMode) {
-      topLeftBtn = (
-        <Button
-          title="Cancel"
-          type="clear"
-          onPress={this.onCancelJotSelect}
-          titleStyle={styles.link}
-        />
-      );
-      topRightBtn = (
-        //TODO: Add in language about how to delete jots
-        <Button
-          title={this.state.selectedJots.length === 0 ? 'Delete All' : 'Delete'}
-          titleStyle={smallButtonText}
-          type="clear"
-          onPress={this.triggerDeleteJotsAlert}
-          style={smallButton}
+      leftButtonConfig = {
+        title: 'Cancel',
+        onPress: this.onCancelJotSelect,
+      };
+      rightButtonConfig = {
+        title: 'Delete',
+        onPress: this.triggerDeleteJotsAlert,
+        disabled: this.state.selectedJots.length === 0,
+      };
+    } else {
+      rightButtonConfig = {
+        onPress: () => this.setState({ listSelectionMode: true }),
+      };
+    }
+
+    if (this.state.listSelectionMode) {
+      header = (
+        <ContuityHeader
+          title="Tap jots to delete"
+          titleType="INSTRUCTION"
+          leftButtonConfig={leftButtonConfig}
+          rightButtonConfig={rightButtonConfig}
+          rightButtonType="DELETE"
+          tintColor="white"
         />
       );
     } else {
-      topRightBtn = (
-        <Button
-          icon={{
-            name: 'delete',
-            size: 24,
-            color: styleConstants.primaryColor,
-          }}
-          type="clear"
-          onPress={() => {
-            this.setState({ listSelectionMode: true });
-            this.props.setNavBarDisplay(false);
-          }}
-        />
-      );
-      bottomRightBtn = (
-        <Button
-          style={styles.createJotBtn}
-          icon={{
-            name: 'pencil',
-            type: 'material-community',
-            size: 36,
-            color: 'white',
-          }}
-          type="clear"
-          onPress={this.createNewJot}
+      header = (
+        <ContuityHeader
+          leftButtonConfig={leftButtonConfig}
+          rightButtonConfig={rightButtonConfig}
+          rightButtonType="TRASH"
         />
       );
     }
@@ -242,19 +264,9 @@ class AllJotsScreen extends Component {
     }
 
     return (
-      <LinearGradient
-        colors={[
-          styleConstants.topGradient,
-          styleConstants.middleGradient,
-          styleConstants.lastGradient,
-        ]}
-        style={styles.container}
-      >
+      <ContuityGradient>
         <SafeAreaView style={styles.container}>
-          <View style={styles.topBtnRow}>
-            {topRightBtn}
-            {topLeftBtn}
-          </View>
+          {header}
           <ScrollView style={styles.scrollContainer}>
             <JotList
               listSelectionMode={this.state.listSelectionMode}
@@ -263,9 +275,9 @@ class AllJotsScreen extends Component {
               onJotSelect={this.onJotSelect}
             />
           </ScrollView>
-          {bottomRightBtn}
+          <CreateJotButton onPress={this.createNewJot} />
         </SafeAreaView>
-      </LinearGradient>
+      </ContuityGradient>
     );
   }
 }
@@ -280,39 +292,6 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     width: '100%',
-  },
-  topBtnRow: {
-    flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingVertical: 10,
-    backgroundColor: 'transparent',
-  },
-  createJotBtn: {
-    ...shadow,
-    shadowOffset: { width: 6, height: 2 },
-    width: 70,
-    height: 70,
-    backgroundColor: styleConstants.secondaryColor,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 52,
-    right: 20,
-    borderRadius: 70,
-  },
-  deleteJotsBtn: {
-    width: 150,
-    height: 50,
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 10,
-    right: 20,
-    borderWidth: 1.5,
-    borderColor: '#2089dc',
-    borderRadius: 10,
   },
   link: {
     ...link,

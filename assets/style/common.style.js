@@ -24,6 +24,12 @@ export const h3 = {
   fontSize: theme.fontSizeSmall,
 };
 
+export const jotText = {
+  fontFamily: theme.assistantLight,
+  fontWeight: theme.fontWeightLight,
+  fontSize: theme.fontSizeMedium,
+};
+
 export const primaryButton = {
   backgroundColor: theme.primaryColor,
   borderRadius: theme.buttonBorderRadius,
@@ -45,6 +51,14 @@ export const secondaryButton = {
   borderRadius: theme.buttonBorderRadius,
   paddingVertical: theme.buttonPaddingVertical,
   paddingHorizontal: theme.buttonPaddingHorizontal,
+};
+
+export const menuButton = {
+  backgroundColor: theme.primaryColor,
+  borderRadius: 18,
+  marginRight: 10,
+  paddingVertical: 5,
+  paddingHorizontal: 18,
 };
 
 export const buttonText = {
@@ -88,13 +102,4 @@ export const shadow = {
   shadowOffset: { width: 0, height: 2 },
   shadowColor: 'black',
   shadowOpacity: 0.25,
-};
-
-export const photo = {
-  backgroundColor: theme.lightBlue,
-};
-
-export const photoTitle = {
-  color: theme.primaryColor,
-  fontFamily: theme.assistantNorm,
 };

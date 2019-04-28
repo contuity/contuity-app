@@ -3,7 +3,8 @@ import { ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import PersonService from '../database/services/PersonService';
 import PersonList from '../components/PersonList';
 import PersonDetailScreen from './PersonDetailScreen';
-import NavigationBar from 'react-native-navbar';
+import ContuityHeader from '../components/ContuityHeader';
+import ContuityGradient from '../components/ContuityGradient';
 
 class PeopleScreen extends Component {
   constructor(props) {
@@ -63,7 +64,7 @@ class PeopleScreen extends Component {
       if (!initialToPeople[initial]) {
         initialToPeople[initial] = [person];
       } else {
-        initialToPeople[initial] = initialToPeople[initial].concat([person]);
+        initialToPeople[initial] = [...initialToPeople[initial], person];
       }
     });
 
@@ -79,7 +80,7 @@ class PeopleScreen extends Component {
   render() {
     const rightButtonConfig = {
       title: 'Add',
-      handler: this.createNewPerson,
+      onPress: this.createNewPerson,
     };
 
     if (this.state.isShowingPersonScreen) {
@@ -93,18 +94,20 @@ class PeopleScreen extends Component {
     }
 
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
-          <NavigationBar
-            title={{ title: 'People' }}
-            rightButton={rightButtonConfig}
-          />
-          <PersonList
-            sections={this.getAlphabatizedSections()}
-            onPersonPress={this.onPersonPress}
-          />
-        </ScrollView>
-      </SafeAreaView>
+      <ContuityGradient>
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={styles.scrollContainer}>
+            <ContuityHeader
+              rightButtonConfig={rightButtonConfig}
+              rightButtonType="ADD"
+            />
+            <PersonList
+              sections={this.getAlphabatizedSections()}
+              onPersonPress={this.onPersonPress}
+            />
+          </ScrollView>
+        </SafeAreaView>
+      </ContuityGradient>
     );
   }
 }
