@@ -45,3 +45,4 @@ After a few moments, an iPhone simulator should appear on your screen with the a
 
 - [Using Realm with React Native](https://realm.io/docs/javascript/latest/)
 - [React Native Elements](https://react-native-training.github.io/react-native-elements/) (component library)
+- [Building the app onto device](https://facebook.github.io/react-native/docs/running-on-device) 
