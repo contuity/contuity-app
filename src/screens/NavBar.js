@@ -4,7 +4,7 @@ import AllJotsScreen from './AllJotsScreen';
 import PeopleScreen from './PeopleScreen';
 import { h3 } from '../../assets/style/common.style';
 
-import jotUnselectedIcon from '../../assets/img/jots_filled.png';
+import jotUnselectedIcon from '../../assets/img/jots_outline.png';
 import spacesUnselectedIcon from '../../assets/img/spaces_outline.png';
 import peopleUnselectedIcon from '../../assets/img/people_outline.png';
 
