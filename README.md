@@ -14,7 +14,7 @@ Run the following commands in a Terminal or Bash window on your computer.
 
 1. `brew install yarn`
 2. `yarn global add react-native-cli`
-3. `git clone https://github.com/Scout-NU/contuity-app.git`
+3. `git clone https://github.com/contuity/contuity-app.git`
 4. `cd contuity-app`
 5. `yarn`
 6. `react-native run-ios`
