@@ -1,6 +1,6 @@
 import Realm from 'realm';
 
-const AUTH_URL = 'https://contuity-2.us1a.cloud.realm.io';
+const AUTH_URL = 'https://contuitytemp.us1a.cloud.realm.io';
 
 class LoginService {
   async login(email, password, createUser) {
